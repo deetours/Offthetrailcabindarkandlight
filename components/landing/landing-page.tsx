@@ -3,12 +3,11 @@
 import { useState, useEffect, useRef } from "react"
 import { motion, useScroll, useSpring, useTransform } from "framer-motion"
 import { SceneArrival } from "./scene-arrival"
-import { SceneVillain } from "./scene-villain"
+import { SceneGoStay } from "./scene-go-stay"
 import { SceneThreeLines } from "./scene-three-lines"
 import { SceneHumanFace } from "./scene-human-face"
 import { ScenePause } from "./scene-pause"
 import { SceneReveal } from "./scene-reveal"
-import { SceneChoice } from "./scene-choice"
 import { SceneProof } from "./scene-proof"
 import { SceneIndependence } from "./scene-independence"
 import { SceneTrust } from "./scene-trust"
@@ -75,12 +74,11 @@ export function LandingPage() {
 
       <div className="relative z-10">
         <SceneArrival />
-        <SceneVillain />
+        <SceneGoStay />
         <SceneThreeLines />
         <SceneHumanFace />
         <ScenePause />
         <SceneReveal />
-        <SceneChoice />
         <SceneProof />
         <SceneIndependence />
         <SceneTrust />
