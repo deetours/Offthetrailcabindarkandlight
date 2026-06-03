@@ -22,16 +22,17 @@ export function JourneysPage() {
       const supabase = createClientComponentClient()
       const { data, error } = await supabase
         .from('trips')
-        .select('id, name, tagline, duration, image_url, group_size')
+        .select('id, name, tagline, duration, image_url, group_size, is_featured, show_on_journeys')
         .eq('status', 'published')
         .not('name', 'is', null)
-        .eq('is_featured', true)
         .limit(5)
 
       if (error) throw error
 
       // Transform Supabase data to match JourneyCard format
-      const transformedData = (data || []).map((trip: any) => ({
+      const transformedData = (data || [])
+        .filter((trip: any) => trip.show_on_journeys === true || trip.is_featured === true)
+        .map((trip: any) => ({
         id: trip.id,
         name: trip.name,
         tagline: trip.tagline,

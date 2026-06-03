@@ -1,42 +1,56 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { createClientComponentClient } from '@/lib/supabase-client'
 import { Plus, Edit2, Trash2, Globe, Users, Clock, MapPin, Eye } from 'lucide-react'
 import { TripForm } from './trip-form'
 
 export function TripsManager() {
   const [trips, setTrips] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const [showForm, setShowForm] = useState(false)
   const [editingTrip, setEditingTrip] = useState<any>(null)
   const [activeTab, setActiveTab] = useState<'published' | 'draft' | 'archived'>('published')
-  const [supabase, setSupabase] = useState<any>(null)
 
   useEffect(() => {
-    const client = createClientComponentClient()
-    setSupabase(client)
-    fetchTrips(client)
+    fetchTrips()
   }, [])
 
-  const fetchTrips = async (client: any) => {
-    const activeClient = client || supabase
-    if (!activeClient) return
-
+  const fetchTrips = async () => {
     setLoading(true)
-    const { data } = await activeClient
-      .from('trips')
-      .select('*')
-      .order('created_at', { ascending: false })
-    setTrips(data || [])
-    setLoading(false)
+    setError(null)
+    try {
+      const response = await fetch('/api/admin/trips', { cache: 'no-store' })
+      const result = await response.json()
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to load trips')
+      }
+
+      setTrips(result.data || [])
+    } catch (err: any) {
+      console.error('Trips fetch error:', err)
+      setTrips([])
+      setError(err?.message || 'Failed to load trips')
+    } finally {
+      setLoading(false)
+    }
   }
 
   const handleDelete = async (id: string) => {
-    if (!supabase) return
     if (confirm('Delete this trip? This action cannot be undone.')) {
-      await supabase.from('trips').delete().eq('id', id)
-      fetchTrips(supabase)
+      try {
+        const response = await fetch(`/api/admin/trips?id=${id}`, { method: 'DELETE' })
+        const result = await response.json()
+
+        if (!response.ok) {
+          throw new Error(result.error || 'Failed to delete trip')
+        }
+
+        fetchTrips()
+      } catch (err: any) {
+        setError(err?.message || 'Failed to delete trip')
+      }
     }
   }
 
@@ -67,10 +81,16 @@ export function TripsManager() {
           trip={editingTrip}
           onSuccess={() => {
             setShowForm(false)
-            fetchTrips(supabase)
+            fetchTrips()
           }}
         />
       </div>
+
+      {error && (
+        <div className="rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-300">
+          {error}
+        </div>
+      )}
 
       {/* Tabs */}
       {!loading && trips.length > 0 && (

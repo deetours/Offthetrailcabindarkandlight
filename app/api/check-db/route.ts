@@ -17,7 +17,9 @@ export async function GET() {
     })
 
     try {
-        const { data, error } = await supabase.from('trips').select('count', { count: 'exact', head: true })
+        const { count, error } = await supabase
+            .from('trips')
+            .select('*', { count: 'exact', head: true })
 
         if (error) {
             return NextResponse.json({
@@ -30,7 +32,7 @@ export async function GET() {
         return NextResponse.json({
             status: 'success',
             message: 'Server-side connectivity to Supabase is healthy',
-            count: data
+            count
         })
     } catch (err: any) {
         return NextResponse.json({

@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { createClientComponentClient } from '@/lib/supabase-client'
 import { Plus, Edit2, Trash2, MapPin, IndianRupee, Bed, Users, X, Eye, RefreshCcw } from 'lucide-react'
 import { StayForm } from './stay-form'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -9,27 +8,34 @@ import { motion, AnimatePresence } from 'framer-motion'
 export function StaysManager() {
   const [stays, setStays] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [editingStay, setEditingStay] = useState<any>(null)
-  const [supabase, setSupabase] = useState<ReturnType<typeof createClientComponentClient> | null>(null)
   const [togglingId, setTogglingId] = useState<string | null>(null)
 
   useEffect(() => {
-    const client = createClientComponentClient()
-    setSupabase(client)
-    fetchStays(client)
+    fetchStays()
   }, [])
 
-  const fetchStays = async (client?: any) => {
-    const activeClient = client || supabase
-    if (!activeClient) return
+  const fetchStays = async () => {
     setLoading(true)
-    const { data } = await activeClient
-      .from('stays')
-      .select('*')
-      .order('created_at', { ascending: false })
-    setStays(data || [])
-    setLoading(false)
+    setError(null)
+    try {
+      const response = await fetch('/api/admin/stays', { cache: 'no-store' })
+      const result = await response.json()
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to load stays')
+      }
+
+      setStays(result.data || [])
+    } catch (err: any) {
+      console.error('Stays fetch error:', err)
+      setStays([])
+      setError(err?.message || 'Failed to load stays')
+    } finally {
+      setLoading(false)
+    }
   }
 
   const openEditor = (stay: any = null) => {
@@ -43,20 +49,43 @@ export function StaysManager() {
   }
 
   const handleDelete = async (id: string) => {
-    if (!supabase) return
     if (confirm('Delete this stay? This action cannot be undone.')) {
-      await supabase.from('stays').delete().eq('id', id)
-      fetchStays()
+      try {
+        const response = await fetch(`/api/admin/stays?id=${id}`, { method: 'DELETE' })
+        const result = await response.json()
+
+        if (!response.ok) {
+          throw new Error(result.error || 'Failed to delete stay')
+        }
+
+        fetchStays()
+      } catch (err: any) {
+        setError(err?.message || 'Failed to delete stay')
+      }
     }
   }
 
   const toggleStatus = async (stay: any) => {
-    if (!supabase) return
     const newStatus = stay.status === 'published' ? 'draft' : 'published'
     setTogglingId(stay.id)
-    await supabase.from('stays').update({ status: newStatus }).eq('id', stay.id)
-    setStays(prev => prev.map(s => s.id === stay.id ? { ...s, status: newStatus } : s))
-    setTogglingId(null)
+    try {
+      const response = await fetch('/api/admin/stays', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: stay.id, status: newStatus }),
+      })
+      const result = await response.json()
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to update stay status')
+      }
+
+      setStays(prev => prev.map(s => s.id === stay.id ? { ...s, status: newStatus } : s))
+    } catch (err: any) {
+      setError(err?.message || 'Failed to update stay status')
+    } finally {
+      setTogglingId(null)
+    }
   }
 
   return (
@@ -108,6 +137,11 @@ export function StaysManager() {
 
       {/* ── Main Content ───────────────────────────── */}
       <div className="space-y-8">
+        {error && (
+          <div className="rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-300">
+            {error}
+          </div>
+        )}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
             <h2 className="font-serif text-2xl text-foreground">Stays & Retreats</h2>

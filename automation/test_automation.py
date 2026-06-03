@@ -1,12 +1,16 @@
 import requests
 from supabase import create_client, Client
+import os
 
-# --- ⚙️ CONFIGURATION (Live Keys) ---
-SUPABASE_URL = "https://ralkdbmoaypdjwtkvbhz.supabase.co"
-SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJhbGtkYm1vYXlwZGp3dGt2Ymh6Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MTYwMjkwNiwiZXhwIjoyMDg3MTc4OTA2fQ.WoF4ZRpHI_6keEhDckKAp6TkWzdLhkw8uklSahtyYgM" 
+# --- CONFIGURATION ---
+SUPABASE_URL = os.getenv("NEXT_PUBLIC_SUPABASE_URL")
+SUPABASE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
 
 WHATSAPP_API_URL = "http://129.159.224.220/api/v1"
 WHATSAPP_API_KEY = "lpQhf-IEmNG8OLlsgv9VhEv-MEh1NQra"
+
+if not SUPABASE_URL or not SUPABASE_KEY:
+    raise RuntimeError("Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY")
 
 # Initialize Supabase
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)

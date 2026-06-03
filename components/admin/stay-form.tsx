@@ -89,11 +89,21 @@ export function StayForm({ stay, onSuccess }: StayFormProps) {
       }
 
       if (stay?.id) {
-        const { error } = await supabase.from('stays').update(payload).eq('id', stay.id)
-        if (error) throw error
+        const response = await fetch('/api/admin/stays', {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: stay.id, ...payload }),
+        })
+        const result = await response.json()
+        if (!response.ok) throw new Error(result.error || 'Failed to update stay')
       } else {
-        const { error } = await supabase.from('stays').insert([payload])
-        if (error) throw error
+        const response = await fetch('/api/admin/stays', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        })
+        const result = await response.json()
+        if (!response.ok) throw new Error(result.error || 'Failed to create stay')
       }
       onSuccess()
     } catch (error: any) {

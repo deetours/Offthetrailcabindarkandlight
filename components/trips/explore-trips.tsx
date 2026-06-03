@@ -20,7 +20,7 @@ export function ExploreTrips() {
         const supabase = createClientComponentClient()
         const { data, error } = await supabase
           .from("trips")
-          .select("id, name, tagline, duration, image_url, terrain, price")
+          .select("id, name, tagline, duration, image_url, terrain, price, group_size, show_on_all_trips")
           .eq("status", "published")
           .not("name", "is", null)
           .order("created_at", { ascending: false })
@@ -32,7 +32,9 @@ export function ExploreTrips() {
         }
 
         // Convert Supabase trips to card format
-        const supabaseTrips = data.map((trip: any) => ({
+        const supabaseTrips = data
+          .filter((trip: any) => trip.show_on_all_trips !== false)
+          .map((trip: any) => ({
           id: trip.id,
           name: trip.name,
           tagline: trip.tagline,

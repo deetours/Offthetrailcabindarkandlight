@@ -1,3 +1,13 @@
+const supabaseHostname = (() => {
+  try {
+    return new URL(
+      process.env.NEXT_PUBLIC_SUPABASE_URL ?? "https://mgsewojshipghesfqmmo.supabase.co"
+    ).hostname
+  } catch {
+    return "mgsewojshipghesfqmmo.supabase.co"
+  }
+})()
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   typescript: {
@@ -10,7 +20,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'ralkdbmoaypdjwtkvbhz.supabase.co',
+        hostname: supabaseHostname,
         port: '',
         pathname: '/storage/v1/object/public/**',
       },

@@ -50,6 +50,30 @@ export function TripForm({ trip, onSuccess }: TripFormProps) {
     setSupabase(createClientComponentClient())
   }, [])
 
+  useEffect(() => {
+    setFormData({
+      name: trip?.name || '',
+      tagline: trip?.tagline || '',
+      description: trip?.description || '',
+      region: trip?.region || '',
+      terrain: trip?.terrain || '',
+      duration: trip?.duration || 5,
+      price: trip?.price || 0,
+      group_size: trip?.group_size || 12,
+      status: trip?.status || 'published',
+      image_url: trip?.image_url || '',
+      is_featured: trip?.is_featured || false,
+      show_on_all_trips: trip?.show_on_all_trips !== false,
+      show_on_journeys: trip?.show_on_journeys || trip?.is_featured || false,
+    })
+    setItinerary(trip?.itinerary || [{ day: 1, title: '', description: '', image_url: '' }])
+    setInclusions(trip?.inclusions || [''])
+    setExclusions(trip?.exclusions || [''])
+    setTerms(trip?.terms || [''])
+    setThingsToCarry(trip?.things_to_carry || [''])
+    setDates(trip?.dates || [{ start: '', end: '', spots: 10 }])
+  }, [trip?.id])
+
   // ─── Image Upload ───
   const handleImageUpload = async (file: File, callback: (url: string) => void) => {
     if (!supabase || !file) return
@@ -106,11 +130,21 @@ export function TripForm({ trip, onSuccess }: TripFormProps) {
       }
 
       if (trip?.id) {
-        const { error } = await supabase.from('trips').update(payload).eq('id', trip.id)
-        if (error) throw error
+        const response = await fetch('/api/admin/trips', {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: trip.id, ...payload }),
+        })
+        const result = await response.json()
+        if (!response.ok) throw new Error(result.error || 'Failed to update trip')
       } else {
-        const { error } = await supabase.from('trips').insert([payload])
-        if (error) throw error
+        const response = await fetch('/api/admin/trips', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        })
+        const result = await response.json()
+        if (!response.ok) throw new Error(result.error || 'Failed to create trip')
       }
       onSuccess()
     } catch (error: any) {

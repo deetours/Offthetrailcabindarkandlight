@@ -1,38 +1,33 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { createClientComponentClient } from '@/lib/supabase-client'
 import { CheckCircle, Clock, XCircle } from 'lucide-react'
 
 export function BookingsViewer() {
   const [bookings, setBookings] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
-  const [supabase, setSupabase] = useState<ReturnType<typeof createClientComponentClient> | null>(null)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    const client = createClientComponentClient()
-    setSupabase(client)
-    fetchBookings(client)
+    fetchBookings()
   }, [])
 
-  const fetchBookings = async (client: typeof supabase) => {
-    if (!client) return
+  const fetchBookings = async () => {
     setLoading(true)
+    setError(null)
     try {
-      const { data, error } = await client
-        .from('bookings')
-        .select('*')
-        .order('created_at', { ascending: false })
-      
-      if (error) {
-        console.error('Bookings fetch error:', error)
-        setBookings([])
-      } else {
-        setBookings(data || [])
+      const response = await fetch('/api/admin/bookings', { cache: 'no-store' })
+      const result = await response.json()
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to load bookings')
       }
-    } catch (err) {
+
+      setBookings(result.data || [])
+    } catch (err: any) {
       console.error('Bookings fetch exception:', err)
       setBookings([])
+      setError(err?.message || 'Failed to load bookings')
     } finally {
       setLoading(false)
     }
@@ -53,6 +48,11 @@ export function BookingsViewer() {
 
   return (
     <div className="space-y-4">
+      {error && (
+        <div className="rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-300">
+          {error}
+        </div>
+      )}
       {loading ? (
         <p className="text-muted-foreground">Loading bookings...</p>
       ) : bookings.length === 0 ? (
@@ -74,7 +74,7 @@ export function BookingsViewer() {
                 <tr key={booking.id} className="border-b border-muted-foreground/5 hover:bg-foreground/5 transition-colors">
                   <td className="py-3 px-4 text-foreground">{booking.whatsapp_phone || 'N/A'}</td>
                   <td className="py-3 px-4 text-foreground">
-                    {booking.trip_id ? 'Trip Booking' : booking.stay_id ? 'Stay Booking' : 'Unknown'}
+                    {booking.trips?.name || booking.stays?.name || 'Unknown'}
                   </td>
                   <td className="py-3 px-4 text-muted-foreground">
                     {booking.trip_id ? 'Trip' : 'Stay'}

@@ -13,7 +13,7 @@ export async function getTrips() {
         console.error('Error fetching trips:', error)
         return []
     }
-    return data || []
+    return (data || []).filter((trip: any) => trip.show_on_all_trips !== false)
 }
 
 export async function getStays() {
