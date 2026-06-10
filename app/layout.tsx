@@ -1,25 +1,17 @@
 import type React from "react"
 import type { Metadata, Viewport } from "next"
-import { Inter, Playfair_Display } from "next/font/google"
 import { WhatsAppPopup } from "@/components/ui/whatsapp-popup"
 import "./globals.css"
-
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-})
-
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  variable: "--font-playfair",
-})
 
 export const metadata: Metadata = {
   title: "Wanderpals | Travel Slower. Stay Longer.",
   description: "A travel and stay experience designed like cinema. For travellers who value people over plans.",
   keywords: ["travel", "hostels", "trips", "India", "backpacking", "slow travel"],
-  generator: 'v0.app'
+  generator: 'v0.app',
+  icons: {
+    icon: '/favicon.png',
+    shortcut: '/favicon.png',
+  },
 }
 
 export const viewport: Viewport = {
@@ -34,7 +26,15 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
+    <html
+      lang="en"
+      style={
+        {
+          "--font-inter": '"Segoe UI", "Helvetica Neue", Arial, sans-serif',
+          "--font-playfair": 'Georgia, "Times New Roman", serif',
+        } as React.CSSProperties
+      }
+    >
       <body className="font-sans antialiased">
         {children}
         <WhatsAppPopup />

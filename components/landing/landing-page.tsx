@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react"
 import { motion, useScroll, useSpring, useTransform } from "framer-motion"
-import { SceneArrival } from "./scene-arrival"
+import { SceneDiscoveryHero } from "./scene-discovery-hero"
 import { SceneGoStay } from "./scene-go-stay"
 import { SceneThreeLines } from "./scene-three-lines"
 import { SceneHumanFace } from "./scene-human-face"
@@ -73,7 +73,7 @@ export function LandingPage() {
       </div>
 
       <div className="relative z-10">
-        <SceneArrival />
+        <SceneDiscoveryHero />
         <SceneGoStay />
         <SceneThreeLines />
         <SceneHumanFace />

@@ -9,7 +9,8 @@ import { LeadsManager } from './leads-manager'
 import { AnalyticsDashboard } from './analytics-dashboard'
 import { UsersManager } from './users-manager'
 import { MediaExplorer } from './media-explorer'
-import { MapPin, BookOpen, Users, BarChart3, MessageSquare, UserCheck, ImageIcon, Wifi, WifiOff, Zap } from 'lucide-react'
+import { PmsControlCenter } from './pms-control-center'
+import { MapPin, BookOpen, Users, BarChart3, MessageSquare, UserCheck, ImageIcon, Wifi, WifiOff, Zap, Building2 } from 'lucide-react'
 import { createClientComponentClient } from '@/lib/supabase-client'
 
 const tabs = [
@@ -18,6 +19,7 @@ const tabs = [
   { id: 'trips', label: 'Trips', short: 'Trips', icon: MapPin, desc: 'Manage expeditions' },
   { id: 'stays', label: 'Stays', short: 'Stays', icon: BookOpen, desc: 'Manage properties' },
   { id: 'bookings', label: 'Bookings', short: 'Book', icon: Users, desc: 'Track reservations' },
+  { id: 'pms', label: 'PMS', short: 'PMS', icon: Building2, desc: 'Multi-owner operations' },
   { id: 'media', label: 'Media', short: 'Media', icon: ImageIcon, desc: 'Manage assets' },
   { id: 'users', label: 'Users', short: 'Users', icon: UserCheck, desc: 'Manage accounts' },
 ]
@@ -158,6 +160,7 @@ export function AdminDashboard() {
             {activeTab === 'stays' && <StaysManager />}
             {activeTab === 'media' && <MediaExplorer />}
             {activeTab === 'bookings' && <BookingsViewer />}
+            {activeTab === 'pms' && <PmsControlCenter />}
             {activeTab === 'leads' && <LeadsManager />}
             {activeTab === 'users' && <UsersManager />}
           </motion.div>

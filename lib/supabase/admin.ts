@@ -33,7 +33,14 @@ export async function requireAdminAccess() {
   ])
 
   const role = profileData?.role || userData?.role
-  if (role !== 'admin') {
+  const allowedRoles = new Set([
+    'admin',
+    'superadmin',
+    'brand_admin',
+    'reservations_manager',
+  ])
+
+  if (!allowedRoles.has(role)) {
     return { error: 'Forbidden', status: 403 as const }
   }
 

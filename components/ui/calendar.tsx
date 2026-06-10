@@ -186,8 +186,7 @@ function CalendarDayButton({
   }, [modifiers.focused])
 
   // Filter out incompatible props from DayButton
-  const { onDrag, ...safeBut
-tonProps } = props as any
+  const { onDrag, ...safeButtonProps } = props as any
 
   return (
     <Button
