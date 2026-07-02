@@ -156,12 +156,12 @@ export function ExploreStaysDynamic({ initialStays = [] }: { initialStays?: any[
               <span className="font-serif text-4xl text-foreground">{stays.length || "4–5"}</span>
               <p className="text-[9px] uppercase tracking-[0.4em] text-muted-foreground/30 font-bold mt-1">Properties</p>
             </div>
-            <div className="h-10 w-px bg-white/5" />
+            <div className="h-10 w-px bg-border dark:bg-white/5" />
             <div>
               <span className="font-serif text-4xl text-foreground">NE</span>
               <p className="text-[9px] uppercase tracking-[0.4em] text-muted-foreground/30 font-bold mt-1">India's finest</p>
             </div>
-            <div className="h-10 w-px bg-white/5" />
+            <div className="h-10 w-px bg-border dark:bg-white/5" />
             <div>
               <span className="font-serif text-4xl text-foreground">98%</span>
               <p className="text-[9px] uppercase tracking-[0.4em] text-muted-foreground/30 font-bold mt-1">Return rate</p>
@@ -204,7 +204,7 @@ export function ExploreStaysDynamic({ initialStays = [] }: { initialStays?: any[
               initial={{ opacity: 0, scale: 0.98 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ ...transition, delay: 0.8 }}
-              className="group flex items-center glass rounded-full px-8 py-5 shadow-2xl hover:bg-white/[0.03] transition-all duration-500 inner-glow"
+              className="group flex items-center glass rounded-full px-8 py-5 shadow-sm md:shadow-md dark:shadow-2xl hover:bg-muted dark:hover:bg-white/[0.03] transition-all duration-500 inner-glow"
             >
               <Search className="w-4 h-4 text-primary/40 mr-6 group-focus-within:text-primary transition-colors flex-shrink-0" />
               <input
@@ -214,7 +214,7 @@ export function ExploreStaysDynamic({ initialStays = [] }: { initialStays?: any[
                 placeholder="Search by name or location..."
                 className="w-full bg-transparent font-sans text-xs text-foreground placeholder:text-muted-foreground/20 focus:outline-none tracking-[0.2em] uppercase font-bold"
               />
-              <div className="flex items-center gap-4 ml-4 border-l border-white/5 pl-6 flex-shrink-0">
+              <div className="flex items-center gap-4 ml-4 border-l border-border dark:border-white/5 pl-6 flex-shrink-0">
                 <button
                   onClick={() => setShowFilters(!showFilters)}
                   className="flex items-center gap-2 text-muted-foreground/30 hover:text-foreground transition-colors"
@@ -278,7 +278,7 @@ export function ExploreStaysDynamic({ initialStays = [] }: { initialStays?: any[
             {loading ? (
               <motion.div key="loading" className="grid gap-6 md:grid-cols-12 auto-rows-[420px]">
                 {[...Array(4)].map((_, i) => (
-                  <div key={i} className={`${i === 0 ? "md:col-span-8" : "md:col-span-4"} rounded-[2.5rem] bg-white/[0.02] animate-pulse`} />
+                  <div key={i} className={`${i === 0 ? "md:col-span-8" : "md:col-span-4"} rounded-[2.5rem] bg-secondary dark:bg-white/[0.02] animate-pulse`} />
                 ))}
               </motion.div>
             ) : filteredStays.length === 0 ? (
@@ -338,7 +338,7 @@ export function ExploreStaysDynamic({ initialStays = [] }: { initialStays?: any[
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 1.5, ease: [0.23, 1, 0.32, 1] }}
-        className="px-6 py-48 md:px-16 lg:px-24 border-y border-white/5 text-center"
+        className="px-6 py-48 md:px-16 lg:px-24 border-y border-border dark:border-white/5 text-center"
       >
         <div className="mx-auto max-w-3xl space-y-4">
           <p className="font-serif text-[clamp(2.5rem,7vw,5.5rem)] text-foreground/20 italic leading-tight">

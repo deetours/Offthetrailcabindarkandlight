@@ -48,7 +48,7 @@ export function TripGridCard({ trip, index, featured = false }: TripGridCardProp
       <Link href={`/trips/${trip.id}`} className="group block h-full">
         <div
           className={`relative h-full overflow-hidden transition-all duration-700
-            group-hover:shadow-[0_60px_120px_-20px_rgba(0,0,0,0.6)]
+            group-hover:shadow-xl dark:group-hover:shadow-[0_60px_120px_-20px_rgba(0,0,0,0.6)]
             ${featured ? "rounded-[3rem]" : "rounded-[2.5rem]"}
           `}
         >
@@ -72,7 +72,7 @@ export function TripGridCard({ trip, index, featured = false }: TripGridCardProp
           </div>
 
           {/* Glass border inner glow */}
-          <div className="absolute inset-0 rounded-[inherit] border border-white/5 group-hover:border-primary/10 transition-colors duration-700 pointer-events-none" />
+          <div className="absolute inset-0 rounded-[inherit] border border-border dark:border-white/5 group-hover:border-primary/10 transition-colors duration-700 pointer-events-none" />
 
           {/* ── Badges ── */}
           <div className="absolute top-7 left-7 flex items-center gap-3 z-10">

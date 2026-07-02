@@ -83,21 +83,23 @@ export function StayBookingFlow({ stay }: StayBookingFlowProps) {
         console.warn('Lead logging failed:', err)
       }
 
-      // 2. WhatsApp redirect
-      const message = `Hi Wanderpals! I'd like to book a stay.
-
-Sanctuary: ${stay.name}
-Room: ${stay.roomTypes[bookingData.roomType].name}
-Dates: ${bookingData.checkIn} to ${bookingData.checkOut}
-Guests: ${bookingData.guests}
-Total Contribution: ₹${totalPrice.toLocaleString()}
-
-My Name: ${bookingData.firstName} ${bookingData.lastName}
-Email: ${bookingData.email}
-Phone: ${bookingData.phone}`
-
-      const whatsappLink = `https://wa.me/917629877144?text=${encodeURIComponent(message)}`
-      window.open(whatsappLink, "_blank")
+      // 2. Redirect to Payment Page instead of WhatsApp
+      const paymentPayload = {
+        stayId: stay.id,
+        stayName: stay.name,
+        roomName: stay.roomTypes[bookingData.roomType].name,
+        checkIn: bookingData.checkIn,
+        checkOut: bookingData.checkOut,
+        guests: bookingData.guests,
+        totalPrice,
+        firstName: bookingData.firstName,
+        lastName: bookingData.lastName,
+        email: bookingData.email,
+        phone: bookingData.phone
+      }
+      
+      sessionStorage.setItem("current_booking", JSON.stringify(paymentPayload))
+      router.push(`/payment?type=stay&id=${stay.id}&total=${totalPrice}`)
     }
   }
 
@@ -143,7 +145,7 @@ Phone: ${bookingData.phone}`
                 Stay <span className="text-foreground/30 italic">Reservation</span>
               </h1>
             </div>
-            <div className="text-left md:text-right border-l md:border-l-0 md:border-r border-white/5 pl-6 md:pl-0 md:pr-6">
+            <div className="text-left md:text-right border-l md:border-l-0 md:border-r border-border dark:border-white/5 pl-6 md:pl-0 md:pr-6">
               <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground/40 mb-1">Location</p>
               <div className="flex items-center gap-2 md:justify-end text-muted-foreground/60">
                 <MapPin className="h-3 w-3" />
@@ -156,7 +158,7 @@ Phone: ${bookingData.phone}`
           <div className="relative mb-20">
             <div className="noise-overlay grayscale" />
             <div className="absolute inset-0 flex items-center" aria-hidden="true">
-              <div className="w-full h-px bg-white/5" />
+              <div className="w-full h-px bg-border dark:bg-white/5" />
             </div>
             <div className="relative flex justify-between">
               {[1, 2, 3].map((s) => (
@@ -191,7 +193,7 @@ Phone: ${bookingData.phone}`
                 animate={{ opacity: 1, x: 0, scale: 1 }}
                 exit={{ opacity: 0, x: -20, scale: 0.98 }}
                 transition={transition}
-                className="glass rounded-[2rem] p-8 md:p-12 shadow-2xl relative overflow-hidden"
+                className="glass rounded-[2rem] p-8 md:p-12 shadow-sm md:shadow-md dark:shadow-2xl relative overflow-hidden"
               >
                 <div className="noise-overlay grayscale" />
                 
@@ -211,7 +213,7 @@ Phone: ${bookingData.phone}`
                           className={`group relative w-full rounded-2xl border px-8 py-6 text-left transition-all duration-500 flex items-center justify-between overflow-hidden ${
                             bookingData.roomType === index
                               ? "border-primary bg-primary/5 shadow-inner"
-                              : "border-white/10 hover:border-white/20 hover:bg-white/[0.02]"
+                              : "border-border dark:border-white/10 hover:border-primary/20 dark:hover:border-white/20 hover:bg-muted dark:hover:bg-white/[0.02]"
                           }`}
                         >
                           <div className="flex items-center gap-6">
@@ -239,7 +241,7 @@ Phone: ${bookingData.phone}`
                           type="date"
                           value={bookingData.checkIn}
                           onChange={(e) => setBookingData({ ...bookingData, checkIn: e.target.value })}
-                          className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-6 py-4 text-foreground focus:outline-none focus:border-primary/50 transition-all font-sans text-sm"
+                          className="w-full bg-card dark:bg-white/[0.03] border border-border dark:border-white/10 rounded-xl px-6 py-4 text-foreground focus:outline-none focus:border-primary/50 transition-all font-sans text-sm"
                         />
                       </div>
                       <div className="space-y-4">
@@ -249,7 +251,7 @@ Phone: ${bookingData.phone}`
                           value={bookingData.checkOut}
                           onChange={(e) => setBookingData({ ...bookingData, checkOut: e.target.value })}
                           min={bookingData.checkIn}
-                          className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-6 py-4 text-foreground focus:outline-none focus:border-primary/50 transition-all font-sans text-sm"
+                          className="w-full bg-card dark:bg-white/[0.03] border border-border dark:border-white/10 rounded-xl px-6 py-4 text-foreground focus:outline-none focus:border-primary/50 transition-all font-sans text-sm"
                         />
                       </div>
                     </div>
@@ -264,7 +266,7 @@ Phone: ${bookingData.phone}`
                             className={`flex-1 h-14 rounded-xl border font-serif text-lg transition-all duration-500 ${
                               bookingData.guests === n
                                 ? "border-primary bg-primary text-primary-foreground shadow-lg shadow-primary/20"
-                                : "border-white/10 bg-white/[0.02] text-muted-foreground hover:border-white/20"
+                                : "border-border dark:border-white/10 bg-card dark:bg-white/[0.02] text-muted-foreground hover:border-primary/20 dark:hover:border-white/20"
                             }`}
                           >
                             {n}
@@ -291,7 +293,7 @@ Phone: ${bookingData.phone}`
                             type="text"
                             value={bookingData.firstName}
                             onChange={(e) => setBookingData({ ...bookingData, firstName: e.target.value })}
-                            className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-6 py-4 text-foreground focus:outline-none focus:border-primary/50 transition-all font-serif text-lg placeholder:text-white/5"
+                            className="w-full bg-card dark:bg-white/[0.03] border border-border dark:border-white/10 rounded-xl px-6 py-4 text-foreground focus:outline-none focus:border-primary/50 transition-all font-serif text-lg placeholder:text-muted-foreground/30 dark:placeholder:text-white/5"
                             placeholder="e.g. Elena"
                           />
                         </div>
@@ -301,7 +303,7 @@ Phone: ${bookingData.phone}`
                             type="text"
                             value={bookingData.lastName}
                             onChange={(e) => setBookingData({ ...bookingData, lastName: e.target.value })}
-                            className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-6 py-4 text-foreground focus:outline-none focus:border-primary/50 transition-all font-serif text-lg placeholder:text-white/5"
+                            className="w-full bg-card dark:bg-white/[0.03] border border-border dark:border-white/10 rounded-xl px-6 py-4 text-foreground focus:outline-none focus:border-primary/50 transition-all font-serif text-lg placeholder:text-muted-foreground/30 dark:placeholder:text-white/5"
                             placeholder="e.g. Vance"
                           />
                         </div>
@@ -315,7 +317,7 @@ Phone: ${bookingData.phone}`
                             type="email"
                             value={bookingData.email}
                             onChange={(e) => setBookingData({ ...bookingData, email: e.target.value })}
-                            className="w-full bg-white/[0.03] border border-white/10 rounded-xl pl-16 pr-6 py-4 text-foreground focus:outline-none focus:border-primary/50 transition-all font-serif text-lg placeholder:text-white/5"
+                            className="w-full bg-card dark:bg-white/[0.03] border border-border dark:border-white/10 rounded-xl pl-16 pr-6 py-4 text-foreground focus:outline-none focus:border-primary/50 transition-all font-serif text-lg placeholder:text-muted-foreground/30 dark:placeholder:text-white/5"
                             placeholder="elena@ethereal.voyage"
                           />
                         </div>
@@ -329,7 +331,7 @@ Phone: ${bookingData.phone}`
                             type="tel"
                             value={bookingData.phone}
                             onChange={(e) => setBookingData({ ...bookingData, phone: e.target.value })}
-                            className="w-full bg-white/[0.03] border border-white/10 rounded-xl pl-16 pr-6 py-4 text-foreground focus:outline-none focus:border-primary/50 transition-all font-serif text-lg placeholder:text-white/5"
+                            className="w-full bg-card dark:bg-white/[0.03] border border-border dark:border-white/10 rounded-xl pl-16 pr-6 py-4 text-foreground focus:outline-none focus:border-primary/50 transition-all font-serif text-lg placeholder:text-muted-foreground/30 dark:placeholder:text-white/5"
                             placeholder="+91 ···· ····"
                           />
                         </div>
@@ -347,7 +349,7 @@ Phone: ${bookingData.phone}`
                     </div>
 
                     <div className="space-y-8">
-                      <div className="flex justify-between items-end border-b border-white/5 pb-8">
+                      <div className="flex justify-between items-end border-b border-border dark:border-white/5 pb-8">
                         <div>
                           <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground/40 mb-2">Sanctuary</p>
                           <h3 className="font-serif text-2xl text-foreground">{stay.name}</h3>
@@ -368,7 +370,7 @@ Phone: ${bookingData.phone}`
                         </div>
                       </div>
 
-                      <div className="rounded-2xl bg-white/[0.02] border border-white/5 p-8 mt-12">
+                      <div className="rounded-2xl bg-card dark:bg-white/[0.02] border border-border dark:border-white/5 p-8 mt-12">
                         <div className="flex items-center justify-between">
                           <div>
                             <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground/40 mb-1">Total Contribution</p>
@@ -408,10 +410,10 @@ Phone: ${bookingData.phone}`
                   className="w-full relative group overflow-hidden flex items-center justify-center gap-4 rounded-full bg-primary py-5 font-bold text-primary-foreground shadow-2xl transition-all duration-500 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-10 disabled:grayscale disabled:cursor-not-allowed"
                 >
                   <span className="relative z-10 uppercase tracking-[0.5em] text-[10px]">
-                    {step === 3 ? "Connect via WhatsApp" : "Continue Journey"}
+                    {step === 3 ? "Proceed to Payment" : "Continue Journey"}
                   </span>
                   <ArrowRight className="relative z-10 h-3 w-3 group-hover:translate-x-1 transition-transform" />
-                  <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity" />
+                  <div className="absolute inset-0 bg-foreground dark:bg-white opacity-0 group-hover:opacity-10 transition-opacity" />
                 </button>
               </Magnetic>
             </div>

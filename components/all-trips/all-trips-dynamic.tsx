@@ -116,7 +116,7 @@ export function AllTripsDynamic({ initialTrips = [] }: { initialTrips?: any[] })
                 initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ ...transition, delay: 1 }}
-                className="group relative flex items-center glass rounded-full px-8 py-5 shadow-2xl hover:bg-white/[0.03] transition-all duration-500 inner-glow"
+                className="group relative flex items-center glass rounded-full px-8 py-5 shadow-sm md:shadow-md dark:shadow-2xl hover:bg-muted dark:hover:bg-white/[0.03] transition-all duration-500 inner-glow"
             >
                 <Search className="w-5 h-5 text-primary/40 mr-6 group-focus-within:text-primary transition-colors" />
                 <input

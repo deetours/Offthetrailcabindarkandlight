@@ -39,9 +39,9 @@ export function SceneHumanFace() {
 
             {/* Name overlay at bottom */}
             <div className="absolute bottom-8 left-8 z-10">
-              <p className="font-sans text-[10px] uppercase tracking-[0.4em] text-white/40 mb-1">The Story</p>
-              <p className="font-serif text-2xl text-white">Aisha</p>
-              <p className="font-sans text-xs uppercase tracking-widest text-white/30 mt-1">
+              <p className="font-sans text-[10px] uppercase tracking-[0.4em] text-foreground/60 dark:text-white/40 mb-1">The Story</p>
+              <p className="font-serif text-2xl text-foreground dark:text-white">Aisha</p>
+              <p className="font-sans text-xs uppercase tracking-widest text-foreground/50 dark:text-white/30 mt-1">
                 Mumbai → Spiti Valley
               </p>
             </div>

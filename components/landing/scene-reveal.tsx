@@ -4,9 +4,9 @@ import { useRef } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
 
 const revealLines = [
-  { text: "Trade the rush", emph: "for the rhythm" },
-  { text: "Stay until it", emph: "feels like home" },
-  { text: "Let the journey", emph: "change you" },
+  { text: "Trade the noise", emph: "for the silence" },
+  { text: "Stay where the", emph: "clouds rest" },
+  { text: "Let the isolation", emph: "free you" },
 ]
 
 // Each line gets its own component with its own scroll offset
@@ -66,8 +66,8 @@ export function SceneReveal() {
   )
 
   return (
-    // Reduced from 300vh → 160vh — lines come in cleanly, no endless blank scrolling
-    <div ref={sectionRef} className="relative min-h-[160vh]">
+    // Reduced to 100vh — lines come in cleanly, no endless blank scrolling
+    <div ref={sectionRef} className="relative min-h-[100vh]">
       <div className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden">
 
         {/* Parallax Background */}

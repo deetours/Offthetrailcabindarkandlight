@@ -57,6 +57,25 @@ const nextConfig = {
       },
     ]
   },
+  async redirects() {
+    return [
+      {
+        source: '/journeys',
+        destination: '/activities',
+        permanent: true,
+      },
+      {
+        source: '/journeys/:slug',
+        destination: '/activities/:slug',
+        permanent: true,
+      },
+      {
+        source: '/all-trips',
+        destination: '/trips',
+        permanent: true,
+      },
+    ]
+  },
 }
 
 export default nextConfig

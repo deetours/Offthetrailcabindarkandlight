@@ -12,10 +12,10 @@ export function WhatsAppPopup() {
     setMounted(true)
     // Show popup after 45 seconds of scrolling
     const handleScroll = () => {
-      if (window.scrollY > window.innerHeight && !isOpen && !localStorage.getItem("wanderpals_whatsapp_shown")) {
+      if (window.scrollY > window.innerHeight && !isOpen && !localStorage.getItem("offthetrail_whatsapp_shown")) {
         setTimeout(() => {
           setIsOpen(true)
-          localStorage.setItem("wanderpals_whatsapp_shown", "true")
+          localStorage.setItem("offthetrail_whatsapp_shown", "true")
         }, 1000)
       }
     }

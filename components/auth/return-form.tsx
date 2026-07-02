@@ -74,7 +74,7 @@ export function ReturnForm() {
   return (
     <div className="w-full max-w-md mx-auto space-y-10">
       {/* Mode Switcher */}
-      <div className="flex p-1.5 bg-white/[0.03] rounded-2xl border border-white/5 backdrop-blur-sm">
+      <div className="flex p-1.5 bg-card dark:bg-white/[0.03] rounded-2xl border border-border dark:border-white/5 backdrop-blur-sm">
         <button
           onClick={() => setMode('signin')}
           className={`relative flex-1 py-3 text-[10px] font-bold uppercase tracking-[0.3em] rounded-xl transition-all duration-500 ${
@@ -145,7 +145,7 @@ export function ReturnForm() {
                         placeholder="e.g. Elena Vance"
                         value={fullName}
                         onChange={(e) => setFullName(e.target.value)}
-                        className="w-full pl-16 pr-6 py-4 bg-white/[0.03] border border-white/10 rounded-2xl text-sm focus:border-primary/50 outline-none transition-all font-serif placeholder:text-white/5"
+                        className="w-full pl-16 pr-6 py-4 bg-card dark:bg-white/[0.03] border border-border dark:border-white/10 rounded-2xl text-sm focus:border-primary/50 outline-none transition-all font-serif placeholder:text-muted-foreground/30 dark:placeholder:text-white/5"
                         required
                       />
                     </div>
@@ -159,7 +159,7 @@ export function ReturnForm() {
                         placeholder="+91 ···· ····"
                         value={whatsapp}
                         onChange={(e) => setWhatsapp(e.target.value)}
-                        className="w-full pl-16 pr-6 py-4 bg-white/[0.03] border border-white/10 rounded-2xl text-sm focus:border-primary/50 outline-none transition-all font-serif placeholder:text-white/5"
+                        className="w-full pl-16 pr-6 py-4 bg-card dark:bg-white/[0.03] border border-border dark:border-white/10 rounded-2xl text-sm focus:border-primary/50 outline-none transition-all font-serif placeholder:text-muted-foreground/30 dark:placeholder:text-white/5"
                         required
                       />
                     </div>
@@ -176,7 +176,7 @@ export function ReturnForm() {
                     placeholder="elena@ethereal.voyage"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full pl-16 pr-6 py-4 bg-white/[0.03] border border-white/10 rounded-2xl text-sm focus:border-primary/50 outline-none transition-all font-serif placeholder:text-white/5"
+                    className="w-full pl-16 pr-6 py-4 bg-card dark:bg-white/[0.03] border border-border dark:border-white/10 rounded-2xl text-sm focus:border-primary/50 outline-none transition-all font-serif placeholder:text-muted-foreground/30 dark:placeholder:text-white/5"
                     required
                   />
                 </div>
@@ -191,7 +191,7 @@ export function ReturnForm() {
                     placeholder="••••••••"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full pl-16 pr-14 py-4 bg-white/[0.03] border border-white/10 rounded-2xl text-sm focus:border-primary/50 outline-none transition-all font-sans placeholder:text-white/5"
+                    className="w-full pl-16 pr-14 py-4 bg-card dark:bg-white/[0.03] border border-border dark:border-white/10 rounded-2xl text-sm focus:border-primary/50 outline-none transition-all font-sans placeholder:text-muted-foreground/30 dark:placeholder:text-white/5"
                     required
                   />
                   <button
@@ -223,17 +223,17 @@ export function ReturnForm() {
           </div>
         </form>
 
-        <div className="mt-10 pt-10 border-t border-white/5 space-y-6">
+        <div className="mt-10 pt-10 border-t border-border dark:border-white/5 space-y-6">
           <div className="relative flex items-center justify-center">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-white/5"></div>
+              <div className="w-full border-t border-border dark:border-white/5"></div>
             </div>
             <span className="relative bg-transparent px-4 text-[8px] uppercase tracking-[0.4em] text-muted-foreground/20 font-bold">Universal Entry</span>
           </div>
 
           <button
             onClick={handleGoogleLogin}
-            className="w-full flex items-center justify-center gap-4 px-6 py-4 bg-white/[0.02] border border-white/5 rounded-2xl hover:bg-white/[0.04] transition-all group"
+            className="w-full flex items-center justify-center gap-4 px-6 py-4 bg-card dark:bg-white/[0.02] border border-border dark:border-white/5 rounded-2xl hover:bg-muted dark:hover:bg-white/[0.04] transition-all group"
           >
             <svg className="w-4 h-4 group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
               <path fill="currentColor" d="M12 5.04c1.94 0 3.51.68 4.6 1.7l3.48-3.48C17.75 1.09 15.15 0 12 0 7.31 0 3.25 2.67 1.21 6.6l3.97 3.08c.95-2.85 3.6-4.64 6.82-4.64z" className="opacity-40" />

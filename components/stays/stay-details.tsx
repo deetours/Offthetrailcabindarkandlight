@@ -109,7 +109,7 @@ export function StayDetails({ stay }: StayDetailsProps) {
               initial={{ opacity: 0, scale: 0.95, y: 40, filter: "blur(10px)" }}
               animate={{ opacity: 1, scale: 1, y: 0, filter: "blur(0px)" }}
               transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1] }}
-              className="font-serif text-[clamp(4rem,11vw,10rem)] leading-[0.85] text-white tracking-tightest mb-8"
+              className="font-serif text-[clamp(4rem,11vw,10rem)] leading-[0.85] text-foreground dark:text-white tracking-tightest mb-8"
             >
               {stay.name.replace('Wanderpals ', '')}
             </motion.h1>
@@ -118,7 +118,7 @@ export function StayDetails({ stay }: StayDetailsProps) {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ ...transition, delay: 0.5 }}
-              className="font-serif text-2xl md:text-4xl text-white/50 italic leading-tight max-w-3xl"
+              className="font-serif text-2xl md:text-4xl text-muted-foreground dark:text-white/50 italic leading-tight max-w-3xl"
             >
               {stay.tagline}
             </motion.p>
@@ -151,7 +151,7 @@ export function StayDetails({ stay }: StayDetailsProps) {
           transition={{ duration: 1.5, ease: [0.23, 1, 0.32, 1] }}
           className="mx-auto max-w-5xl text-center"
         >
-          <h2 className="font-serif text-[clamp(2rem,5vw,5rem)] text-white/90 leading-[1.1] tracking-tight">
+          <h2 className="font-serif text-[clamp(2rem,5vw,5rem)] text-foreground dark:text-white/90 leading-[1.1] tracking-tight">
             {stay.feeling}
           </h2>
           <div className="h-px w-24 bg-primary/20 mx-auto mt-20" />
@@ -195,7 +195,7 @@ export function StayDetails({ stay }: StayDetailsProps) {
       )}
 
       {/* ── 4. APPLE BENTO GRID (Amenities & Specs) ───────────── */}
-      <section className="px-6 py-32 md:py-48 md:px-16 lg:px-24 bg-zinc-950 border-y border-white/5">
+      <section className="px-6 py-32 md:py-48 md:px-16 lg:px-24 bg-secondary dark:bg-zinc-950 border-y border-border dark:border-white/5">
         <div className="mx-auto max-w-7xl">
           
           <motion.div
@@ -205,8 +205,8 @@ export function StayDetails({ stay }: StayDetailsProps) {
             transition={transition}
             className="mb-20 text-center"
           >
-            <h3 className="font-serif text-5xl md:text-7xl text-white tracking-tightest">The Anatomy.</h3>
-            <p className="mt-6 text-xl font-serif italic text-white/40 lowercase max-w-2xl mx-auto">
+            <h3 className="font-serif text-5xl md:text-7xl text-foreground dark:text-white tracking-tightest">The Anatomy.</h3>
+            <p className="mt-6 text-xl font-serif italic text-muted-foreground dark:text-white/40 lowercase max-w-2xl mx-auto">
               Everything considered. Nothing superfluous.
             </p>
           </motion.div>
@@ -220,11 +220,11 @@ export function StayDetails({ stay }: StayDetailsProps) {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ ...transition, delay: 0.1 }}
-              className="md:col-span-8 rounded-[3rem] p-10 md:p-16 glass inner-glow relative overflow-hidden bg-white/[0.02]"
+              className="md:col-span-8 rounded-[3rem] p-10 md:p-16 glass inner-glow relative overflow-hidden bg-card dark:bg-white/[0.02]"
             >
-              <div className="absolute -top-10 -right-10 text-[20rem] font-serif text-white/[0.03] leading-none pointer-events-none hover:rotate-12 transition-transform duration-1000">"</div>
+              <div className="absolute -top-10 -right-10 text-[20rem] font-serif text-foreground/[0.03] dark:text-white/[0.03] leading-none pointer-events-none hover:rotate-12 transition-transform duration-1000">"</div>
               <div className="relative z-10 h-full flex flex-col justify-center">
-                <p className="font-serif text-3xl md:text-5xl text-white/90 leading-snug">
+                <p className="font-serif text-3xl md:text-5xl text-foreground dark:text-white/90 leading-snug">
                   "{stay.quotes?.[0]?.text || "A perfect balance of isolation and absolute comfort."}"
                 </p>
                 <div className="mt-8 flex items-center gap-4">
@@ -244,11 +244,11 @@ export function StayDetails({ stay }: StayDetailsProps) {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ ...transition, delay: 0.2 }}
-              className="md:col-span-4 rounded-[3rem] p-10 flex flex-col justify-center items-center text-center bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] transition-colors"
+              className="md:col-span-4 rounded-[3rem] p-10 flex flex-col justify-center items-center text-center bg-card dark:bg-white/[0.02] border border-border dark:border-white/5 hover:bg-muted dark:hover:bg-white/[0.04] transition-colors"
             >
-              <Bed className="h-12 w-12 text-primary/40 mb-6" />
-              <p className="text-[10px] uppercase tracking-[0.4em] text-white/30 font-bold mb-2">Capacity</p>
-              <p className="font-serif text-4xl text-white">Up to {stay.roomTypes?.[0]?.description?.match(/\d+/)?.[0] || '4'} Guests</p>
+              <Bed className="h-12 w-12 text-primary/80 dark:text-primary/40 mb-6" />
+              <p className="text-[10px] uppercase tracking-[0.4em] text-muted-foreground dark:text-white/30 font-bold mb-2">Capacity</p>
+              <p className="font-serif text-4xl text-foreground dark:text-white">Up to {stay.roomTypes?.[0]?.description?.match(/\d+/)?.[0] || '4'} Guests</p>
             </motion.div>
 
             {/* Bento Item 3: Secondary Quote or Vibe */}
@@ -257,11 +257,11 @@ export function StayDetails({ stay }: StayDetailsProps) {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ ...transition, delay: 0.3 }}
-              className="md:col-span-4 rounded-[3rem] p-10 bg-gradient-to-br from-primary/10 to-transparent border border-primary/20 flex flex-col justify-end"
+              className="md:col-span-4 rounded-[3rem] p-10 bg-gradient-to-br from-primary/5 dark:from-primary/10 to-transparent border border-primary/20 flex flex-col justify-end"
             >
               <MapPin className="h-8 w-8 text-primary mb-6" />
-              <h4 className="font-serif text-3xl text-white mb-2">{stay.location}</h4>
-              <p className="text-sm font-sans tracking-wide text-white/60 leading-relaxed uppercase">
+              <h4 className="font-serif text-3xl text-foreground dark:text-white mb-2">{stay.location}</h4>
+              <p className="text-sm font-sans tracking-wide text-muted-foreground dark:text-white/60 leading-relaxed uppercase">
                 {stay.state}
               </p>
             </motion.div>
@@ -272,16 +272,16 @@ export function StayDetails({ stay }: StayDetailsProps) {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ ...transition, delay: 0.4 }}
-              className="md:col-span-8 rounded-[3rem] p-10 md:p-16 bg-white/[0.02] border border-white/5"
+              className="md:col-span-8 rounded-[3rem] p-10 md:p-16 bg-card dark:bg-white/[0.02] border border-border dark:border-white/5"
             >
-              <p className="text-[10px] uppercase tracking-[0.4em] text-white/30 font-bold mb-10">Included Amenities</p>
+              <p className="text-[10px] uppercase tracking-[0.4em] text-muted-foreground dark:text-white/30 font-bold mb-10">Included Amenities</p>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-y-10 gap-x-6">
                 {(stay.amenities || []).map((amenity, idx) => (
                   <div key={idx} className="flex gap-4 items-start group">
-                    <div className="mt-1 h-8 w-8 rounded-full bg-white/5 group-hover:bg-primary/20 group-hover:text-primary transition-colors flex items-center justify-center text-white/40">
+                    <div className="mt-1 h-8 w-8 rounded-full bg-secondary dark:bg-white/5 group-hover:bg-primary/20 group-hover:text-primary transition-colors flex items-center justify-center text-muted-foreground dark:text-white/40">
                       {getAmenityIcon(amenity)}
                     </div>
-                    <span className="font-sans text-sm text-white/70 group-hover:text-white transition-colors">{amenity}</span>
+                    <span className="font-sans text-sm text-foreground/80 dark:text-white/70 group-hover:text-foreground dark:group-hover:text-white transition-colors">{amenity}</span>
                   </div>
                 ))}
               </div>
@@ -302,8 +302,8 @@ export function StayDetails({ stay }: StayDetailsProps) {
             transition={transition} 
             className="text-center mb-24"
           >
-            <span className="text-[10px] uppercase tracking-[0.6em] text-primary/60 font-bold mb-6 block">Reservation</span>
-            <h2 className="font-serif text-[clamp(3rem,8vw,6rem)] text-white tracking-tightest leading-none">
+            <span className="text-[10px] uppercase tracking-[0.6em] text-primary/80 dark:text-primary/60 font-bold mb-6 block">Reservation</span>
+            <h2 className="font-serif text-[clamp(3rem,8vw,6rem)] text-foreground dark:text-white tracking-tightest leading-none">
               Commit to<br/>the Sanctuary.
             </h2>
           </motion.div>
@@ -313,15 +313,15 @@ export function StayDetails({ stay }: StayDetailsProps) {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ ...transition, delay: 0.2 }}
-            className="glass rounded-[3rem] p-8 md:p-16 inner-glow border border-white/10 shadow-2xl relative overflow-hidden bg-black/40"
+            className="glass rounded-[3rem] p-8 md:p-16 inner-glow border border-border dark:border-white/10 shadow-2xl relative overflow-hidden bg-card dark:bg-black/40"
           >
             <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
 
             <div className="relative z-10">
-              <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 border-b border-white/10 pb-12">
+              <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 border-b border-border dark:border-white/10 pb-12">
                 <div>
-                  <h3 className="font-serif text-4xl text-white">Select Quarters</h3>
-                  <p className="mt-2 text-white/40 font-serif italic text-xl lowercase">Your space awaits.</p>
+                  <h3 className="font-serif text-4xl text-foreground dark:text-white">Select Quarters</h3>
+                  <p className="mt-2 text-muted-foreground dark:text-white/40 font-serif italic text-xl lowercase">Your space awaits.</p>
                 </div>
               </div>
 
@@ -334,24 +334,24 @@ export function StayDetails({ stay }: StayDetailsProps) {
                     className={`w-full text-left group flex flex-col md:flex-row md:items-center justify-between p-8 rounded-[2rem] transition-all duration-700 border ${
                       selectedRoom === idx 
                         ? "bg-primary/10 border-primary/40 shadow-[0_0_40px_rgba(230,184,115,0.1)]" 
-                        : "bg-transparent border-white/5 hover:border-white/20 hover:bg-white/[0.02]"
+                        : "bg-transparent border-border dark:border-white/5 hover:border-primary/20 dark:hover:border-white/20 hover:bg-secondary/30 dark:hover:bg-white/[0.02]"
                     }`}
                   >
                     <div>
-                      <h3 className={`font-serif text-3xl mb-3 transition-colors duration-500 ${selectedRoom === idx ? "text-primary" : "text-white group-hover:text-white/90"}`}>
+                      <h3 className={`font-serif text-3xl mb-3 transition-colors duration-500 ${selectedRoom === idx ? "text-primary" : "text-foreground dark:text-white group-hover:text-foreground/80 dark:group-hover:text-white/90"}`}>
                         {room.name}
                       </h3>
-                      <div className="flex items-center gap-6 text-sm tracking-widest text-white/50 uppercase font-sans">
+                      <div className="flex items-center gap-6 text-sm tracking-widest text-muted-foreground dark:text-white/50 uppercase font-sans">
                         <span className="flex items-center gap-2"><Bed className="h-4 w-4" /> Space</span>
                         <span className="flex items-center gap-2"><Users className="h-4 w-4" /> {room.description}</span>
                       </div>
                     </div>
                     
                     <div className="mt-6 md:mt-0 text-left md:text-right">
-                      <p className={`font-serif text-4xl ${selectedRoom === idx ? "text-white" : "text-white/60"}`}>
+                      <p className={`font-serif text-4xl ${selectedRoom === idx ? "text-foreground dark:text-white" : "text-foreground/80 dark:text-white/60"}`}>
                         ₹{room.price.toLocaleString('en-IN')}
                       </p>
-                      <p className="text-[10px] uppercase tracking-[0.3em] font-bold text-white/30 mt-2">Per Night</p>
+                      <p className="text-[10px] uppercase tracking-[0.3em] font-bold text-muted-foreground dark:text-white/30 mt-2">Per Night</p>
                     </div>
                   </button>
                 ))}
@@ -359,7 +359,7 @@ export function StayDetails({ stay }: StayDetailsProps) {
 
               {/* Apple-style Call to Action */}
               <div className="flex flex-col items-center pt-8">
-                <p className="font-sans text-xs uppercase tracking-[0.3em] font-medium text-white/40 mb-8 text-center max-w-sm leading-relaxed">
+                <p className="font-sans text-xs uppercase tracking-[0.3em] font-medium text-muted-foreground dark:text-white/40 mb-8 text-center max-w-sm leading-relaxed">
                   Proceeding connects you with our concierge to secure and personalize your dates.
                 </p>
                 
@@ -379,7 +379,7 @@ export function StayDetails({ stay }: StayDetailsProps) {
                 <Link 
                   href={`https://wa.me/917629877144?text=${encodeURIComponent(`Hi! I'm looking at ${stay.name} (${stay.roomTypes[selectedRoom]?.name}). Can you help me with a booking?`)}`}
                   target="_blank"
-                  className="mt-8 text-[10px] uppercase tracking-[0.4em] text-white/20 hover:text-primary transition-colors font-bold"
+                  className="mt-8 text-[10px] uppercase tracking-[0.4em] text-muted-foreground dark:text-white/20 hover:text-primary transition-colors font-bold"
                 >
                   Chat with Concierge
                 </Link>

@@ -121,7 +121,7 @@ export function TripDetails({ trip }: TripDetailsProps) {
       {/* ACT 2: The Elevation Timeline */}
       <section className="py-32 relative">
         {/* Timeline Line */}
-        <div className="absolute left-1/2 top-0 bottom-0 w-px bg-white/5 md:block hidden" />
+        <div className="absolute left-1/2 top-0 bottom-0 w-px bg-border dark:bg-white/5 md:block hidden" />
         
         <div className="space-y-64">
           {trip.acts.map((act, index) => (
@@ -131,7 +131,7 @@ export function TripDetails({ trip }: TripDetailsProps) {
       </section>
 
       {/* ACT 3: The Common Ground */}
-      <section className="px-6 py-64 md:px-16 lg:px-24 text-center border-t border-white/5">
+      <section className="px-6 py-64 md:px-16 lg:px-24 text-center border-t border-border dark:border-white/5">
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -146,7 +146,7 @@ export function TripDetails({ trip }: TripDetailsProps) {
       </section>
 
       {/* ACT 4: Dossier Application (Practicals) */}
-      <section className="px-6 py-32 md:px-16 lg:px-24 pb-64 bg-black/20">
+      <section className="px-6 py-32 md:px-16 lg:px-24 pb-64 bg-secondary dark:bg-black/20">
         <div className="mx-auto max-w-4xl">
           <motion.div 
             initial={{ opacity: 0, y: 50 }}
@@ -201,8 +201,8 @@ export function TripDetails({ trip }: TripDetailsProps) {
                         selectedDate === index
                           ? "border-primary bg-primary/5 shadow-[0_0_30px_rgba(var(--primary-rgb),0.1)]"
                           : date.spots === 0
-                            ? "border-white/5 opacity-30 cursor-not-allowed"
-                            : "border-white/10 hover:border-white/20 hover:bg-white/5"
+                            ? "border-border dark:border-white/5 opacity-30 cursor-not-allowed"
+                            : "border-border dark:border-white/10 hover:border-primary/20 dark:hover:border-white/20 hover:bg-muted dark:hover:bg-white/5"
                       }`}
                     >
                       <span className="font-serif text-xl md:text-2xl text-foreground">
@@ -220,7 +220,7 @@ export function TripDetails({ trip }: TripDetailsProps) {
 
               {/* Inclusions Bento */}
               <div className="grid md:grid-cols-2 gap-12 items-start mb-20">
-                <div className="p-8 rounded-3xl bg-white/[0.02] border border-white/5">
+                <div className="p-8 rounded-3xl bg-card dark:bg-white/[0.02] border border-border dark:border-white/5">
                   <h4 className="font-serif text-lg text-foreground mb-6">The Inclusion</h4>
                   <div className="space-y-4">
                     {trip.inclusions.map((item, index) => (
@@ -248,7 +248,7 @@ export function TripDetails({ trip }: TripDetailsProps) {
                       >
                         Apply for this Journey
                       </motion.span>
-                      <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity" />
+                      <div className="absolute inset-0 bg-foreground dark:bg-white opacity-0 group-hover:opacity-10 transition-opacity" />
                     </div>
                   </Magnetic>
                 </Link>
@@ -256,7 +256,7 @@ export function TripDetails({ trip }: TripDetailsProps) {
                 <Link 
                   href={`https://wa.me/917629877144?text=${encodeURIComponent(`Hi! I'm interested in the ${trip.name} journey (${trip.dates[selectedDate]?.start}). Can you tell me more?`)}`}
                   target="_blank"
-                  className="mt-8 text-[10px] uppercase tracking-[0.4em] text-white/20 hover:text-primary transition-colors font-bold"
+                  className="mt-8 text-[10px] uppercase tracking-[0.4em] text-muted-foreground dark:text-white/20 hover:text-primary transition-colors font-bold"
                 >
                   Chat with Concierge
                 </Link>

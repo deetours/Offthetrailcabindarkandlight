@@ -3,10 +3,9 @@
 import { useState, useEffect, useRef } from "react"
 import { motion, useScroll, useSpring, useTransform } from "framer-motion"
 import { SceneDiscoveryHero } from "./scene-discovery-hero"
-import { SceneGoStay } from "./scene-go-stay"
-import { SceneThreeLines } from "./scene-three-lines"
-import { SceneHumanFace } from "./scene-human-face"
-import { ScenePause } from "./scene-pause"
+import { SceneStaysGrid } from "./scene-stays-grid"
+import { SceneJourneys } from "./scene-journeys"
+import { SceneCafeEditorial } from "./scene-cafe-editorial"
 import { SceneReveal } from "./scene-reveal"
 import { SceneProof } from "./scene-proof"
 import { SceneIndependence } from "./scene-independence"
@@ -17,11 +16,17 @@ import { TravellerStories } from "../community/traveller-stories"
 import { HighlightsGallery } from "../community/highlights-gallery"
 import { PostTripJourney } from "../community/post-trip-journey"
 import { Navbar } from "../ui/navbar"
+import { FrontendEnquiryModal, EnquiryTab } from "../booking/frontend-enquiry-modal"
 
 export function LandingPage() {
   const containerRef = useRef<HTMLDivElement>(null)
   const [showNavbar, setShowNavbar] = useState(false)
   
+  // Modal State
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [modalTab, setModalTab] = useState<EnquiryTab>("stay")
+  const [modalLocation, setModalLocation] = useState("")
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"]
@@ -42,6 +47,16 @@ export function LandingPage() {
     window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
+
+  const handleOpenModal = (tab: EnquiryTab, locationId?: string) => {
+    setModalTab(tab)
+    if (locationId) {
+      setModalLocation(locationId)
+    } else {
+      setModalLocation("")
+    }
+    setIsModalOpen(true)
+  }
 
   return (
     <main 
@@ -73,11 +88,10 @@ export function LandingPage() {
       </div>
 
       <div className="relative z-10">
-        <SceneDiscoveryHero />
-        <SceneGoStay />
-        <SceneThreeLines />
-        <SceneHumanFace />
-        <ScenePause />
+        <SceneDiscoveryHero onOpenModal={handleOpenModal} />
+        <SceneStaysGrid onOpenModal={handleOpenModal} />
+        <SceneCafeEditorial />
+        <SceneJourneys onOpenModal={handleOpenModal} />
         <SceneReveal />
         <SceneProof />
         <SceneIndependence />
@@ -88,6 +102,13 @@ export function LandingPage() {
         <SceneFAQ />
         <SceneExit />
       </div>
+
+      <FrontendEnquiryModal 
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        initialTab={modalTab}
+        initialLocation={modalLocation}
+      />
     </main>
   )
 }

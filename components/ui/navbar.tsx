@@ -5,16 +5,17 @@ import { useState } from "react"
 import { Menu, X } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Magnetic } from "./magnetic"
+import { ThemeToggle } from "./theme-toggle"
 
 interface NavbarProps {
   visible: boolean
 }
 
 const navLinks = [
-  { href: "/journeys", label: "Journeys" },
   { href: "/stays", label: "Stays" },
-  { href: "/all-trips", label: "All Trips" },
-  { href: "/about", label: "About" },
+  { href: "/activities", label: "Activities" },
+  { href: "/trips", label: "Trips" },
+  { href: "/cafe", label: "Café" },
 ]
 
 export function Navbar({ visible }: NavbarProps) {
@@ -29,7 +30,7 @@ export function Navbar({ visible }: NavbarProps) {
       >
         <div className="mx-auto flex max-w-4xl items-center justify-between glass rounded-full px-6 py-3 inner-glow shadow-2xl">
           <Link href="/" className="font-serif text-xl text-foreground tracking-tight hover:text-primary transition-colors">
-            Wanderpals
+            OffTheTrail
           </Link>
 
           {/* Desktop nav */}
@@ -45,6 +46,7 @@ export function Navbar({ visible }: NavbarProps) {
               </Magnetic>
             ))}
             <div className="w-px h-4 bg-white/10 mx-2" />
+            <ThemeToggle />
             <Link
               href="/login"
               className="font-sans text-xs uppercase tracking-widest text-primary hover:text-primary/80 transition-colors"

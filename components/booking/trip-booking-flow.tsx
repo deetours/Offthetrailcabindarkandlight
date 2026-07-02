@@ -138,7 +138,7 @@ Emergency Contact: ${bookingData.emergencyContact} (${bookingData.emergencyPhone
                 Dossier <span className="text-foreground/30 italic">Application</span>
               </h1>
             </div>
-            <div className="text-left md:text-right border-l md:border-l-0 md:border-r border-white/5 pl-6 md:pl-0 md:pr-6">
+            <div className="text-left md:text-right border-l md:border-l-0 md:border-r border-border dark:border-white/5 pl-6 md:pl-0 md:pr-6">
               <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground/40 mb-1">Status</p>
               <div className="flex items-center gap-2 md:justify-end">
                 <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
@@ -150,7 +150,7 @@ Emergency Contact: ${bookingData.emergencyContact} (${bookingData.emergencyPhone
           {/* Progress Indicator */}
           <div className="relative mb-20">
             <div className="absolute inset-0 flex items-center" aria-hidden="true">
-              <div className="w-full h-px bg-white/5" />
+              <div className="w-full h-px bg-border dark:bg-white/5" />
             </div>
             <div className="relative flex justify-between">
               {[1, 2, 3].map((s) => (
@@ -185,7 +185,7 @@ Emergency Contact: ${bookingData.emergencyContact} (${bookingData.emergencyPhone
                 animate={{ opacity: 1, x: 0, scale: 1 }}
                 exit={{ opacity: 0, x: -20, scale: 0.98 }}
                 transition={transition}
-                className="glass rounded-[2rem] p-8 md:p-12 shadow-2xl relative overflow-hidden"
+                className="glass rounded-[2rem] p-8 md:p-12 shadow-sm md:shadow-md dark:shadow-2xl relative overflow-hidden"
               >
                 <div className="noise-overlay grayscale" />
                 
@@ -207,8 +207,8 @@ Emergency Contact: ${bookingData.emergencyContact} (${bookingData.emergencyPhone
                             bookingData.dateIndex === index
                               ? "border-primary bg-primary/5 shadow-inner"
                               : date.spots === 0
-                                ? "border-white/5 opacity-20 cursor-not-allowed"
-                                : "border-white/10 hover:border-white/20 hover:bg-white/[0.02]"
+                                ? "border-border dark:border-white/5 opacity-20 cursor-not-allowed"
+                                : "border-border dark:border-white/10 hover:border-primary/20 dark:hover:border-white/20 hover:bg-muted dark:hover:bg-white/[0.02]"
                           }`}
                         >
                           <div className="flex items-center gap-6">
@@ -240,7 +240,7 @@ Emergency Contact: ${bookingData.emergencyContact} (${bookingData.emergencyPhone
                             className={`flex-1 h-14 rounded-xl border font-serif text-lg transition-all duration-500 ${
                               bookingData.travellers === n
                                 ? "border-primary bg-primary text-primary-foreground shadow-lg shadow-primary/20"
-                                : "border-white/10 bg-white/[0.02] text-muted-foreground hover:border-white/20"
+                                : "border-border dark:border-white/10 bg-card dark:bg-white/[0.02] text-muted-foreground hover:border-primary/20 dark:hover:border-white/20"
                             } disabled:opacity-10 disabled:cursor-not-allowed`}
                           >
                             {n}
@@ -267,7 +267,7 @@ Emergency Contact: ${bookingData.emergencyContact} (${bookingData.emergencyPhone
                             type="text"
                             value={bookingData.firstName}
                             onChange={(e) => setBookingData({ ...bookingData, firstName: e.target.value })}
-                            className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-6 py-4 text-foreground focus:outline-none focus:border-primary/50 transition-all font-serif text-lg placeholder:text-white/5"
+                            className="w-full bg-card dark:bg-white/[0.03] border border-border dark:border-white/10 rounded-xl px-6 py-4 text-foreground focus:outline-none focus:border-primary/50 transition-all font-serif text-lg placeholder:text-muted-foreground/30 dark:placeholder:text-white/5"
                             placeholder="e.g. Julian"
                           />
                         </div>
@@ -277,7 +277,7 @@ Emergency Contact: ${bookingData.emergencyContact} (${bookingData.emergencyPhone
                             type="text"
                             value={bookingData.lastName}
                             onChange={(e) => setBookingData({ ...bookingData, lastName: e.target.value })}
-                            className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-6 py-4 text-foreground focus:outline-none focus:border-primary/50 transition-all font-serif text-lg placeholder:text-white/5"
+                            className="w-full bg-card dark:bg-white/[0.03] border border-border dark:border-white/10 rounded-xl px-6 py-4 text-foreground focus:outline-none focus:border-primary/50 transition-all font-serif text-lg placeholder:text-muted-foreground/30 dark:placeholder:text-white/5"
                             placeholder="e.g. Thorne"
                           />
                         </div>
@@ -291,7 +291,7 @@ Emergency Contact: ${bookingData.emergencyContact} (${bookingData.emergencyPhone
                             type="email"
                             value={bookingData.email}
                             onChange={(e) => setBookingData({ ...bookingData, email: e.target.value })}
-                            className="w-full bg-white/[0.03] border border-white/10 rounded-xl pl-16 pr-6 py-4 text-foreground focus:outline-none focus:border-primary/50 transition-all font-serif text-lg placeholder:text-white/5"
+                            className="w-full bg-card dark:bg-white/[0.03] border border-border dark:border-white/10 rounded-xl pl-16 pr-6 py-4 text-foreground focus:outline-none focus:border-primary/50 transition-all font-serif text-lg placeholder:text-muted-foreground/30 dark:placeholder:text-white/5"
                             placeholder="julian@ethereal.voyage"
                           />
                         </div>
@@ -305,15 +305,15 @@ Emergency Contact: ${bookingData.emergencyContact} (${bookingData.emergencyPhone
                             type="tel"
                             value={bookingData.phone}
                             onChange={(e) => setBookingData({ ...bookingData, phone: e.target.value })}
-                            className="w-full bg-white/[0.03] border border-white/10 rounded-xl pl-16 pr-6 py-4 text-foreground focus:outline-none focus:border-primary/50 transition-all font-serif text-lg placeholder:text-white/5"
+                            className="w-full bg-card dark:bg-white/[0.03] border border-border dark:border-white/10 rounded-xl pl-16 pr-6 py-4 text-foreground focus:outline-none focus:border-primary/50 transition-all font-serif text-lg placeholder:text-muted-foreground/30 dark:placeholder:text-white/5"
                             placeholder="+91 ···· ····"
                           />
                         </div>
                       </div>
 
-                      <div className="pt-8 border-t border-white/5">
+                      <div className="pt-8 border-t border-border dark:border-white/5">
                         <div className="flex items-center gap-3 mb-6">
-                          <ShieldCheck className="h-4 w-4 text-primary/40" />
+                          <ShieldCheck className="h-4 w-4 text-primary/80 dark:text-primary/40" />
                           <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-widest">Emergency Safeguard</h3>
                         </div>
                         <div className="grid md:grid-cols-2 gap-6">
@@ -322,14 +322,14 @@ Emergency Contact: ${bookingData.emergencyContact} (${bookingData.emergencyPhone
                             placeholder="Nexus Name"
                             value={bookingData.emergencyContact}
                             onChange={(e) => setBookingData({ ...bookingData, emergencyContact: e.target.value })}
-                            className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-6 py-4 text-foreground focus:outline-none focus:border-primary/50 transition-all font-serif text-lg placeholder:text-white/5"
+                            className="w-full bg-card dark:bg-white/[0.03] border border-border dark:border-white/10 rounded-xl px-6 py-4 text-foreground focus:outline-none focus:border-primary/50 transition-all font-serif text-lg placeholder:text-muted-foreground/30 dark:placeholder:text-white/5"
                           />
                           <input
                             type="tel"
                             placeholder="Nexus Phone"
                             value={bookingData.emergencyPhone}
                             onChange={(e) => setBookingData({ ...bookingData, emergencyPhone: e.target.value })}
-                            className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-6 py-4 text-foreground focus:outline-none focus:border-primary/50 transition-all font-serif text-lg placeholder:text-white/5"
+                            className="w-full bg-card dark:bg-white/[0.03] border border-border dark:border-white/10 rounded-xl px-6 py-4 text-foreground focus:outline-none focus:border-primary/50 transition-all font-serif text-lg placeholder:text-muted-foreground/30 dark:placeholder:text-white/5"
                           />
                         </div>
                       </div>
@@ -346,7 +346,7 @@ Emergency Contact: ${bookingData.emergencyContact} (${bookingData.emergencyPhone
                     </div>
 
                     <div className="space-y-8">
-                      <div className="flex justify-between items-end border-b border-white/5 pb-8">
+                      <div className="flex justify-between items-end border-b border-border dark:border-white/5 pb-8">
                         <div>
                           <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground/40 mb-2">Journey</p>
                           <h3 className="font-serif text-2xl text-foreground">{trip.name}</h3>
@@ -379,7 +379,7 @@ Emergency Contact: ${bookingData.emergencyContact} (${bookingData.emergencyPhone
                         </div>
                       </div>
 
-                      <div className="rounded-2xl bg-white/[0.02] border border-white/5 p-8 mt-12">
+                      <div className="rounded-2xl bg-card dark:bg-white/[0.02] border border-border dark:border-white/5 p-8 mt-12">
                         <div className="flex items-center justify-between">
                           <div>
                             <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground/40 mb-1">Total Contribution</p>
@@ -422,7 +422,7 @@ Emergency Contact: ${bookingData.emergencyContact} (${bookingData.emergencyPhone
                     {step === 3 ? "Connect via WhatsApp" : "Continue Journey"}
                   </span>
                   <ArrowRight className="relative z-10 h-3 w-3 group-hover:translate-x-1 transition-transform" />
-                  <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity" />
+                  <div className="absolute inset-0 bg-foreground dark:bg-white opacity-0 group-hover:opacity-10 transition-opacity" />
                 </button>
               </Magnetic>
             </div>

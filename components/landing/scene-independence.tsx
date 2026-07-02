@@ -49,13 +49,13 @@ export function SceneIndependence() {
           {/* "No" — the anchor word */}
           <motion.div style={{ opacity: line1Opacity, y: line1Y }}>
             <span className="block font-serif text-[clamp(3.5rem,12vw,9rem)] leading-[0.85] text-foreground tracking-tightest">
-              No investors.
+              No chains.
             </span>
           </motion.div>
 
           <motion.div style={{ opacity: line1Opacity, y: line1Y }}>
             <span className="block font-serif text-[clamp(3.5rem,12vw,9rem)] leading-[0.85] text-foreground/30 tracking-tightest italic">
-              No exit plan.
+              No playbook.
             </span>
           </motion.div>
 
@@ -64,7 +64,7 @@ export function SceneIndependence() {
             className="mt-12 space-y-3"
           >
             <p className="font-serif text-xl md:text-2xl text-muted-foreground/60 lowercase italic leading-relaxed max-w-2xl mx-auto">
-              Just travellers running trips for travellers.
+              Just a cabin, a cafe, and the kind of adventure we would choose for ourselves.
             </p>
             <div className="flex items-center justify-center gap-10 text-[10px] uppercase tracking-[0.5em] font-bold text-muted-foreground/20">
               <span>Since 2019</span>
@@ -81,8 +81,8 @@ export function SceneIndependence() {
             <div className="h-px w-24 bg-primary/20 mx-auto mb-10" />
             <p className="font-serif text-2xl md:text-3xl text-foreground/50 italic">
               While others chase{" "}
-              <span className="text-foreground/20 line-through decoration-primary/30">scale</span>
-              , we chase{" "}
+              <span className="text-foreground/20 line-through decoration-primary/30">volume</span>
+              , we stay loyal to{" "}
               <span className="text-primary/80">meaning.</span>
             </p>
           </motion.div>

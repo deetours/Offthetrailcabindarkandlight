@@ -75,7 +75,7 @@ function ThreeLinesItem({
           />
         </motion.div>
         {/* Cinematic number overlay */}
-        <div className="absolute top-6 left-6 font-serif text-[60px] leading-none text-white/5 font-bold select-none pointer-events-none">
+        <div className="absolute top-6 left-6 font-serif text-[60px] leading-none text-foreground/5 dark:text-white/5 font-bold select-none pointer-events-none">
           {line.num}
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent" />

@@ -4,6 +4,60 @@
 
 @layer base {
   :root {
+    /* Light Mode */
+    --background: #f7f5f0;
+    --foreground: #17191c;
+
+    /* Surface cards */
+    --card: #ffffff;
+    --card-foreground: #17191c;
+
+    --popover: #ffffff;
+    --popover-foreground: #17191c;
+
+    /* Primary accent - warm sand/ember */
+    --primary: #e6b873;
+    --primary-foreground: #0b0e11;
+
+    /* Secondary - muted surface */
+    --secondary: #e9e6df;
+    --secondary-foreground: #17191c;
+
+    /* Muted text */
+    --muted: #e9e6df;
+    --muted-foreground: #6b6d70;
+
+    /* Accent same as primary for consistency */
+    --accent: #e6b873;
+    --accent-foreground: #0b0e11;
+
+    --destructive: #ef4444;
+    --destructive-foreground: #fef2f2;
+
+    --border: #ded9cf;
+    --input: #ffffff;
+    --ring: #e6b873;
+
+    --radius: 0.5rem;
+
+    --chart-1: #e8845c;
+    --chart-2: #4db8a0;
+    --chart-3: #4a6fa5;
+    --chart-4: #d4a843;
+    --chart-5: #c8a25a;
+
+    --sidebar: #f7f5f0;
+    --sidebar-foreground: #17191c;
+    --sidebar-primary: #e6b873;
+    --sidebar-primary-foreground: #0b0e11;
+    --sidebar-accent: #e9e6df;
+    --sidebar-accent-foreground: #17191c;
+    --sidebar-border: #ded9cf;
+    --sidebar-ring: #e6b873;
+  }
+
+  .dark {
+    /* Dark Mode - PRESERVED EXACTLY AS IT WAS */
     --background: #0b0e11;
     --foreground: #ededed;
 
@@ -37,8 +91,6 @@
     --input: #1a1f26;
     --ring: #e6b873;
 
-    --radius: 0.5rem;
-
     --chart-1: #e8845c;
     --chart-2: #4db8a0;
     --chart-3: #4a6fa5;
@@ -66,18 +118,33 @@
 
 @layer utilities {
   .glass {
-    background-color: rgba(11, 14, 17, 0.7);
+    background-color: rgba(255, 255, 255, 0.68);
     @apply backdrop-blur-3xl;
+    box-shadow: 
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.8),
+      0 0 0 1px rgba(0, 0, 0, 0.05);
+  }
+
+  .dark .glass {
+    background-color: rgba(11, 14, 17, 0.7);
     box-shadow: 
       inset 0 1px 0 0 rgba(255, 255, 255, 0.05),
       0 0 0 1px rgba(255, 255, 255, 0.03);
   }
 
   .inner-glow {
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.8);
+  }
+
+  .dark .inner-glow {
     box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
   }
 
   .text-shadow-sm {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .dark .text-shadow-sm {
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
   }
 
@@ -91,8 +158,12 @@
     inset: 0;
     pointer-events: none;
     z-index: 50;
-    opacity: 0.02;
+    opacity: 0.04; /* Slightly more visible in light mode */
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  }
+
+  .dark .noise-overlay {
+    opacity: 0.02;
   }
 }
 
@@ -109,10 +180,14 @@
   width: 300%;
   height: 300%;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  opacity: 0.02;
+  opacity: 0.04;
   pointer-events: none;
   z-index: 50;
   animation: noise 8s steps(10) infinite;
+}
+
+.dark .grain::before {
+  opacity: 0.02;
 }
 
 @keyframes noise {
