@@ -99,6 +99,9 @@ export function Navbar({ visible }: NavbarProps) {
               >
                 Return
               </Link>
+              <div className="mt-8">
+                <ThemeToggle />
+              </div>
             </motion.nav>
           </motion.div>
         )}

@@ -48,42 +48,42 @@ export function SceneIndependence() {
         >
           {/* "No" — the anchor word */}
           <motion.div style={{ opacity: line1Opacity, y: line1Y }}>
-            <span className="block font-serif text-[clamp(3.5rem,12vw,9rem)] leading-[0.85] text-foreground tracking-tightest">
+            <span className="block font-serif text-[clamp(2rem,10vw,9rem)] leading-[0.85] text-foreground tracking-tightest">
               No chains.
             </span>
           </motion.div>
 
           <motion.div style={{ opacity: line1Opacity, y: line1Y }}>
-            <span className="block font-serif text-[clamp(3.5rem,12vw,9rem)] leading-[0.85] text-foreground/30 tracking-tightest italic">
+            <span className="block font-serif text-[clamp(2rem,10vw,9rem)] leading-[0.85] text-foreground/30 tracking-tightest italic">
               No playbook.
             </span>
           </motion.div>
 
           <motion.div
             style={{ opacity: line2Opacity, y: line2Y }}
-            className="mt-12 space-y-3"
+            className="mt-8 md:mt-12 space-y-4 md:space-y-3"
           >
-            <p className="font-serif text-xl md:text-2xl text-muted-foreground/60 lowercase italic leading-relaxed max-w-2xl mx-auto">
+            <p className="font-serif text-lg md:text-2xl text-muted-foreground/60 lowercase italic leading-relaxed max-w-2xl mx-auto px-4 md:px-0">
               Just a cabin, a cafe, and the kind of adventure we would choose for ourselves.
             </p>
-            <div className="flex items-center justify-center gap-10 text-[10px] uppercase tracking-[0.5em] font-bold text-muted-foreground/20">
+            <div className="flex flex-wrap items-center justify-center gap-3 md:gap-10 text-[9px] md:text-[10px] uppercase tracking-[0.3em] md:tracking-[0.5em] font-bold text-muted-foreground/30">
               <span>Since 2019</span>
-              <span className="w-1 h-1 rounded-full bg-white/10" />
+              <span className="hidden md:block w-1 h-1 rounded-full bg-border dark:bg-white/10" />
               <span>Independent</span>
-              <span className="w-1 h-1 rounded-full bg-white/10" />
+              <span className="hidden md:block w-1 h-1 rounded-full bg-border dark:bg-white/10" />
               <span>Intentional</span>
-              <span className="w-1 h-1 rounded-full bg-white/10" />
+              <span className="hidden md:block w-1 h-1 rounded-full bg-border dark:bg-white/10" />
               <span>Uncompromising</span>
             </div>
           </motion.div>
 
-          <motion.div style={{ opacity: line3Opacity, y: line3Y }} className="mt-20">
-            <div className="h-px w-24 bg-primary/20 mx-auto mb-10" />
-            <p className="font-serif text-2xl md:text-3xl text-foreground/50 italic">
+          <motion.div style={{ opacity: line3Opacity, y: line3Y }} className="mt-12 md:mt-20 px-4 md:px-0">
+            <div className="h-px w-16 md:w-24 bg-primary/20 mx-auto mb-8 md:mb-10" />
+            <p className="font-serif text-xl md:text-3xl text-foreground/50 italic leading-snug md:leading-normal">
               While others chase{" "}
               <span className="text-foreground/20 line-through decoration-primary/30">volume</span>
               , we stay loyal to{" "}
-              <span className="text-primary/80">meaning.</span>
+              <span className="text-primary/80 block sm:inline mt-2 sm:mt-0">meaning.</span>
             </p>
           </motion.div>
         </motion.div>

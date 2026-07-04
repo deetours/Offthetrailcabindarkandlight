@@ -61,7 +61,7 @@ export function WhatsAppPopup() {
 
       {/* Popup */}
       <div
-        className={`fixed bottom-4 right-4 md:bottom-8 md:right-8 z-50 transition-all duration-300 ease-out ${isOpen ? "opacity-100 scale-100" : "opacity-0 scale-90 pointer-events-none"
+        className={`fixed bottom-[calc(env(safe-area-inset-bottom)+1rem)] right-4 md:bottom-8 md:right-8 z-40 transition-all duration-300 ease-out ${isOpen ? "opacity-100 scale-100" : "opacity-0 scale-90 pointer-events-none"
           }`}
       >
         <div className="bg-card rounded-2xl p-6 max-w-sm shadow-xl border border-primary/20">
@@ -112,7 +112,7 @@ export function WhatsAppPopup() {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-4 right-4 md:bottom-8 md:right-8 z-40 bg-primary text-primary-foreground rounded-full p-3 shadow-lg hover:scale-110 transition-transform"
+          className="fixed bottom-[calc(env(safe-area-inset-bottom)+1rem)] right-4 md:bottom-8 md:right-8 z-30 bg-primary text-primary-foreground rounded-full p-3 shadow-lg hover:scale-110 transition-transform"
           aria-label="Open WhatsApp chat"
         >
           <MessageCircle className="h-6 w-6" />

@@ -135,11 +135,11 @@ export function StayBookingFlow({ stay }: StayBookingFlowProps) {
           >
             <div>
               <Link
-                href={`/stays/${stay.id}`}
+                href={stay?.id && stay.id !== "undefined" ? `/stays/${stay.id}` : "/stays"}
                 className="group inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.4em] text-primary/60 hover:text-primary transition-all mb-4"
               >
                 <ArrowLeft className="h-3 w-3 group-hover:-translate-x-1 transition-transform" />
-                Return to {stay.name}
+                Return to {stay?.name || "Stays"}
               </Link>
               <h1 className="font-serif text-4xl md:text-6xl text-foreground tracking-tightest">
                 Stay <span className="text-foreground/30 italic">Reservation</span>

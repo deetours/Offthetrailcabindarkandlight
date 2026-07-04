@@ -142,7 +142,7 @@ export function FrontendEnquiryModal({ isOpen, onClose, initialTab = "stay", ini
           </div>
         )}
 
-        <div className="flex-1 overflow-y-auto p-6 no-scrollbar pb-32">
+        <div className="flex-1 overflow-y-auto p-6 no-scrollbar pb-48">
           {tab === "stay" ? (
             stayStep === 1 ? (
               <div className="space-y-6">
@@ -274,7 +274,7 @@ export function FrontendEnquiryModal({ isOpen, onClose, initialTab = "stay", ini
                   onClick={handleBookNow}
                   className="w-full flex items-center justify-center gap-2 bg-foreground text-background py-4 rounded-xl font-bold uppercase tracking-widest text-xs transition-transform hover:scale-[1.02] active:scale-95"
                 >
-                  <span>Book Now</span>
+                  <span>Continue to Booking</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
                 <button
