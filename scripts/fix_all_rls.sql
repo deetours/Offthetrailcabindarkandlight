@@ -1,5 +1,5 @@
 -- ==========================================
--- WANDERPALS COMPLETE FIX SQL
+-- OFFTHETRAIL COMPLETE FIX SQL
 -- Fixes:
 --   1. "operator does not exist: text = user_role" error
 --   2. Trip/Stay RLS policies for admin editing

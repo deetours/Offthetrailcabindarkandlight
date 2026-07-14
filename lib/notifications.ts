@@ -1,5 +1,5 @@
 /**
- * Notification Service for Wanderpals
+ * Notification Service for Offthetrail
  * Handles Email (Resend) and WhatsApp (Interakt/Twilio) integrations.
  */
 
@@ -18,7 +18,7 @@ export async function sendBookingConfirmationEmail(booking: any, user: any) {
                 'Authorization': `Bearer ${RESEND_API_KEY}`,
             },
             body: JSON.stringify({
-                from: 'Wanderpals <bookings@wanderpals.com>',
+                from: 'Offthetrail <bookings@offthetrail.com>',
                 to: [user.email],
                 subject: `Booking Confirmed: ${booking.trips?.title}`,
                 html: `

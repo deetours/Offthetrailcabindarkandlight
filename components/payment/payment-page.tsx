@@ -3,7 +3,8 @@
 import { useState, useEffect, Suspense } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import { Navbar } from "../ui/navbar"
-import { QrCode, Copy, Lock, CheckCircle2, AlertCircle } from "lucide-react"
+import { Copy, Lock, CheckCircle2, AlertCircle } from "lucide-react"
+import Image from "next/image"
 
 function PaymentContent() {
   const searchParams = useSearchParams()
@@ -38,7 +39,7 @@ function PaymentContent() {
     let message = ""
     if (bookingPayload) {
       const data = JSON.parse(bookingPayload)
-      message = `Hi Wanderpals! I've submitted my payment for verification.
+      message = `Hi Offthetrail! I've submitted my payment for verification.
 
 Sanctuary: ${data.stayName}
 Room: ${data.roomName}
@@ -52,7 +53,7 @@ My Name: ${data.firstName} ${data.lastName}
 Email: ${data.email}
 Phone: ${data.phone}`
     } else {
-      message = `Hi Wanderpals! I've submitted a payment.
+      message = `Hi Offthetrail! I've submitted a payment.
 Amount: ₹${total}
 UTR: ${utr}
 Status: Payment submitted for verification.`
@@ -125,8 +126,8 @@ Status: Payment submitted for verification.`
 
                     <div className="pt-6 text-center">
                       <p className="text-xs text-muted-foreground mb-4 uppercase tracking-widest">Or scan QR code</p>
-                      <div className="bg-white p-4 rounded-xl inline-block">
-                        <QrCode className="w-32 h-32 md:w-40 md:h-40 text-black opacity-80" />
+                      <div className="bg-white p-2 rounded-xl inline-block relative w-32 h-32 md:w-40 md:h-40 overflow-hidden">
+                        <Image src="/images/qr-code.jpeg" alt="UPI QR Code" fill className="object-cover" />
                       </div>
                       <div className="text-center space-y-1 mt-4">
                         <p className="text-[10px] text-muted-foreground uppercase tracking-widest">Payee</p>

@@ -4,7 +4,7 @@ import { getStays } from "@/lib/trips"
 export const revalidate = 0
 
 export const metadata = {
-  title: "Stays | Wanderpals",
+  title: "Stays | Offthetrail",
   description: "Places you don't just check into. You arrive as a guest. You leave knowing names.",
 }
 

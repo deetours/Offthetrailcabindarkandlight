@@ -1,5 +1,5 @@
 -- ==================================================================
--- WANDERPALS SIGNUP FIX - RUN THIS IN SUPABASE SQL EDITOR
+-- OFFTHETRAIL SIGNUP FIX - RUN THIS IN SUPABASE SQL EDITOR
 -- ==================================================================
 -- This script fixes signup issues with Supabase user creation
 -- Run this as admin in your Supabase SQL editor

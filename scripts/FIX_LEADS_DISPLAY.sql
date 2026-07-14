@@ -1,5 +1,5 @@
 -- ==================================================================
--- WANDERPALS LEADS FIX - RUN THIS IN SUPABASE SQL EDITOR
+-- OFFTHETRAIL LEADS FIX - RUN THIS IN SUPABASE SQL EDITOR
 -- ==================================================================
 -- This script fixes the leads dashboard display issue
 -- Run this in your Supabase SQL editor to see leads in admin panel

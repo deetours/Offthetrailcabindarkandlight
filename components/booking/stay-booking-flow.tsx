@@ -8,6 +8,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Magnetic } from "../ui/magnetic"
 import { Footer } from "../ui/footer"
+import { OFFTHETRAIL_DATA } from "@/lib/frontend-data"
 
 interface Stay {
   id: string
@@ -39,6 +40,7 @@ export function StayBookingFlow({ stay }: StayBookingFlowProps) {
     email: "",
     phone: "",
   })
+  const [selectedActivities, setSelectedActivities] = useState<string[]>([])
 
   useEffect(() => {
     setMounted(true)
@@ -51,10 +53,20 @@ export function StayBookingFlow({ stay }: StayBookingFlowProps) {
         )
       : 0
 
-  const totalPrice = stay.roomTypes[bookingData.roomType].price * nights * bookingData.guests
+  const availableActivities = OFFTHETRAIL_DATA.activities?.filter(
+    (a) => a.location.toLowerCase() === stay.location.toLowerCase()
+  ) || []
+
+  const basePrice = stay.roomTypes[bookingData.roomType].price * nights * bookingData.guests
+  const activitiesPrice = selectedActivities.reduce((total, activityId) => {
+    const activity = availableActivities.find((a) => a.id === activityId)
+    return total + (activity?.price || 0) * bookingData.guests
+  }, 0)
+  
+  const totalPrice = basePrice + activitiesPrice
 
   const handleNext = async () => {
-    if (step < 3) {
+    if (step < 4) {
       setStep(step + 1)
     } else {
       // 1. Log the lead
@@ -75,6 +87,7 @@ export function StayBookingFlow({ stay }: StayBookingFlowProps) {
               check_in: bookingData.checkIn,
               check_out: bookingData.checkOut,
               guests: bookingData.guests,
+              activities: selectedActivities,
               total_price: totalPrice
             }
           })
@@ -91,6 +104,7 @@ export function StayBookingFlow({ stay }: StayBookingFlowProps) {
         checkIn: bookingData.checkIn,
         checkOut: bookingData.checkOut,
         guests: bookingData.guests,
+        activities: selectedActivities,
         totalPrice,
         firstName: bookingData.firstName,
         lastName: bookingData.lastName,
@@ -108,6 +122,9 @@ export function StayBookingFlow({ stay }: StayBookingFlowProps) {
       return bookingData.checkIn && bookingData.checkOut && nights > 0
     }
     if (step === 2) {
+      return true
+    }
+    if (step === 3) {
       return (
         bookingData.firstName &&
         bookingData.lastName &&
@@ -161,7 +178,7 @@ export function StayBookingFlow({ stay }: StayBookingFlowProps) {
               <div className="w-full h-px bg-border dark:bg-white/5" />
             </div>
             <div className="relative flex justify-between">
-              {[1, 2, 3].map((s) => (
+              {[1, 2, 3, 4].map((s) => (
                 <div key={s} className="flex flex-col items-center">
                   <motion.div
                     animate={{
@@ -174,10 +191,10 @@ export function StayBookingFlow({ stay }: StayBookingFlowProps) {
                   >
                     {s < step ? <Check className="h-4 w-4" /> : s}
                   </motion.div>
-                  <span className={`mt-3 text-[10px] uppercase tracking-[0.3em] font-medium transition-colors duration-500 ${
+                  <span className={`mt-3 text-[10px] uppercase tracking-[0.3em] font-medium transition-colors duration-500 hidden md:block ${
                     s <= step ? "text-primary/60" : "text-muted-foreground/20"
                   }`}>
-                    {s === 1 ? "Configuration" : s === 2 ? "Identity" : "Finalize"}
+                    {s === 1 ? "Configuration" : s === 2 ? "Enhance" : s === 3 ? "Identity" : "Finalize"}
                   </span>
                 </div>
               ))}
@@ -277,8 +294,66 @@ export function StayBookingFlow({ stay }: StayBookingFlowProps) {
                   </div>
                 )}
 
-                {/* Step 2: Identity */}
+                {/* Step 2: Enhance Your Stay */}
                 {step === 2 && (
+                  <div className="space-y-12">
+                    <div className="space-y-3">
+                      <h2 className="font-serif text-3xl text-foreground">Enhance your journey.</h2>
+                      <p className="text-muted-foreground/60 font-serif italic text-lg lowercase">Select experiences curated for {stay.location}.</p>
+                    </div>
+
+                    {availableActivities.length === 0 ? (
+                      <div className="glass p-8 rounded-3xl border border-white/5 text-center">
+                        <p className="text-muted-foreground">No additional experiences are currently available for this sanctuary.</p>
+                      </div>
+                    ) : (
+                      <div className="grid gap-4">
+                        {availableActivities.map((activity) => {
+                          const isSelected = selectedActivities.includes(activity.id)
+                          return (
+                            <button
+                              key={activity.id}
+                              onClick={() => {
+                                if (isSelected) {
+                                  setSelectedActivities(selectedActivities.filter((id) => id !== activity.id))
+                                } else {
+                                  setSelectedActivities([...selectedActivities, activity.id])
+                                }
+                              }}
+                              className={`group relative w-full rounded-2xl border px-8 py-6 text-left transition-all duration-500 flex items-center justify-between overflow-hidden ${
+                                isSelected
+                                  ? "border-primary bg-primary/5 shadow-inner"
+                                  : "border-border dark:border-white/10 hover:border-primary/20 dark:hover:border-white/20 hover:bg-muted dark:hover:bg-white/[0.02]"
+                              }`}
+                            >
+                              <div className="flex items-center gap-6">
+                                <div className={`w-6 h-6 rounded border flex items-center justify-center transition-colors ${
+                                  isSelected ? "bg-primary border-primary text-primary-foreground" : "border-border dark:border-white/20 group-hover:border-primary/50"
+                                }`}>
+                                  {isSelected && <Check className="w-4 h-4" />}
+                                </div>
+                                <div>
+                                  <p className="font-serif text-xl text-foreground">{activity.title}</p>
+                                  <p className="text-xs text-muted-foreground/60 mt-1 uppercase tracking-widest">{activity.difficulty} · {activity.duration}</p>
+                                </div>
+                              </div>
+                              <div className="text-right">
+                                <span className="font-serif text-lg text-foreground">₹{activity.price.toLocaleString()}</span>
+                                <span className="text-[10px] uppercase tracking-widest text-muted-foreground/40 ml-2">/ guest</span>
+                              </div>
+                              {isSelected && (
+                                <motion.div layoutId="activity-active-bg" className="absolute inset-0 bg-primary/5 pointer-events-none" />
+                              )}
+                            </button>
+                          )
+                        })}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Step 3: Identity */}
+                {step === 3 && (
                   <div className="space-y-12">
                     <div className="space-y-3">
                       <h2 className="font-serif text-3xl text-foreground">A few more details.</h2>
@@ -340,8 +415,8 @@ export function StayBookingFlow({ stay }: StayBookingFlowProps) {
                   </div>
                 )}
 
-                {/* Step 3: Finalize */}
-                {step === 3 && (
+                {/* Step 4: Finalize */}
+                {step === 4 && (
                   <div className="space-y-12">
                     <div className="space-y-3">
                       <h2 className="font-serif text-3xl text-foreground">Read once. Breathe.</h2>
@@ -361,6 +436,23 @@ export function StayBookingFlow({ stay }: StayBookingFlowProps) {
                           <p className="text-[10px] text-muted-foreground/30 uppercase tracking-widest">{bookingData.checkIn} — {bookingData.checkOut}</p>
                         </div>
                       </div>
+                      
+                      {selectedActivities.length > 0 && (
+                        <div className="border-b border-border dark:border-white/5 pb-8">
+                          <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground/40 mb-4">Curated Experiences</p>
+                          <div className="space-y-2">
+                            {selectedActivities.map((activityId) => {
+                              const activity = availableActivities.find(a => a.id === activityId)
+                              return activity ? (
+                                <div key={activity.id} className="flex justify-between text-sm">
+                                  <span className="font-serif text-lg text-foreground">{activity.title}</span>
+                                  <span className="text-muted-foreground">₹{((activity.price || 0) * bookingData.guests).toLocaleString()}</span>
+                                </div>
+                              ) : null
+                            })}
+                          </div>
+                        </div>
+                      )}
 
                       <div className="space-y-6">
                         <div>
@@ -410,7 +502,7 @@ export function StayBookingFlow({ stay }: StayBookingFlowProps) {
                   className="w-full relative group overflow-hidden flex items-center justify-center gap-4 rounded-full bg-primary py-5 font-bold text-primary-foreground shadow-2xl transition-all duration-500 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-10 disabled:grayscale disabled:cursor-not-allowed"
                 >
                   <span className="relative z-10 uppercase tracking-[0.5em] text-[10px]">
-                    {step === 3 ? "Proceed to Payment" : "Continue Journey"}
+                    {step === 4 ? "Proceed to Payment" : "Continue Journey"}
                   </span>
                   <ArrowRight className="relative z-10 h-3 w-3 group-hover:translate-x-1 transition-transform" />
                   <div className="absolute inset-0 bg-foreground dark:bg-white opacity-0 group-hover:opacity-10 transition-opacity" />

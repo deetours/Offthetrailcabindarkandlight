@@ -74,7 +74,7 @@ export function SceneEarlyGateways() {
               <div className="absolute inset-0">
                 <Image
                   src="/cozy-hostel-dorm-warm-lights-quiet-evening-mountai.jpg"
-                  alt="Wanderpals Stays"
+                  alt="Offthetrail Stays"
                   fill
                   className="object-cover scale-105 group-hover:scale-100 transition-transform duration-[2s] ease-[cubic-bezier(0.23,1,0.32,1)]"
                   priority
@@ -164,7 +164,7 @@ export function SceneEarlyGateways() {
               <div className="absolute inset-0">
                 <Image
                   src="/mountain-road-trip-group-travelers-sunrise-himalay.jpg"
-                  alt="Wanderpals Journeys"
+                  alt="Offthetrail Journeys"
                   fill
                   className="object-cover scale-105 group-hover:scale-100 transition-transform duration-[2s] ease-[cubic-bezier(0.23,1,0.32,1)]"
                   priority

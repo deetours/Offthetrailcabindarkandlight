@@ -11,34 +11,34 @@ const transition = {
 
 const faqs = [
   {
-    question: "How do I know if Wanderpals is right for me?",
+    question: "What level of curation can I expect from an OffTheTrail experience?",
     answer:
-      "If you've ever felt lonely while travelling, wanted to meet real people instead of taking selfies, or felt like your trip was too rushed—Wanderpals is built for you. We're for travellers who want depth over highlights.",
+      "Every stay is meticulously designed for those who appreciate quiet luxury. From architectural integration with the landscape to bespoke in-room amenities, our properties are curated for absolute comfort, absolute privacy, and absolute immersion.",
   },
   {
-    question: "Are the stays and trips really that small?",
+    question: "Do you accommodate specific dietary requirements or private dining?",
     answer:
-      "Yes. Our stays host maximum 8-12 people. Our trips are 8-15 people. We've intentionally stayed small because we believe real connection only happens in small groups. Bigger is never better for us.",
+      "Yes. Our culinary teams excel in crafting hyper-local, seasonal menus tailored to your exact preferences. Whether you require plant-based curation, allergen-specific preparation, or desire a private dining setup overlooking the valley, our concierge will arrange it prior to your arrival.",
   },
   {
-    question: "What if I'm travelling alone?",
+    question: "How is privacy maintained at OffTheTrail properties?",
     answer:
-      "Perfect. That's our demographic. You'll be grouped with other solo travellers who are looking for the same thing—genuine connection. Not a party. Not a business trip. Just humans being human.",
+      "Privacy is our ultimate luxury. Our stays are geographically isolated and structurally designed to ensure you never have to see another guest unless you choose to. With limited room counts and expansive private domains, seclusion is guaranteed.",
   },
   {
-    question: "How much time should I plan?",
+    question: "Are your spaces equipped for remote work or extended sabbaticals?",
     answer:
-      "For stays, anywhere from 2 nights to 2 weeks. For trips, they range from 5-11 days. We recommend at least 3 nights at a stay to really settle in, and the full duration of a trip to experience the arc.",
+      "Absolutely. While we encourage disconnection, we understand the modern need for connectivity. Our properties feature enterprise-grade internet and dedicated, architecturally inspiring workspaces, making them perfect for executive retreats or deep work blocks.",
   },
   {
-    question: "Can I bring a friend?",
+    question: "Can your concierge arrange bespoke local experiences?",
     answer:
-      "Yes, friends are welcome. Actually, we love when friends come together. The trips and stays are designed to help friendships deepen. So bring your best friend, your college gang, your travel buddy.",
+      "Yes. We bypass standard tourism to offer you access to hidden elements of the region. From private guided hikes with local naturalists to exclusive cultural immersions and private wellness sessions, everything is orchestrated discreetly for you.",
   },
   {
-    question: "What's included in the price?",
+    question: "What is your policy on direct reservations and cancellations?",
     answer:
-      "For stays: accommodation, meals, and activities. For trips: everything except flights. We include transport, stays, most meals, activities, and a local host who becomes your friend. Ask in WhatsApp for detailed breakdowns.",
+      "We highly recommend reserving directly through our concierge to ensure the most personalized experience. Direct reservations guarantee priority room allocation, flexible cancellation terms, and immediate access to our pre-arrival planning team.",
   },
 ]
 

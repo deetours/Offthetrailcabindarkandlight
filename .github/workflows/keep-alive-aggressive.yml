@@ -22,9 +22,9 @@ jobs:
           set +e  # Don't exit on error
           
           ENDPOINTS=(
-            "https://wanderpals.netlify.app/api/health"
-            "https://wanderpals.netlify.app/api/bookings"
-            "https://wanderpals.netlify.app/api/leads"
+            "https://offthetrail.netlify.app/api/health"
+            "https://offthetrail.netlify.app/api/bookings"
+            "https://offthetrail.netlify.app/api/leads"
           )
           
           echo "⏰ Starting aggressive keep-alive at $(date)"

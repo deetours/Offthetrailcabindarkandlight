@@ -1,4 +1,4 @@
-# ✅ WANDERPALS - COMPLETE BUILD
+# ✅ OFFTHETRAIL - COMPLETE BUILD
 
 ## 🎯 PROJECT STATUS: 95% PRODUCTION-READY
 
@@ -73,7 +73,7 @@ All features have been built, tested, and are ready for deployment. Only externa
    - `NEXT_PUBLIC_SUPABASE_URL`
    - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 3. Deploy (automatic)
-4. Get your domain (wanderpals.com or wanderpals.vercel.app)
+4. Get your domain (offthetrail.com or offthetrail.vercel.app)
 
 ### **Step 3: Seed Data (20 min)**
 Option A: Use admin dashboard
@@ -136,7 +136,7 @@ Every pixel matches the plan:
 
 ## 💎 UNIQUE FEATURES
 
-What makes Wanderpals different:
+What makes Offthetrail different:
 1. **WhatsApp-First**: No email. Direct WhatsApp communication.
 2. **Emotional Copy**: Every word is crafted for human connection.
 3. **Cinematic Design**: Landing page is an experience, not a form.
@@ -258,7 +258,7 @@ All needed files created:
 - [ ] Payment endpoints created
 - [ ] Twilio account created
 - [ ] WhatsApp endpoints created
-- [ ] Admin account created (email: admin@wanderpals.com)
+- [ ] Admin account created (email: admin@offthetrail.com)
 - [ ] Tested booking flow (trip + stay)
 - [ ] Tested admin dashboard
 - [ ] Tested mobile responsiveness

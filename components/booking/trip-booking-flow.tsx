@@ -77,7 +77,7 @@ export function TripBookingFlow({ trip, initialDateIndex }: TripBookingFlowProps
       }
 
       // 2. WhatsApp redirect
-      const message = `Hi Wanderpals! I'd like to join a journey.
+      const message = `Hi Offthetrail! I'd like to join a journey.
 
 Journey: ${trip.name}
 Dates: ${trip.dates[bookingData.dateIndex].start} to ${trip.dates[bookingData.dateIndex].end}

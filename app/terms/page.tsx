@@ -48,7 +48,7 @@ export default function TermsPage() {
             icon: <Activity className="h-6 w-6 text-primary" />,
             title: "Fitness & Medical",
             points: [
-                "Wanderpals trips often involve high altitudes. A basic level of fitness is required.",
+                "Offthetrail trips often involve high altitudes. A basic level of fitness is required.",
                 "Travelers must inform trip leaders about any pre-existing medical conditions before the journey begins."
             ]
         },
@@ -73,7 +73,7 @@ export default function TermsPage() {
             title: "Liability & Belongings",
             points: [
                 "Travelers are solely responsible for their luggage and valuables.",
-                "Wanderpals holds no liability for lost, stolen, or damaged items during the trip."
+                "Offthetrail holds no liability for lost, stolen, or damaged items during the trip."
             ]
         },
         {
@@ -99,7 +99,7 @@ export default function TermsPage() {
             icon: <ShieldCheck className="h-6 w-6 text-primary" />,
             title: "Force Majeure",
             points: [
-                "Wanderpals bears no liability for delays or cancellations due to landslides, road blocks, or natural disasters.",
+                "Offthetrail bears no liability for delays or cancellations due to landslides, road blocks, or natural disasters.",
                 "No refunds or compensation for disruptions caused by political disturbances or weather conditions."
             ]
         }

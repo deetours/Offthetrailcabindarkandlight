@@ -1,11 +1,11 @@
-# WANDERPALS - QUICK START GUIDE
+# OFFTHETRAIL - QUICK START GUIDE
 
 ## 🚀 FOR TESTING LOCALLY
 
 ### 1. Clone & Install
 ```bash
 git clone [your-repo]
-cd wanderpals
+cd offthetrail
 npm install
 ```
 
@@ -25,7 +25,7 @@ Visit: http://localhost:3000
 
 ### 4. Test Admin Dashboard
 - Go to http://localhost:3000/return
-- Sign in with: admin@wanderpals.com / [password]
+- Sign in with: admin@offthetrail.com / [password]
 - Redirected to http://localhost:3000/admin
 - Add a test trip and watch it appear on /all-trips instantly
 
@@ -89,7 +89,7 @@ vercel deploy
 2. Click "Stays" tab
 3. Click "+ Add Stay"
 4. Fill form:
-   - Name: "Wanderpals Jaipur"
+   - Name: "Offthetrail Jaipur"
    - Location: "Rajasthan"
    - Price: "3999"
    - Room Type: "Dorm"
@@ -115,7 +115,7 @@ vercel deploy
 ## 🔐 ACCOUNT CREDENTIALS
 
 ### Initial Admin Setup
-- Email: admin@wanderpals.com
+- Email: admin@offthetrail.com
 - Password: [Set in seed data]
 - Role: admin
 - Access: /admin dashboard
@@ -123,7 +123,7 @@ vercel deploy
 ### Create More Admins
 ```sql
 INSERT INTO public.users (email, password, role)
-VALUES ('newadmin@wanderpals.com', crypt('password123', gen_salt('bf')), 'admin');
+VALUES ('newadmin@offthetrail.com', crypt('password123', gen_salt('bf')), 'admin');
 ```
 
 ---
@@ -227,4 +227,4 @@ Once you've:
 
 **You're live! 🚀**
 
-Monitor daily for first week, then you're golden. Wanderpals is ready to scale!
+Monitor daily for first week, then you're golden. Offthetrail is ready to scale!

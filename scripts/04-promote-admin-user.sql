@@ -1,9 +1,9 @@
--- Promote an existing Supabase auth user to Wanderpals admin.
+-- Promote an existing Supabase auth user to Offthetrail admin.
 -- IMPORTANT: You must create the auth user in Supabase Console FIRST!
 -- 
 -- Setup steps:
 -- 1. Go to Supabase Dashboard > Authentication > Users
--- 2. Click "Add user" and create: admin@wanderpals.com (or change email below)
+-- 2. Click "Add user" and create: admin@offthetrail.com (or change email below)
 -- 3. Update target_email and target_name below
 -- 4. Run this script
 
@@ -12,8 +12,8 @@
 
 do $$
 declare
-  target_email text := 'admin@wanderpals.com';
-  target_name text := 'Wanderpals Admin';
+  target_email text := 'admin@offthetrail.com';
+  target_name text := 'Offthetrail Admin';
   target_user_id uuid;
 begin
   -- Look up the auth user

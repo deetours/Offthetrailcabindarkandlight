@@ -1,7 +1,7 @@
 import { PaymentPage } from "@/components/payment/payment-page"
 
 export const metadata = {
-  title: "Payment | Wanderpals",
+  title: "Payment | Offthetrail",
   description: "Complete your booking",
 }
 

@@ -10,10 +10,12 @@ interface CafeCartDrawerProps {
   onClose: () => void
   cart: CartItem[]
   onRemoveItem: (id: string) => void
+  onAddItem?: (item: Omit<CartItem, 'id'>) => void
+  onUpdateQuantity?: (itemId: string, delta: number) => void
 }
 
-export function CafeCartDrawer({ isOpen, onClose, cart, onRemoveItem }: CafeCartDrawerProps) {
-  const [step, setStep] = useState<"details" | "payment" | "submitted">("details")
+export function CafeCartDrawer({ isOpen, onClose, cart, onRemoveItem, onAddItem, onUpdateQuantity }: CafeCartDrawerProps) {
+  const [step, setStep] = useState<"cart" | "details" | "payment" | "submitted">("cart")
   const [name, setName] = useState("")
   const [phone, setPhone] = useState("")
   const [orderMode, setOrderMode] = useState<"dine-in" | "room-service" | "pickup">("dine-in")
@@ -22,6 +24,16 @@ export function CafeCartDrawer({ isOpen, onClose, cart, onRemoveItem }: CafeCart
   const [copied, setCopied] = useState<"upi" | "amount" | null>(null)
 
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
+
+  // Basic heuristic for pairing: if there are items, but no 'croissant', suggest it.
+  const hasCroissant = cart.some(item => item.name.toLowerCase().includes("croissant"))
+  const showPairing = cart.length > 0 && !hasCroissant && step === "cart"
+
+  const handlePairingAdd = () => {
+    if (onAddItem) {
+      onAddItem({ itemId: "c1", name: "Butter Croissant", price: 180, quantity: 1 })
+    }
+  }
 
   const handleCopy = (text: string, type: "upi" | "amount") => {
     navigator.clipboard.writeText(text)
@@ -51,24 +63,30 @@ export function CafeCartDrawer({ isOpen, onClose, cart, onRemoveItem }: CafeCart
 
   const handleOpenChange = (open: boolean) => {
     if (!open) {
-      setTimeout(() => setStep("details"), 300)
+      setTimeout(() => setStep("cart"), 300)
       onClose()
     }
   }
 
   return (
     <Sheet open={isOpen} onOpenChange={handleOpenChange}>
-      <SheetContent side="right" className="w-full sm:max-w-md border-l border-border p-0 flex flex-col bg-background/95 backdrop-blur-xl max-md:h-[100dvh] max-md:max-w-none">
+      <SheetContent side="right" className="w-full sm:max-w-md border-l border-border p-0 flex flex-col bg-background/95 backdrop-blur-xl modal-bg-fix max-md:h-[100dvh] max-md:max-w-none">
         <SheetHeader className="p-6 border-b border-border">
           <div className="flex items-center gap-4">
             <button onClick={() => {
               if (step === "payment") {
                 setStep("details")
+              } else if (step === "details") {
+                setStep("cart")
               } else {
                 onClose()
               }
-            }} className="p-2 hover:bg-secondary rounded-full transition-colors md:hidden" aria-label="Back or Close">
-              <ArrowLeft className="h-5 w-5 text-foreground" />
+            }} className="p-2 hover:bg-secondary rounded-full transition-colors" aria-label="Back or Close">
+              {step === "cart" || step === "submitted" ? (
+                <X className="h-5 w-5 text-foreground" />
+              ) : (
+                <ArrowLeft className="h-5 w-5 text-foreground" />
+              )}
             </button>
             <SheetTitle className="font-serif text-2xl text-foreground flex items-center gap-2">
               <ShoppingBag className="w-5 h-5 text-primary" /> Your Order
@@ -86,16 +104,30 @@ export function CafeCartDrawer({ isOpen, onClose, cart, onRemoveItem }: CafeCart
             <>
               {step !== "submitted" && (
                 <div className="space-y-4 mb-8">
-                  {cart.map((item) => (
-                    <div key={item.id} className="flex justify-between items-start border-b border-border pb-4">
-                      <div>
+                  {cart.map((item, index) => (
+                    <div key={item.id || item.itemId || index} className="flex justify-between items-start border-b border-border pb-4">
+                      <div className="flex-1">
                         <h4 className="text-sm font-bold text-foreground">{item.name}</h4>
-                        <p className="text-xs text-muted-foreground">Qty: {item.quantity} x Rs.{item.price}</p>
+                        {step === "cart" ? (
+                          <p className="text-xs text-muted-foreground mt-1">Rs.{item.price}</p>
+                        ) : (
+                          <p className="text-xs text-muted-foreground mt-1">Qty: {item.quantity} x Rs.{item.price}</p>
+                        )}
                       </div>
-                      {step === "details" && (
-                        <button onClick={() => onRemoveItem(item.id)} className="text-muted-foreground hover:text-red-400 p-1 md:p-0">
-                          <X className="w-5 h-5 md:w-4 md:h-4" />
-                        </button>
+                      
+                      {step === "cart" ? (
+                        <div className="flex flex-col items-end gap-2 shrink-0">
+                           <div className="flex items-center bg-secondary border border-border rounded-lg overflow-hidden h-8">
+                             <button onClick={() => onUpdateQuantity && onUpdateQuantity(item.itemId, -1)} className="px-3 h-full hover:bg-accent text-primary transition-colors flex items-center justify-center">-</button>
+                             <span className="text-xs font-bold w-6 text-center">{item.quantity}</span>
+                             <button onClick={() => onUpdateQuantity && onUpdateQuantity(item.itemId, 1)} className="px-3 h-full hover:bg-accent text-primary transition-colors flex items-center justify-center">+</button>
+                           </div>
+                           <button onClick={() => onRemoveItem(item.id)} className="text-[10px] uppercase tracking-widest text-red-400 hover:text-red-300 font-bold transition-colors">Remove</button>
+                        </div>
+                      ) : (
+                        <div className="text-sm font-bold text-foreground">
+                          Rs.{item.price * item.quantity}
+                        </div>
                       )}
                     </div>
                   ))}
@@ -104,11 +136,46 @@ export function CafeCartDrawer({ isOpen, onClose, cart, onRemoveItem }: CafeCart
                     <span className="text-sm uppercase tracking-widest font-bold text-muted-foreground">Estimated Total</span>
                     <span className="text-xl font-serif text-primary">Rs.{subtotal}</span>
                   </div>
+
+                  {step === "cart" && (
+                    <div className="pt-6 mt-4">
+                      <button 
+                        onClick={() => setStep("details")}
+                        className="w-full flex items-center justify-center gap-2 bg-primary text-black py-4 rounded-xl font-bold uppercase tracking-widest text-sm hover:bg-primary/90 transition-colors"
+                      >
+                        Proceed to Checkout
+                      </button>
+                      <button 
+                        onClick={onClose}
+                        className="w-full flex items-center justify-center py-4 mt-2 text-muted-foreground text-xs font-bold uppercase tracking-widest hover:text-foreground transition-colors"
+                      >
+                        Continue Browsing
+                      </button>
+                    </div>
+                  )}
+
+                  {showPairing && (
+                    <div className="mt-8 pt-6 border-t border-border border-dashed animate-in fade-in slide-in-from-bottom-4">
+                      <p className="text-[10px] uppercase tracking-widest text-primary font-bold mb-3">Perfect Pairing</p>
+                      <div className="bg-[#e6b873]/10 rounded-xl p-4 flex justify-between items-center border border-[#e6b873]/20">
+                        <div>
+                          <p className="text-sm font-bold text-foreground mb-1">Butter Croissant</p>
+                          <p className="text-xs text-muted-foreground">Freshly baked, pairs well with your order.</p>
+                        </div>
+                        <button 
+                           onClick={handlePairingAdd} 
+                           className="text-xs uppercase tracking-widest font-bold text-primary hover:text-primary/80 transition-colors ml-4 bg-background px-3 py-2 rounded-lg border border-primary/20"
+                        >
+                          + Add
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
 
               {step === "details" && cart.length > 0 && (
-                <form id="checkout-form" onSubmit={handleProceedToPayment} className="space-y-6 pt-4 border-t border-border animate-in fade-in slide-in-from-right-4">
+                <form id="checkout-form" onSubmit={handleProceedToPayment} className="space-y-6 pt-2 border-t border-border animate-in fade-in slide-in-from-right-4">
                   <h3 className="text-sm font-bold uppercase tracking-widest text-foreground/80">Details</h3>
 
                   <div className="space-y-2">
@@ -226,8 +293,8 @@ export function CafeCartDrawer({ isOpen, onClose, cart, onRemoveItem }: CafeCart
                     <CheckCircle2 className="w-8 h-8" />
                   </div>
                   <div className="space-y-2">
-                    <h3 className="font-serif text-2xl text-foreground">Order Submitted</h3>
-                    <p className="text-sm text-muted-foreground">Your order and payment are pending verification.</p>
+                    <h3 className="font-serif text-2xl text-foreground">Payment Submitted</h3>
+                    <p className="text-sm text-muted-foreground">Awaiting Café Acceptance. Your order is pending verification.</p>
                   </div>
                   <div className="bg-primary/5 border border-primary/20 rounded-xl p-4 flex gap-3 text-left w-full">
                     <AlertCircle className="w-4 h-4 text-primary shrink-0 mt-0.5" />
@@ -240,7 +307,7 @@ export function CafeCartDrawer({ isOpen, onClose, cart, onRemoveItem }: CafeCart
         </div>
 
         {cart.length > 0 && (
-          <div className="absolute bottom-0 left-0 right-0 p-6 border-t border-border bg-background/95 backdrop-blur-xl pb-[calc(env(safe-area-inset-bottom)+1.5rem)]">
+          <div className="absolute bottom-0 left-0 right-0 p-6 border-t border-border bg-background/95 backdrop-blur-xl modal-bg-fix pb-[calc(env(safe-area-inset-bottom)+1.5rem)]">
             {step === "details" && (
               <button
                 type="submit"

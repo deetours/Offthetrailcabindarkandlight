@@ -87,9 +87,9 @@ on:
 ## 📊 Monitor Keep-Alive Runs
 
 ### View Workflow Runs
-1. Go to GitHub: `github.com/deetours/wanderpals`
+1. Go to GitHub: `github.com/deetours/offthetrail`
 2. Click **Actions** tab
-3. Click **"Keep Wanderpals Backend Alive"** workflow
+3. Click **"Keep Offthetrail Backend Alive"** workflow
 4. See execution history and logs
 
 ### Check Logs
@@ -99,7 +99,7 @@ on:
 
 ### Expected Output
 ```
-🔄 Pinging Wanderpals backend...
+🔄 Pinging Offthetrail backend...
 📊 Response Code: 200
 📄 Response Body:
 {
@@ -127,7 +127,7 @@ on:
 - cron: '0 9-18 * * 1-5'
 ```
 
-### For Production (Wanderpals)
+### For Production (Offthetrail)
 ```yaml
 # Always keep alive, 5-minute intervals
 - cron: '*/5 * * * *'
@@ -218,4 +218,4 @@ Set interval: Create schedule in Netlify UI
 3. Wait for first scheduled run
 4. Monitor logs for any issues
 
-**Result**: Your Wanderpals backend will stay warm and responsive! 🚀
+**Result**: Your Offthetrail backend will stay warm and responsive! 🚀

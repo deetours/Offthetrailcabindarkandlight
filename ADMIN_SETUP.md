@@ -1,7 +1,7 @@
 # 🔐 ADMIN USER SETUP GUIDE
 
 ## Quick Summary
-- **Email**: `admin@wanderpals.com`
+- **Email**: `admin@offthetrail.com`
 - **Password**: `Welcome@2026`
 - **Access**: `/admin` dashboard
 - **Capabilities**: Add/edit/delete trips & stays, view bookings, analytics
@@ -13,12 +13,12 @@
 ### **Step 1: Create Auth User in Supabase**
 
 1. Go to [Supabase Console](https://supabase.com)
-2. Select your Wanderpals project
+2. Select your Offthetrail project
 3. Click **Authentication** in the left sidebar
 4. Click **Users** tab
 5. Click **Add user** button (top right)
 6. Fill in the form:
-   - **Email**: `admin@wanderpals.com`
+   - **Email**: `admin@offthetrail.com`
    - **Password**: `Welcome@2026`
    - **Auto Confirm User**: Toggle ON (makes user immediately active)
 7. Click **Create user**
@@ -42,14 +42,14 @@
      updated_at
    ) VALUES (
      'a1b2c3d4-e5f6-7890-abcd-ef1234567890',  -- ← Your actual UUID here
-     'admin@wanderpals.com',
-     'Wanderpals Admin',
+     'admin@offthetrail.com',
+     'Offthetrail Admin',
      'admin',
      NOW(),
      NOW()
    ) ON CONFLICT (id) DO UPDATE SET
      role = 'admin',
-     email = 'admin@wanderpals.com';
+     email = 'admin@offthetrail.com';
    ```
 5. Click **Run** button
 6. Check the result - should show 1 row inserted
@@ -58,10 +58,10 @@
 
 ### **Step 3: Login and Verify**
 
-1. Go to your Wanderpals app: `http://localhost:3000/login`
+1. Go to your Offthetrail app: `http://localhost:3000/login`
 2. Click **Sign In** tab
 3. Enter:
-   - **Email**: `admin@wanderpals.com`
+   - **Email**: `admin@offthetrail.com`
    - **Password**: `Welcome@2026`
 4. Click **Sign In**
 5. **Should redirect to** `/admin` dashboard ✅
@@ -108,7 +108,7 @@ Once logged in at `/admin`:
 
 ## Testing Checklist
 
-- [ ] Admin login works with `admin@wanderpals.com` / `Welcome@2026`
+- [ ] Admin login works with `admin@offthetrail.com` / `Welcome@2026`
 - [ ] Redirects to `/admin` (not `/return`)
 - [ ] Can see "Trips" tab
 - [ ] Can see "Stays" tab
@@ -124,7 +124,7 @@ Once logged in at `/admin`:
 ## Troubleshooting
 
 ### **Login fails with "Invalid credentials"**
-- ✅ Verify email is exactly: `admin@wanderpals.com`
+- ✅ Verify email is exactly: `admin@offthetrail.com`
 - ✅ Verify password is exactly: `Welcome@2026`
 - ✅ Check that **Auto Confirm User** was enabled
 
@@ -165,7 +165,7 @@ To add more admin users, repeat the process:
 2. Run SQL:
    ```sql
    INSERT INTO users (id, email, full_name, role, created_at, updated_at)
-   VALUES ('NEW_UUID_HERE', 'newadmin@wanderpals.com', 'Admin Name', 'admin', NOW(), NOW());
+   VALUES ('NEW_UUID_HERE', 'newadmin@offthetrail.com', 'Admin Name', 'admin', NOW(), NOW());
    ```
 
 ---

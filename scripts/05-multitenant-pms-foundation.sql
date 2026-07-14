@@ -1,4 +1,4 @@
--- Wanderpals Multi-Tenant PMS Foundation
+-- Offthetrail Multi-Tenant PMS Foundation
 -- Apply after the base Supabase bootstrap scripts.
 -- Safe to rerun where possible.
 
@@ -343,9 +343,9 @@ create index if not exists idx_housekeeping_property on public.housekeeping_task
 create index if not exists idx_audit_logs_property on public.audit_logs(property_id);
 
 insert into public.organizations (name, slug, organization_type, status)
-select 'Wanderpals', 'wanderpals', 'brand', 'active'
+select 'Offthetrail', 'offthetrail', 'brand', 'active'
 where not exists (
-  select 1 from public.organizations where slug = 'wanderpals'
+  select 1 from public.organizations where slug = 'offthetrail'
 );
 
 create or replace function public.has_property_access(target_property_id uuid)

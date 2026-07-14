@@ -69,7 +69,7 @@ export function AdminDashboard() {
             <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
           </span>
           <span className="text-[9px] uppercase tracking-[0.5em] text-primary/60 font-bold">Mission Control</span>
-          <span className="ml-auto text-[9px] uppercase tracking-[0.4em] text-muted-foreground/20 font-bold">Wanderpals Admin</span>
+          <span className="ml-auto text-[9px] uppercase tracking-[0.4em] text-muted-foreground/20 font-bold">Offthetrail Admin</span>
         </div>
 
         {/* Connection banner */}

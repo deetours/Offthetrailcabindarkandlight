@@ -42,7 +42,7 @@ export function SceneArrival() {
           transition={{ ...transition, delay: 0.2 }}
         >
           <h1 className="font-serif text-[clamp(4rem,12vw,10rem)] leading-[0.9] font-medium text-foreground tracking-tightest">
-            Wanderpals
+            Offthetrail
           </h1>
         </motion.div>
 

@@ -1,6 +1,6 @@
-# Wanderpals Backend Architecture Design
+# Offthetrail Backend Architecture Design
 
-You are acting as a senior backend architect. This document outlines the full-scale backend architecture for the Wanderpals travel platform, leveraging Supabase and Next.js.
+You are acting as a senior backend architect. This document outlines the full-scale backend architecture for the Offthetrail travel platform, leveraging Supabase and Next.js.
 
 ---
 

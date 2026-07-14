@@ -1,12 +1,12 @@
 -- ============================================
--- WANDERPALS ADMIN USER - DIAGNOSTIC QUERIES
+-- OFFTHETRAIL ADMIN USER - DIAGNOSTIC QUERIES
 -- ============================================
 -- Run these in Supabase SQL Editor to diagnose the issue
 
 -- ============================================
 -- QUERY 1: Check if admin user exists in users table
 -- ============================================
-SELECT id, email, full_name, role, created_at FROM users WHERE email = 'admin@wanderpals.com';
+SELECT id, email, full_name, role, created_at FROM users WHERE email = 'admin@offthetrail.com';
 
 -- Expected Result: Should show 1 row with role = 'admin'
 -- If NO RESULTS: User not added to users table (need to run INSERT)
@@ -16,7 +16,7 @@ SELECT id, email, full_name, role, created_at FROM users WHERE email = 'admin@wa
 -- ============================================
 -- QUERY 2: If user doesn't exist, get the UUID from Auth
 -- ============================================
--- Go to Supabase Auth > Users tab and copy the UUID for admin@wanderpals.com
+-- Go to Supabase Auth > Users tab and copy the UUID for admin@offthetrail.com
 -- Then run this INSERT:
 
 INSERT INTO users (
@@ -28,8 +28,8 @@ INSERT INTO users (
   updated_at
 ) VALUES (
   'PASTE_YOUR_UUID_HERE',  -- Replace with actual UUID from Supabase Auth Users list
-  'admin@wanderpals.com',
-  'Wanderpals Admin',
+  'admin@offthetrail.com',
+  'Offthetrail Admin',
   'admin',
   NOW(),
   NOW()
@@ -44,7 +44,7 @@ INSERT INTO users (
 -- ============================================
 UPDATE users 
 SET role = 'admin' 
-WHERE email = 'admin@wanderpals.com';
+WHERE email = 'admin@offthetrail.com';
 
 -- Then verify with Query 1
 

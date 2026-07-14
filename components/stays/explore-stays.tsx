@@ -10,7 +10,7 @@ import { StayFilters } from "./stay-filters"
 const stays = [
   {
     id: "bir",
-    name: "Wanderpals Bir",
+    name: "Offthetrail Bir",
     location: "Himachal Pradesh",
     tagline: "Where mornings begin slowly",
     memoryCue: "Best for paragliding season",
@@ -22,7 +22,7 @@ const stays = [
   },
   {
     id: "gokarna",
-    name: "Wanderpals Gokarna",
+    name: "Offthetrail Gokarna",
     location: "Karnataka",
     tagline: "Salt air and shared sunsets",
     memoryCue: "Known for beach bonfires",
@@ -34,7 +34,7 @@ const stays = [
   },
   {
     id: "manali",
-    name: "Wanderpals Manali",
+    name: "Offthetrail Manali",
     location: "Himachal Pradesh",
     tagline: "Snow, silence, and stories",
     memoryCue: "Loved for winter stays",
@@ -46,7 +46,7 @@ const stays = [
   },
   {
     id: "pondicherry",
-    name: "Wanderpals Pondicherry",
+    name: "Offthetrail Pondicherry",
     location: "Tamil Nadu",
     tagline: "French doors, local souls",
     memoryCue: "Perfect for solo travellers",
@@ -58,7 +58,7 @@ const stays = [
   },
   {
     id: "rishikesh",
-    name: "Wanderpals Rishikesh",
+    name: "Offthetrail Rishikesh",
     location: "Uttarakhand",
     tagline: "River sounds and early risers",
     memoryCue: "Known for long breakfasts",
@@ -70,7 +70,7 @@ const stays = [
   },
   {
     id: "varkala",
-    name: "Wanderpals Varkala",
+    name: "Offthetrail Varkala",
     location: "Kerala",
     tagline: "Cliffs, cafes, and calm",
     memoryCue: "Loved for sunset walks",

@@ -30,7 +30,7 @@ export function SceneHumanFace() {
             <motion.div style={{ scale: imgScale }} className="absolute inset-0">
               <Image
                 src="/traveller-testimonial-aisha.png"
-                alt="Aisha, a Wanderpals traveller"
+                alt="Aisha, a Offthetrail traveller"
                 fill
                 className="object-cover grayscale-[0.2]"
               />

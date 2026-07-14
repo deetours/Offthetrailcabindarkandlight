@@ -50,6 +50,16 @@ export function FrontendEnquiryModal({ isOpen, onClose, initialTab = "stay", ini
     }
   }, [isOpen, initialTab, initialLocation])
 
+  React.useEffect(() => {
+    if (stayLocation && typeof window !== "undefined") {
+      const selectedStayData = OFFTHETRAIL_DATA.stays.find(s => s.id === stayLocation)
+      if (selectedStayData) {
+        localStorage.setItem('offthetrail_last_stay_id', stayLocation)
+        localStorage.setItem('offthetrail_last_stay_name', selectedStayData.name)
+      }
+    }
+  }, [stayLocation])
+
   const validateEnquiry = () => {
     const newErrors: Record<string, string> = {}
     if (!stayDates) newErrors.stayDates = "Please enter dates"
@@ -106,7 +116,7 @@ export function FrontendEnquiryModal({ isOpen, onClose, initialTab = "stay", ini
 
   return (
     <Sheet open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <SheetContent side="right" className="w-full sm:max-w-md md:max-w-lg border-l border-border p-0 flex flex-col bg-background/95 backdrop-blur-xl max-md:h-[100dvh] max-md:max-w-none">
+      <SheetContent side="right" className="w-full sm:max-w-md md:max-w-lg border-l border-border p-0 flex flex-col bg-background/95 backdrop-blur-xl modal-bg-fix max-md:h-[100dvh] max-md:max-w-none">
         <SheetHeader className="p-6 border-b border-border relative">
           <div className="flex items-center gap-4">
             <button onClick={() => {
@@ -266,7 +276,7 @@ export function FrontendEnquiryModal({ isOpen, onClose, initialTab = "stay", ini
         </div>
 
         {/* Sticky bottom CTA area using pb-safe concept */}
-        <div className="absolute bottom-0 left-0 right-0 p-6 border-t border-border bg-background/95 backdrop-blur-xl pb-[calc(env(safe-area-inset-bottom)+1.5rem)]">
+        <div className="absolute bottom-0 left-0 right-0 p-6 border-t border-border bg-background/95 backdrop-blur-xl modal-bg-fix pb-[calc(env(safe-area-inset-bottom)+1.5rem)]">
           {tab === "stay" ? (
             stayStep === 1 ? (
               <div className="flex flex-col gap-3">

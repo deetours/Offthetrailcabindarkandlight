@@ -112,7 +112,7 @@ export async function POST(request: Request) {
     const order = await createRazorpayOrder({
       amount,
       currency: booking.currency || 'INR',
-      receipt: `wanderpals-${bookingId}`,
+      receipt: `offthetrail-${bookingId}`,
       notes: { bookingId },
     })
 

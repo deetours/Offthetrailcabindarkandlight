@@ -1,4 +1,4 @@
-# WANDERPALS - COMPLETE IMPLEMENTATION SUMMARY
+# OFFTHETRAIL - COMPLETE IMPLEMENTATION SUMMARY
 
 ## 🎯 PROJECT OVERVIEW
 
@@ -231,7 +231,7 @@
 ## 🚀 HOW TO USE
 
 ### For Customers
-1. Visit wanderpals.com
+1. Visit offthetrail.com
 2. Explore landing page (16 scenes)
 3. Click "Go" to view trips or "Stay" to view stays
 4. Browse and filter

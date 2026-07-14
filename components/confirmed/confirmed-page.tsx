@@ -21,12 +21,12 @@ function ConfirmedContent() {
   }, [])
 
   const staysData: Record<string, { name: string; location: string }> = {
-    bir: { name: "Wanderpals Bir", location: "Himachal Pradesh" },
-    gokarna: { name: "Wanderpals Gokarna", location: "Karnataka" },
-    manali: { name: "Wanderpals Manali", location: "Himachal Pradesh" },
-    pondicherry: { name: "Wanderpals Pondicherry", location: "Tamil Nadu" },
-    rishikesh: { name: "Wanderpals Rishikesh", location: "Uttarakhand" },
-    varkala: { name: "Wanderpals Varkala", location: "Kerala" },
+    bir: { name: "Offthetrail Bir", location: "Himachal Pradesh" },
+    gokarna: { name: "Offthetrail Gokarna", location: "Karnataka" },
+    manali: { name: "Offthetrail Manali", location: "Himachal Pradesh" },
+    pondicherry: { name: "Offthetrail Pondicherry", location: "Tamil Nadu" },
+    rishikesh: { name: "Offthetrail Rishikesh", location: "Uttarakhand" },
+    varkala: { name: "Offthetrail Varkala", location: "Kerala" },
   }
 
   const tripsData: Record<string, { name: string; duration: string }> = {
@@ -127,6 +127,25 @@ function ConfirmedContent() {
         >
           Start packing slowly.
         </p>
+
+        {/* Post-Booking Cross-sell */}
+        {type === "stay" && (
+          <div
+            className={`mt-12 rounded-2xl border border-[#e6b873]/20 bg-[#e6b873]/5 p-6 text-left transition-all duration-700 ease-out ${
+              mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+            }`}
+            style={{ transitionDelay: "1100ms" }}
+          >
+            <h3 className="font-serif text-lg text-foreground mb-2">Turn your stay into a full escape.</h3>
+            <p className="text-sm text-muted-foreground mb-4">Discover curated activities and adventures near your location.</p>
+            <Link 
+              href="/activities" 
+              className="inline-flex items-center gap-2 text-xs uppercase tracking-widest font-bold text-primary hover:text-primary/80 transition-colors"
+            >
+              Explore Activities <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        )}
 
         {/* Navigation */}
         <div

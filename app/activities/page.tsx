@@ -1,10 +1,10 @@
-import { JourneysPage } from "@/components/journeys/journeys-page"
+import { ActivitiesPage } from "@/components/activities/activities-page"
 
 export const metadata = {
-  title: "Journeys | Wanderpals",
-  description: "Handpicked routes for people who don't rush places. Small groups. Local routes. Real pace.",
+  title: "Activities | Offthetrail",
+  description: "Curated experiences that cut through the ordinary.",
 }
 
-export default function Journeys() {
-  return <JourneysPage />
+export default function Activities() {
+  return <ActivitiesPage />
 }

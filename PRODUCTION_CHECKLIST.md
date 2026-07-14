@@ -1,4 +1,4 @@
-# WANDERPALS PRODUCTION CHECKLIST
+# OFFTHETRAIL PRODUCTION CHECKLIST
 
 Complete Phase 4 of the build is done. Below are ALL the steps needed before production deployment.
 
@@ -41,7 +41,7 @@ Complete Phase 4 of the build is done. Below are ALL the steps needed before pro
 
 ### 2. **Seed Initial Data** (20 minutes)
    - Create `/scripts/02-seed-data.sql` with:
-     - [ ] Admin user (email: admin@wanderpals.com, password: secure-password)
+     - [ ] Admin user (email: admin@offthetrail.com, password: secure-password)
      - [ ] All 12 trips (Spiti, Ladakh, Kerala, Meghalaya, Rajasthan, Himachal, Goa-Karnataka, Uttarakhand, Northeast, Kashmir, Sikkim, Andaman)
      - [ ] All 6 stays (Bir, Gokarna, Manali, Pondicherry, Rishikesh, Varkala)
      - [ ] Host profiles for each stay/trip
@@ -165,7 +165,7 @@ Complete Phase 4 of the build is done. Below are ALL the steps needed before pro
    - [ ] Connect GitHub repository to Vercel
    - [ ] Set all environment variables in Vercel dashboard
    - [ ] Set up automatic deployments from main branch
-   - [ ] Configure domain (wanderpals.com or subdomain)
+   - [ ] Configure domain (offthetrail.com or subdomain)
    - [ ] Set up SSL certificate
    - [ ] Configure redirects/rewrites if needed
 
@@ -180,7 +180,7 @@ Complete Phase 4 of the build is done. Below are ALL the steps needed before pro
      - Top performing trips/stays
 
 ### 19. **Marketing Checklist** (Varies)
-   - [ ] Create Instagram account (@wanderpals or similar)
+   - [ ] Create Instagram account (@offthetrail or similar)
    - [ ] Create LinkedIn company page
    - [ ] Write press release
    - [ ] Email early supporters

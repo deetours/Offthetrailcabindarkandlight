@@ -17,11 +17,11 @@ export async function generateMetadata({
     const { data: stay } = await supabase.from('stays').select('name').eq('id', id).single()
     const name = stay?.name || room || "Stay"
     return {
-      title: `Book ${name} | Wanderpals`,
+      title: `Book ${name} | Offthetrail`,
       description: `Reserve your space at ${name}`,
     }
   } catch {
-    return { title: "Booking | Wanderpals" }
+    return { title: "Booking | Offthetrail" }
   }
 }
 

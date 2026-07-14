@@ -14,13 +14,13 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
       .eq('id', id)
       .single()
 
-    if (!stay) return { title: "Stay Not Found | Wanderpals" }
+    if (!stay) return { title: "Stay Not Found | Offthetrail" }
     return {
-      title: `${stay.name} | Wanderpals`,
-      description: stay.description || stay.tagline || "A Wanderpals stay.",
+      title: `${stay.name} | Offthetrail`,
+      description: stay.description || stay.tagline || "A Offthetrail stay.",
     }
   } catch {
-    return { title: "Stay | Wanderpals" }
+    return { title: "Stay | Offthetrail" }
   }
 }
 

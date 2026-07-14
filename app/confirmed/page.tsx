@@ -1,7 +1,7 @@
 import { ConfirmedPage } from "@/components/confirmed/confirmed-page"
 
 export const metadata = {
-  title: "You're In | Wanderpals",
+  title: "You're In | Offthetrail",
   description: "Your booking is confirmed. Start packing slowly.",
 }
 

@@ -1,6 +1,6 @@
-# 🎨 WANDERPALS DESIGN DOCUMENT
+# 🎨 OFFTHETRAIL DESIGN DOCUMENT
 
-**A Complete Guide to How Wanderpals Was Designed & Why**
+**A Complete Guide to How Offthetrail Was Designed & Why**
 
 ---
 
@@ -26,9 +26,9 @@
 
 ## DESIGN PHILOSOPHY
 
-### **The Wanderpals Design Manifesto**
+### **The Offthetrail Design Manifesto**
 
-Wanderpals is designed around a single core belief: **Travel is not a transaction—it's a transformation.**
+Offthetrail is designed around a single core belief: **Travel is not a transaction—it's a transformation.**
 
 Every design decision serves this principle:
 
@@ -61,7 +61,7 @@ Every design decision serves this principle:
 
 ## BRAND STRATEGY & POSITIONING
 
-### **Who Is Wanderpals?**
+### **Who Is Offthetrail?**
 
 **Target Audience:**
 - Solo travelers seeking authentic experiences
@@ -76,11 +76,11 @@ Every design decision serves this principle:
 - **Humble & authentic**: Celebrating customers, not bragging about the brand
 
 **Positioning:**
-> *"Wanderpals isn't a travel company. It's a community of travelers who believe that the best journey is one shared with kindred spirits."*
+> *"Offthetrail isn't a travel company. It's a community of travelers who believe that the best journey is one shared with kindred spirits."*
 
 ### **Why Dark Theme?**
 
-Most travel apps use bright, energetic colors to feel "summer vacation." Wanderpals inverts this:
+Most travel apps use bright, energetic colors to feel "summer vacation." Offthetrail inverts this:
 
 - **Dark = Intimate**: Like sitting around a campfire sharing stories at night
 - **Dark = Focus**: Keeps attention on trip images and descriptions, not the interface
@@ -265,7 +265,7 @@ This dual approach serves two user needs:
 
 ## LANDING PAGE DESIGN (16 Scenes)
 
-The landing page is the **emotional core** of Wanderpals. It's designed like a film, not a website.
+The landing page is the **emotional core** of Offthetrail. It's designed like a film, not a website.
 
 ### **Scene-by-Scene Breakdown**
 
@@ -274,7 +274,7 @@ The landing page is the **emotional core** of Wanderpals. It's designed like a f
 - **Design**: 
   - Full-screen hero image (mountain, forest, or ocean)
   - Large animated background shift
-  - Centered logo and "Wanderpals" text
+  - Centered logo and "Offthetrail" text
   - Grain texture overlay (cinematic quality)
 - **Why**: First impressions are emotional, not rational
 - **Timing**: Fade in over 700ms on page load
@@ -1131,7 +1131,7 @@ Used on: Testimonials, host profiles, traveller stories
 
 #### **Why India-Centric Language?**
 
-Wanderpals operates in India, so:
+Offthetrail operates in India, so:
 - Prices in rupees (₹8,999 not $120)
 - References to Indian context (*"Earn ₹500 credit"*, not *"Get $6"*)
 - Familiar locations (*"Western Ghats"* not *"mountain chain"*)
@@ -1353,7 +1353,7 @@ Base Modal
 
 ---
 
-## SUMMARY: WHY WANDERPALS DESIGNS THIS WAY
+## SUMMARY: WHY OFFTHETRAIL DESIGNS THIS WAY
 
 ### **The Core Question: Why Every Choice?**
 
@@ -1370,7 +1370,7 @@ Base Modal
 
 ### **Design Is Strategy**
 
-Every design decision serves Wanderpals' business goal: **Turn browsers into bookers, bookers into repeat customers, and customers into advocates.**
+Every design decision serves Offthetrail' business goal: **Turn browsers into bookers, bookers into repeat customers, and customers into advocates.**
 
 - **Landing Page** (Cinematic) → Builds emotional connection
 - **Discovery** (Dynamic, personalized) → Guides without overwhelming
@@ -1400,7 +1400,7 @@ Every design decision serves Wanderpals' business goal: **Turn browsers into boo
 
 ### **Design Philosophy in One Sentence**
 
-*"Wanderpals designs for the person, not the business—ultimately serving the business better."*
+*"Offthetrail designs for the person, not the business—ultimately serving the business better."*
 
 By prioritizing authentic experiences, emotional connection, and user trust, every page, button, and animation works toward a single goal: making travel transformation feel inevitable, not optional.
 

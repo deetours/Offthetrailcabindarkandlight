@@ -1,5 +1,5 @@
 -- ==========================================
--- WANDERPALS ADMIN FOUNDATION SQL v2
+-- OFFTHETRAIL ADMIN FOUNDATION SQL v2
 -- FIXES: Infinite recursion in RLS policies
 -- Run this in your Supabase SQL Editor
 -- ==========================================

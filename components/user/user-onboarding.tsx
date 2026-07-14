@@ -38,7 +38,7 @@ export function UserOnboarding({ userId }: { userId: string }) {
     const steps = [
         {
             title: "Welcome to your Archive",
-            desc: "This is where your journeys come to life. Every trip you've taken with Wanderpals is stored here safely.",
+            desc: "This is where your journeys come to life. Every trip you've taken with Offthetrail is stored here safely.",
             icon: Sparkles
         },
         {

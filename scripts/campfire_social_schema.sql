@@ -1,4 +1,4 @@
--- WANDERPALS SOCIAL "CAMPFIRE" SCHEMA UPDATE
+-- OFFTHETRAIL SOCIAL "CAMPFIRE" SCHEMA UPDATE
 -- Run this in your Supabase SQL Editor to enable Trip Memory comments and likes
 
 -- ═══ 1. MEMORY LIKES ═══

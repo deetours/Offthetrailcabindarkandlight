@@ -18,7 +18,7 @@ jobs:
       - name: Ping health endpoint
         run: |
           echo "🚀 Pinging Supabase health endpoint..."
-          RESPONSE=$(curl -s -X GET https://wanderpals.vercel.app/api/health)
+          RESPONSE=$(curl -s -X GET https://offthetrail.vercel.app/api/health)
           echo "📊 Response: $RESPONSE"
           
           # Check if response contains "ok" status

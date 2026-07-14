@@ -8,7 +8,7 @@ Your `.env.local` file **only works locally**. When you deploy to Netlify, these
 
 ### Step 1: Go to Netlify Dashboard
 1. Log in to [netlify.com](https://netlify.com)
-2. Select your "Wanderpals" site
+2. Select your "Offthetrail" site
 
 ### Step 2: Add Environment Variables
 Navigate to: **Site settings → Build & deploy → Environment**
@@ -23,7 +23,7 @@ Click "Add environment variable" for each:
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Your anon key | From `.env.local` |
 | `SUPABASE_SERVICE_ROLE_KEY` | Your service role key | From `.env.local` line 5 |
 | `RESEND_API_KEY` | Your Resend API key | From `.env.local` |
-| `INTERNAL_API_SECRET` | `wanderpals_secure_bridge_2025` | From `.env.local` |
+| `INTERNAL_API_SECRET` | `offthetrail_secure_bridge_2025` | From `.env.local` |
 
 ### ✅ How to Copy Values from .env.local
 
@@ -45,7 +45,7 @@ After adding env vars:
 
 ### Check Health Endpoint
 ```bash
-curl https://your-wanderpals-site.netlify.app/api/health
+curl https://your-offthetrail-site.netlify.app/api/health
 ```
 
 You should see:

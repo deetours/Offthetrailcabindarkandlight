@@ -4,12 +4,12 @@ import { useState, useEffect } from 'react'
 import Image from 'next/image'
 
 const highlights = [
-  { id: 1, image: '/moments1.jpg', trip: 'Puga Valley Ladakh', likes: 342 },
-  { id: 2, image: '/moments2.png', trip: 'Meghalaya caves', likes: 521 },
-  { id: 3, image: '/moments3.png', trip: 'Tyrna Meghalaya', likes: 298 },
-  { id: 4, image: '/moments4.png', trip: 'Arunachal Pradesh', likes: 445 },
-  { id: 5, image: '/moments5.png', trip: 'Spiti Valley Komic', likes: 678 },
-  { id: 6, image: '/moments6.png', trip: 'Arunachal Pradesh beauty', likes: 512 },
+  { id: 1, image: '/images/offthetrail1.jpeg', trip: 'Off the Trail Stay 1', likes: 342 },
+  { id: 2, image: '/images/offthetrail2.jpeg', trip: 'Off the Trail Stay 2', likes: 521 },
+  { id: 3, image: '/images/offthetrail3.jpeg', trip: 'Off the Trail Stay 3', likes: 298 },
+  { id: 4, image: '/images/offthetrail4.jpeg', trip: 'Off the Trail Stay 4', likes: 445 },
+  { id: 5, image: '/images/offthetrail5.jpeg', trip: 'Off the Trail Stay 5', likes: 678 },
+  { id: 6, image: '/images/offthetrail6.jpeg', trip: 'Off the Trail Stay 6', likes: 512 },
 ]
 
 export function HighlightsGallery() {
@@ -25,9 +25,9 @@ export function HighlightsGallery() {
   return (
     <section className="py-24 px-6 md:px-16 lg:px-24">
       <div className="mx-auto max-w-6xl">
-        <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-4">Moments from the trips</h2>
+        <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-4">Real Photos of Off the Trail</h2>
         <p className="font-sans text-muted-foreground mb-12">
-          Real photos. Real people. Real connections.
+          Genuine experiences. Real people. True connections.
         </p>
 
         <div className="grid md:grid-cols-3 gap-6">

@@ -58,7 +58,7 @@ function ManifestoSection() {
               <span className="text-foreground not-italic">world is made of people</span>, not pins on a map.
             </motion.p>
             <motion.p style={{ opacity: p2Opacity, y: p2Y }} className="text-muted-foreground/40 font-serif text-xl md:text-2xl italic">
-              We're building Wanderpals because the travel industry has forgotten this.<br />
+              We're building Offthetrail because the travel industry has forgotten this.<br />
               It's turned journeys into consumption. We reject that.
             </motion.p>
             <motion.div style={{ opacity: p3Opacity, y: p3Y }} className="flex flex-col items-center gap-6 pt-8">
@@ -172,7 +172,7 @@ export function AboutPage() {
           </div>
           <div className="space-y-12 text-xl text-muted-foreground/80 leading-relaxed font-serif italic">
             <p>
-              Wanderpals started with a simple observation: the best parts of travel are rarely planned. They happen when you stay somewhere long enough to stop being a tourist.
+              Offthetrail started with a simple observation: the best parts of travel are rarely planned. They happen when you stay somewhere long enough to stop being a tourist.
             </p>
             <p className="text-foreground/60">
               We were tired of hostel chains that felt like hotels, and group trips that felt like tours. We wanted something different—places where you could actually belong.
@@ -262,7 +262,7 @@ export function AboutPage() {
       <footer className="px-6 py-24 border-t border-white/5 md:px-16 lg:px-24 opacity-60">
         <div className="mx-auto max-w-7xl flex flex-col md:flex-row items-center justify-between gap-12">
           <Link href="/" className="font-serif text-3xl text-foreground tracking-tightest">
-            Wanderpals.
+            Offthetrail.
           </Link>
           <nav className="flex items-center gap-12 text-[10px] uppercase tracking-[0.4em] font-bold">
             <Link href="/stays" className="hover:text-primary transition-colors">Stays</Link>

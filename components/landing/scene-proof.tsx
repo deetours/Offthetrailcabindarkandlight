@@ -4,9 +4,9 @@ import { useRef } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
 
 const STATS = [
-  { value: "4,800+", label: "Travellers trusted", sub: "across 7 years." },
-  { value: "120+", label: "Places in India", sub: "curated, not listed." },
-  { value: "98%", label: "Return rate", sub: "the number that humbles us most." },
+  { value: "2", label: "Hidden Sanctuaries", sub: "tucked away in dalhousie & jibhi." },
+  { value: "0", label: "Rushed Itineraries", sub: "we prefer slow mountain mornings." },
+  { value: "∞", label: "Wilderness", sub: "where the trail truly begins." },
 ]
 
 export function SceneProof() {

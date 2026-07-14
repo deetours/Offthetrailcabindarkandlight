@@ -1,4 +1,4 @@
--- Wanderpals Supabase bootstrap for a fresh project
+-- Offthetrail Supabase bootstrap for a fresh project
 -- Run this in the Supabase SQL editor for the new project.
 -- Safe to rerun: tables, policies, functions, and triggers are created idempotently where possible.
 
@@ -508,7 +508,7 @@ insert into public.trips (
   image_url
 )
 select
-  'Wanderpals Launch Test Trip',
+  'Offthetrail Launch Test Trip',
   'Bootstrap validation record',
   'Used to validate that the reconnected project is reachable.',
   'Himachal Pradesh',
@@ -519,5 +519,5 @@ select
   'draft',
   null
 where not exists (
-  select 1 from public.trips where name = 'Wanderpals Launch Test Trip'
+  select 1 from public.trips where name = 'Offthetrail Launch Test Trip'
 );

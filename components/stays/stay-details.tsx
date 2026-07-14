@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion"
 import { Navbar } from "../ui/navbar"
 import { Footer } from "../ui/footer"
@@ -8,6 +8,7 @@ import { Check, ArrowDown, MapPin, Bed, Users, Wifi, Coffee, Wind, Mountain } fr
 import Link from "next/link"
 import Image from "next/image"
 import { Magnetic } from "../ui/magnetic"
+import { WhatsAppHelpToast } from "../booking/whatsapp-help-toast"
 
 interface Stay {
   id: string
@@ -44,7 +45,17 @@ const getAmenityIcon = (name: string) => {
 
 export function StayDetails({ stay }: StayDetailsProps) {
   const [selectedRoom, setSelectedRoom] = useState(0)
+  const [showWhatsAppPrompt, setShowWhatsAppPrompt] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    // Show WhatsApp help toast after 45 seconds of dwell time
+    const timer = setTimeout(() => {
+      setShowWhatsAppPrompt(true)
+    }, 45000)
+    
+    return () => clearTimeout(timer)
+  }, [])
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -111,7 +122,7 @@ export function StayDetails({ stay }: StayDetailsProps) {
               transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1] }}
               className="font-serif text-[clamp(4rem,11vw,10rem)] leading-[0.85] text-foreground dark:text-white tracking-tightest mb-8"
             >
-              {stay.name.replace('Wanderpals ', '')}
+              {stay.name.replace('Offthetrail ', '')}
             </motion.h1>
 
             <motion.p
@@ -232,7 +243,7 @@ export function StayDetails({ stay }: StayDetailsProps) {
                     <span className="font-serif text-primary text-xl">W</span>
                   </div>
                   <p className="text-[10px] uppercase tracking-[0.3em] font-bold text-primary/60">
-                    — {stay.quotes?.[0]?.author || "Wanderpals Journal"}
+                    — {stay.quotes?.[0]?.author || "Offthetrail Journal"}
                   </p>
                 </div>
               </div>
@@ -391,6 +402,23 @@ export function StayDetails({ stay }: StayDetailsProps) {
       </section>
 
       <Footer />
+      
+      {/* ── STICKY MOBILE CTA ──────────────────────────────── */}
+      <div className="fixed bottom-0 left-0 right-0 p-4 md:hidden z-40 bg-background/90 backdrop-blur-md border-t border-border pb-[calc(env(safe-area-inset-bottom)+1rem)]">
+        <Link 
+          href={`/booking/stay/${stay.id}?room=${encodeURIComponent(stay.roomTypes[selectedRoom]?.name)}`}
+          className="w-full flex items-center justify-center py-4 bg-primary text-black rounded-xl font-sans text-xs uppercase tracking-[0.4em] font-bold"
+        >
+          Check Dates & Book
+        </Link>
+      </div>
+
+      {/* ── WHATSAPP HELP TOAST ────────────────────────────── */}
+      <WhatsAppHelpToast 
+        isVisible={showWhatsAppPrompt}
+        onDismiss={() => setShowWhatsAppPrompt(false)}
+        propertyName={stay.name}
+      />
     </main>
   )
 }

@@ -207,11 +207,11 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   const { id } = await params
   const tripResult = await getTripData(id)
 
-  if (!tripResult) return { title: "Trip Not Found | Wanderpals" }
+  if (!tripResult) return { title: "Trip Not Found | Offthetrail" }
 
   const trip = tripResult.data
   return {
-    title: `${trip.name || trip.title} | Wanderpals`,
+    title: `${trip.name || trip.title} | Offthetrail`,
     description: trip.why || trip.description,
   }
 }

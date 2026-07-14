@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import { motion, useScroll, useSpring, useTransform } from "framer-motion"
+import { motion, useScroll, useSpring, useTransform, AnimatePresence } from "framer-motion"
 import { SceneDiscoveryHero } from "./scene-discovery-hero"
 import { SceneStaysGrid } from "./scene-stays-grid"
 import { SceneJourneys } from "./scene-journeys"
@@ -38,6 +38,9 @@ export function LandingPage() {
     restDelta: 0.001
   })
 
+  const [lastStayId, setLastStayId] = useState<string | null>(null)
+  const [lastStayName, setLastStayName] = useState<string | null>(null)
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY
@@ -47,6 +50,18 @@ export function LandingPage() {
     window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
+
+  useEffect(() => {
+    // Check local storage for abandoned selection
+    if (typeof window !== "undefined") {
+      const savedId = localStorage.getItem('offthetrail_last_stay_id')
+      const savedName = localStorage.getItem('offthetrail_last_stay_name')
+      if (savedId && savedName) {
+        setLastStayId(savedId)
+        setLastStayName(savedName)
+      }
+    }
+  }, [isModalOpen]) // Re-check when modal closes
 
   const handleOpenModal = (tab: EnquiryTab, locationId?: string) => {
     setModalTab(tab)
@@ -64,6 +79,27 @@ export function LandingPage() {
       className="grain min-h-screen bg-background relative overflow-x-hidden no-scrollbar"
     >
       <Navbar visible={showNavbar} />
+      
+      {/* Abandoned Selection Banner */}
+      <AnimatePresence>
+        {lastStayId && lastStayName && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="fixed top-24 left-0 right-0 z-40 px-4 flex justify-center pointer-events-none"
+          >
+            <button 
+              onClick={() => handleOpenModal("stay", lastStayId)}
+              className="bg-card/90 backdrop-blur-md border border-border shadow-2xl rounded-full px-6 py-3 flex items-center gap-3 text-sm hover:border-primary transition-colors group pointer-events-auto"
+            >
+              <span className="text-muted-foreground hidden sm:inline">Continue where you left off:</span>
+              <span className="font-serif text-primary">Resume {lastStayName}</span>
+              <span className="text-primary group-hover:translate-x-1 transition-transform">→</span>
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Traveler's Compass (Innovation Indicator) */}
       <motion.div 

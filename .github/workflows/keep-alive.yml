@@ -1,4 +1,4 @@
-name: Keep Wanderpals Backend Alive
+name: Keep Offthetrail Backend Alive
 
 # Run every 5 minutes to keep Supabase connection active
 # Prevents cold starts and database idle timeouts
@@ -17,8 +17,8 @@ jobs:
     steps:
       - name: Ping Health Endpoint
         run: |
-          echo "🔄 Pinging Wanderpals backend..."
-          RESPONSE=$(curl -s -w "\n%{http_code}" https://wanderpals.netlify.app/api/health)
+          echo "🔄 Pinging Offthetrail backend..."
+          RESPONSE=$(curl -s -w "\n%{http_code}" https://offthetrail.netlify.app/api/health)
           HTTP_CODE=$(echo "$RESPONSE" | tail -1)
           BODY=$(echo "$RESPONSE" | head -1)
           
@@ -48,7 +48,7 @@ jobs:
           # This endpoint ensures the database connection stays warm
           curl -s -X GET \
             -H "Content-Type: application/json" \
-            https://wanderpals.netlify.app/api/health \
+            https://offthetrail.netlify.app/api/health \
             -w "\nStatus: %{http_code}\n"
         timeout-minutes: 5
 
