@@ -10,8 +10,8 @@ export const metadata: Metadata = {
   keywords: ["travel", "hostels", "trips", "India", "backpacking", "slow travel", "offthetrail", "cafe"],
   generator: 'v0.app',
   icons: {
-    icon: '/favicon.png',
-    shortcut: '/favicon.png',
+    icon: '/images/favicon.png',
+    shortcut: '/images/favicon.png',
   },
 }
 
