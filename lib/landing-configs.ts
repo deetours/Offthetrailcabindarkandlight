@@ -12,6 +12,7 @@ export type LandingPageConfig = {
   name: string
   tagline: string
   heroImage: string
+  storyImage?: string
   ownerWhatsapp: string
   narrative: string[]
   rooms: RoomType[]
@@ -26,6 +27,7 @@ export const dalhousieConfig: LandingPageConfig = {
   name: "Dalhousie Estate",
   tagline: "Trade the noise for silence. Pine air, colonial stone, and slow mornings on the ridge.",
   heroImage: "/images/offthetrail7.jpeg",
+  storyImage: "/images/offthetrail5.jpeg",
   ownerWhatsapp: "+919816315898",
   narrative: [
     "Dalhousie Estate isn't just a property; it's a return to form. Built with colonial stone and resting quietly against the ridgeline, it is designed for those who want to trade the noise of the city for the silence of the pines.",
