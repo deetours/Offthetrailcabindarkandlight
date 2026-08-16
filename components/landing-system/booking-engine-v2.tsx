@@ -1,51 +1,27 @@
 "use client"
 
 import { useState, useMemo } from "react"
-import { Calendar, Users, Phone, User, CheckCircle2 } from "lucide-react"
+import { Calendar, Users, Phone, User, QrCode, Send } from "lucide-react"
+import Image from "next/image"
+import type { LandingPageConfig } from "@/lib/landing-configs"
 
-// Hardcoded Dalhousie Inventory
-const ROOMS = [
-  {
-    id: "super_deluxe",
-    name: "Super Deluxe",
-    description: "Wake up to the ridge from your own balcony.",
-    price: 4800,
-    available: 4,
-    numbers: "01–04"
-  },
-  {
-    id: "deluxe",
-    name: "Deluxe",
-    description: "Attached balcony, sweeping valley views.",
-    price: 4000,
-    available: 2,
-    numbers: "05–06"
-  },
-  {
-    id: "standard",
-    name: "Standard",
-    description: "Window views, warm colonial interiors.",
-    price: 3200,
-    available: 4,
-    numbers: "07–10"
-  }
-]
+interface BookingEngineProps {
+  config: LandingPageConfig
+}
 
-// Note: Ensure user replaces this with their actual WhatsApp number
-const OWNER_WHATSAPP = "+919816315898" 
+type Step = "SELECTION" | "PAYMENT" | "CONFIRMATION"
 
-export function BookingEngine() {
+export function BookingEngineV2({ config }: BookingEngineProps) {
+  const [step, setStep] = useState<Step>("SELECTION")
+  
+  // Form State
   const [checkIn, setCheckIn] = useState("")
   const [checkOut, setCheckOut] = useState("")
-  const [roomSelection, setRoomSelection] = useState<Record<string, number>>({
-    super_deluxe: 0,
-    deluxe: 0,
-    standard: 0
-  })
+  const [roomSelection, setRoomSelection] = useState<Record<string, number>>({})
   const [guestCount, setGuestCount] = useState(2)
   const [guestName, setGuestName] = useState("")
   const [guestPhone, setGuestPhone] = useState("")
-  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [transactionId, setTransactionId] = useState("")
 
   // Math
   const nights = useMemo(() => {
@@ -62,12 +38,13 @@ export function BookingEngine() {
 
   const subtotal = useMemo(() => {
     let total = 0
-    ROOMS.forEach(room => {
+    config.rooms.forEach(room => {
       total += (roomSelection[room.id] || 0) * room.price
     })
     return total * (nights || 1) // Default to 1 night for display if dates not picked yet
-  }, [roomSelection, nights])
+  }, [roomSelection, nights, config.rooms])
 
+  // Handlers
   const handleRoomChange = (id: string, delta: number, available: number) => {
     setRoomSelection(prev => {
       const current = prev[id] || 0
@@ -79,31 +56,36 @@ export function BookingEngine() {
     })
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleProceedToPayment = (e: React.FormEvent) => {
     e.preventDefault()
     if (!checkIn || !checkOut || totalRooms === 0 || !guestName || !guestPhone) return
+    setStep("PAYMENT")
+  }
+
+  const handleSendToWhatsApp = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!transactionId) return
 
     // Construct WhatsApp Message
     let roomSummary = ""
-    ROOMS.forEach(room => {
+    config.rooms.forEach(room => {
       const qty = roomSelection[room.id]
       if (qty > 0) {
         roomSummary += `- ${qty}x ${room.name} (Rooms ${room.numbers})\n`
       }
     })
 
-    const message = `Hello! I'd like to request a booking at Dalhousie Estate.\n\n*Name:* ${guestName}\n*Phone:* ${guestPhone}\n*Dates:* ${checkIn} to ${checkOut} (${nights} nights)\n*Guests:* ${guestCount}\n\n*Rooms Requested:*\n${roomSummary}\n*Estimated Total:* ₹${subtotal.toLocaleString()} (incl. breakfast)\n\nPlease let me know if these are available and how to proceed with payment.`
+    const message = `Hello! I have completed payment for a booking at ${config.name}.\n\n*Guest:* ${guestName}\n*Phone:* ${guestPhone}\n*Dates:* ${checkIn} to ${checkOut} (${nights} nights)\n*Guests:* ${guestCount}\n\n*Rooms Requested:*\n${roomSummary}\n*Total Paid:* ₹${subtotal.toLocaleString()}\n*Transaction ID:* ${transactionId}\n\n[Please find my payment screenshot attached]`
     
     const encodedMessage = encodeURIComponent(message)
-    const waLink = `https://wa.me/${OWNER_WHATSAPP.replace("+", "")}?text=${encodedMessage}`
+    const waLink = `https://wa.me/${config.ownerWhatsapp.replace("+", "")}?text=${encodedMessage}`
 
-    // Redirect to WhatsApp
     window.open(waLink, '_blank')
-    setIsSubmitted(true)
+    setStep("CONFIRMATION")
   }
 
   return (
-    <section id="booking-ledger" className="bg-ink text-parchment py-16 px-6 md:px-12 lg:px-24 border-t border-mist">
+    <section id="booking-ledger" className="bg-ink text-parchment py-16 px-6 md:px-12 lg:px-24 border-t border-mist relative z-20">
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-12 lg:gap-24 relative">
         
         {/* Left Column: The Ledger */}
@@ -112,7 +94,7 @@ export function BookingEngine() {
             <h3 className="font-serif text-3xl md:text-4xl text-parchment mb-8">The Guest Ledger</h3>
             
             {/* Dates */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 bg-mist p-6 rounded-xl border border-white/5">
+            <div className={`grid grid-cols-1 sm:grid-cols-2 gap-6 bg-mist p-6 rounded-xl border border-white/5 transition-opacity ${step !== "SELECTION" ? "opacity-50 pointer-events-none" : ""}`}>
               <div>
                 <label className="flex items-center gap-2 text-xs font-sans text-moss uppercase tracking-widest mb-2">
                   <Calendar className="w-3 h-3" /> Check-in
@@ -141,14 +123,14 @@ export function BookingEngine() {
           </div>
 
           {/* Rooms */}
-          <div className="space-y-6">
+          <div className={`space-y-6 ${step !== "SELECTION" ? "opacity-50 pointer-events-none" : ""}`}>
             <h4 className="font-sans text-xs text-moss uppercase tracking-widest border-b border-white/10 pb-4">
               Select Rooms
             </h4>
             
             <div className="space-y-6">
-              {ROOMS.map((room) => {
-                const qty = roomSelection[room.id]
+              {config.rooms.map((room) => {
+                const qty = roomSelection[room.id] || 0
                 return (
                   <div key={room.id} className="group flex flex-col sm:flex-row justify-between items-start sm:items-center p-6 bg-mist rounded-xl border border-white/5 hover:border-white/15 transition-colors gap-6">
                     <div className="flex-1">
@@ -182,7 +164,7 @@ export function BookingEngine() {
                         </button>
                       </div>
                       {qty === room.available && room.available > 0 && (
-                         <span className="font-sans text-[10px] text-ember uppercase tracking-widest">{room.available} left (Max reached)</span>
+                         <span className="font-sans text-[10px] text-ember uppercase tracking-widest">{room.available} left</span>
                       )}
                     </div>
                   </div>
@@ -192,26 +174,27 @@ export function BookingEngine() {
           </div>
         </div>
 
-        {/* Right Column: Sticky Summary */}
+        {/* Right Column: Sticky Summary & Checkout Flow */}
         <div className="w-full lg:w-[400px]">
           <div className="sticky top-24 bg-mist rounded-xl border border-white/5 p-8 flex flex-col gap-8 shadow-2xl">
-            <div>
-              <h4 className="font-serif text-2xl text-parchment mb-1">Your Stay</h4>
-              <p className="font-mono text-sm text-moss">
-                {nights} {nights === 1 ? 'night' : 'nights'} • {totalRooms} {totalRooms === 1 ? 'room' : 'rooms'}
-              </p>
-            </div>
-
-            {isSubmitted ? (
-              <div className="bg-ink p-6 rounded-lg border border-brass/30 text-center space-y-4">
-                <CheckCircle2 className="w-8 h-8 text-brass mx-auto" />
-                <h5 className="font-serif text-lg text-parchment">Request Sent</h5>
-                <p className="font-sans text-sm text-moss font-light">
-                  Your WhatsApp message has been generated. The owner will reply shortly to confirm availability and process your payment.
+            
+            {/* Header: Always visible */}
+            <div className="flex justify-between items-start border-b border-white/10 pb-6">
+              <div>
+                <h4 className="font-serif text-2xl text-parchment mb-1">Your Stay</h4>
+                <p className="font-mono text-sm text-moss">
+                  {nights} {nights === 1 ? 'night' : 'nights'} • {totalRooms} {totalRooms === 1 ? 'room' : 'rooms'}
                 </p>
               </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-8 flex flex-col">
+              <div className="text-right">
+                <p className="font-sans text-[10px] text-moss uppercase tracking-widest mb-1">Subtotal</p>
+                <p className="font-mono text-2xl text-brass tracking-tight">₹{subtotal.toLocaleString()}</p>
+              </div>
+            </div>
+
+            {/* FLOW STATE 1: SELECTION */}
+            {step === "SELECTION" && (
+              <form onSubmit={handleProceedToPayment} className="space-y-8 flex flex-col animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <div className="space-y-4">
                   <div>
                     <label className="flex items-center gap-2 text-xs font-sans text-moss uppercase tracking-widest mb-2">
@@ -254,22 +237,107 @@ export function BookingEngine() {
                   </div>
                 </div>
 
-                <div className="pt-6 border-t border-white/10 flex justify-between items-end">
-                  <div>
-                    <p className="font-sans text-xs text-moss uppercase tracking-widest mb-1">Subtotal</p>
-                    <p className="font-mono text-xs text-moss">Incl. Taxes & Breakfast</p>
-                  </div>
-                  <p className="font-mono text-3xl text-brass tracking-tight">₹{subtotal.toLocaleString()}</p>
-                </div>
-
                 <button 
                   type="submit"
                   disabled={totalRooms === 0 || nights === 0}
                   className="w-full py-4 bg-brass text-ink font-sans text-sm font-semibold uppercase tracking-widest rounded-lg hover:bg-brass/90 transition-colors disabled:opacity-50 disabled:hover:bg-brass"
                 >
-                  Request to Book
+                  Proceed to Payment
                 </button>
               </form>
+            )}
+
+            {/* FLOW STATE 2: PAYMENT */}
+            {step === "PAYMENT" && (
+              <form onSubmit={handleSendToWhatsApp} className="space-y-8 flex flex-col animate-in fade-in slide-in-from-right-4 duration-500">
+                <div className="space-y-4">
+                  <div className="bg-ink p-4 rounded-lg border border-white/10 text-center flex flex-col items-center">
+                    <QrCode className="w-6 h-6 text-brass mb-3" />
+                    <p className="font-sans text-sm text-parchment mb-4">Pay securely via UPI to <br/><span className="font-medium text-brass">{config.name}</span></p>
+                    
+                    <div className="relative w-48 h-48 bg-white p-2 rounded-lg mb-4">
+                      <Image 
+                        src="/images/qr-code.jpeg"
+                        alt="UPI Payment QR Code"
+                        fill
+                        className="object-contain"
+                      />
+                    </div>
+                    
+                    <div className="bg-brass/10 border border-brass/20 text-brass px-4 py-3 rounded-lg w-full mt-2">
+                      <p className="font-sans text-xs mb-1">Scan and pay exactly:</p>
+                      <p className="font-mono text-xl tracking-tight">₹{subtotal.toLocaleString()}</p>
+                    </div>
+                    <p className="font-sans text-[11px] text-moss mt-3 px-2 leading-relaxed">
+                      *Scan using Google Pay, PhonePe, or Paytm. Ensure you manually enter the exact amount shown above.
+                    </p>
+                  </div>
+
+                  <div className="pt-4">
+                    <label className="flex items-center justify-between text-xs font-sans text-moss uppercase tracking-widest mb-2">
+                      <span>Transaction ID / UTR</span>
+                      <span className="text-ember">Required</span>
+                    </label>
+                    <input 
+                      type="text" 
+                      required
+                      value={transactionId}
+                      onChange={(e) => setTransactionId(e.target.value)}
+                      placeholder="e.g. 31234567890"
+                      className="w-full bg-ink border border-white/10 text-parchment px-4 py-3 rounded-lg focus:outline-none focus:border-brass font-mono text-sm transition-colors"
+                    />
+                    <p className="font-sans text-[11px] text-moss mt-2">
+                      After paying, enter your reference number here. <strong className="text-parchment font-medium">Please screenshot your payment success screen</strong> — you will need to attach it in the next step.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex gap-3">
+                  <button 
+                    type="button"
+                    onClick={() => setStep("SELECTION")}
+                    className="px-6 py-4 border border-white/10 text-parchment font-sans text-sm font-semibold uppercase tracking-widest rounded-lg hover:bg-white/5 transition-colors"
+                  >
+                    Back
+                  </button>
+                  <button 
+                    type="submit"
+                    disabled={!transactionId}
+                    className="flex-1 py-4 bg-brass text-ink font-sans text-sm font-semibold uppercase tracking-widest rounded-lg hover:bg-brass/90 transition-colors disabled:opacity-50 disabled:hover:bg-brass flex justify-center items-center gap-2"
+                  >
+                    Confirm & Send <Send className="w-4 h-4" />
+                  </button>
+                </div>
+              </form>
+            )}
+
+            {/* FLOW STATE 3: CONFIRMATION */}
+            {step === "CONFIRMATION" && (
+              <div className="bg-ink p-8 rounded-lg border border-brass/30 text-center space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <Send className="w-10 h-10 text-brass mx-auto" />
+                <div>
+                  <h5 className="font-serif text-xl text-parchment mb-2">Message Generated</h5>
+                  <p className="font-sans text-sm text-moss font-light leading-relaxed">
+                    Your booking details have been sent to WhatsApp. 
+                  </p>
+                </div>
+                
+                <div className="bg-mist p-4 border border-white/5 rounded text-left">
+                  <p className="font-sans text-xs text-parchment font-medium uppercase tracking-widest mb-2 text-center text-ember">
+                    Important Next Step
+                  </p>
+                  <p className="font-sans text-sm text-moss font-light text-center">
+                    Please <strong className="text-parchment">attach your payment screenshot</strong> in WhatsApp before hitting send so {config.name} can verify instantly.
+                  </p>
+                </div>
+
+                <button 
+                  onClick={() => window.location.reload()}
+                  className="text-xs font-sans text-moss hover:text-parchment underline underline-offset-4"
+                >
+                  Start over
+                </button>
+              </div>
             )}
           </div>
         </div>

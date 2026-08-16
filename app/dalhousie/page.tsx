@@ -1,21 +1,26 @@
-import { DalhousieHero } from "@/components/dalhousie/dalhousie-hero"
-import { EstateNarrative } from "@/components/dalhousie/estate-narrative"
-import { BookingEngine } from "@/components/dalhousie/booking-engine"
-import { EstateFaq } from "@/components/dalhousie/estate-faq"
+import { dalhousieConfig } from "@/lib/landing-configs"
+import { ScrollHero } from "@/components/landing-system/scroll-hero"
+import { EstateNarrative } from "@/components/landing-system/estate-narrative"
+import { BookingEngineV2 } from "@/components/landing-system/booking-engine-v2"
+import { EstateFaq } from "@/components/landing-system/estate-faq"
 import { Footer } from "@/components/ui/footer"
 
 export const metadata = {
-  title: "Dalhousie Estate | OffTheTrail",
-  description: "Trade the noise for silence. Pine air, colonial stone, and slow mornings on the ridge.",
+  title: `${dalhousieConfig.name} | OffTheTrail`,
+  description: dalhousieConfig.tagline,
 }
 
 export default function DalhousiePage() {
   return (
-    <main className="min-h-screen bg-ink selection:bg-brass selection:text-ink">
-      <DalhousieHero />
-      <EstateNarrative />
-      <BookingEngine />
-      <EstateFaq />
+    <main className="min-h-screen bg-ink selection:bg-brass selection:text-ink font-sans">
+      <ScrollHero 
+        title={dalhousieConfig.name} 
+        tagline={dalhousieConfig.tagline} 
+        imagePath={dalhousieConfig.heroImage} 
+      />
+      <EstateNarrative config={dalhousieConfig} />
+      <BookingEngineV2 config={dalhousieConfig} />
+      <EstateFaq config={dalhousieConfig} />
       <Footer />
     </main>
   )
