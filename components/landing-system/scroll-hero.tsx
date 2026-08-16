@@ -11,9 +11,10 @@ interface ScrollHeroProps {
   imagePath: string
   eyebrow?: string
   hideCta?: boolean
+  chipText?: string
 }
 
-export function ScrollHero({ title, tagline, imagePath, eyebrow, hideCta = false }: ScrollHeroProps) {
+export function ScrollHero({ title, tagline, imagePath, eyebrow, hideCta = false, chipText }: ScrollHeroProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const prefersReducedMotion = useReducedMotion()
 
@@ -102,14 +103,27 @@ export function ScrollHero({ title, tagline, imagePath, eyebrow, hideCta = false
       {/* Content with sequenced fade-in & Clip-Path wipe */}
       <motion.div 
         style={{ y: prefersReducedMotion ? "0%" : textY, opacity: textOpacity }}
-        className="relative z-30 flex flex-col items-center text-center px-6 max-w-4xl mt-[25vh]"
+        className="relative z-30 flex flex-col items-start text-left px-6 md:px-12 lg:px-24 w-full max-w-7xl mx-auto mt-[25vh] pointer-events-none"
       >
+        
+        {/* Floating Anti-Grid Chip (Desktop) / Inline Tag (Mobile) */}
+        {chipText && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
+            animate={{ opacity: 1, scale: 1, rotate: prefersReducedMotion ? 0 : -3 }}
+            transition={{ duration: 1.2, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="mb-8 md:absolute md:-left-8 md:top-12 lg:-left-16 z-40 bg-mist/90 backdrop-blur-md border border-white/10 px-4 py-2 rounded-lg shadow-2xl pointer-events-none md:rotate-[-3deg] inline-block"
+          >
+            <span className="font-sans text-[10px] md:text-xs text-moss uppercase tracking-[0.1em]">{chipText}</span>
+          </motion.div>
+        )}
+
         {/* Clip-Path Reveal for Headline */}
         <motion.div
           initial={{ clipPath: prefersReducedMotion ? "inset(0 0 0 0)" : "inset(100% 0 0 0)" }}
           animate={{ clipPath: "inset(0 0 0 0)" }}
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          className="pb-2 flex flex-col items-center" // padding to prevent cutting off descenders
+          className="pb-2 flex flex-col items-start w-full md:w-2/3 lg:w-[60%]" // rule-of-thirds width on desktop
         >
           {eyebrow && (
             <motion.span 
@@ -145,7 +159,7 @@ export function ScrollHero({ title, tagline, imagePath, eyebrow, hideCta = false
           <motion.div
             initial={{ opacity: 0 }}
             transition={{ duration: 1, delay: 0.6 }}
-            className="mt-16 relative"
+            className="mt-16 relative pointer-events-auto"
             onMouseEnter={() => setIsHoveringCTA(true)}
             onMouseLeave={() => setIsHoveringCTA(false)}
             animate={{

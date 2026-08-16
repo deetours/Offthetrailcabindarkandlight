@@ -16,6 +16,12 @@ export type LandingPageConfig = {
   ownerWhatsapp: string
   narrative: string[]
   rooms: RoomType[]
+  amenities: {
+    title: string
+    description: string
+  }[]
+  mapUrl: string
+  chipText: string
   faq: {
     question: string
     answer: string
@@ -59,6 +65,14 @@ export const dalhousieConfig: LandingPageConfig = {
       numbers: "07–10"
     }
   ],
+  amenities: [
+    { title: "Colonial Stone", description: "Built in 1918, restored for modern comfort." },
+    { title: "Pine Air", description: "Surrounded by a dense, private pine forest." },
+    { title: "In-house Kitchen", description: "Fresh local meals prepared daily." },
+    { title: "Ridge Views", description: "Uninterrupted valley panoramas." }
+  ],
+  mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13568.178326093405!2d75.9626359!3d32.5358052!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391c89f5bc36e783%3A0xc34a169b12d5b62b!2sDalhousie%2C%20Himachal%20Pradesh!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin",
+  chipText: "10 Rooms · Dalhousie, HP · Est. Retreat",
   faq: [
     {
       question: "Check-in & Check-out",
@@ -109,5 +123,12 @@ export const jibhiConfig: LandingPageConfig = {
       numbers: ""
     }
   ],
+  amenities: [
+    { title: "Canopy Level", description: "Built high in the trees, eye-level with the mist." },
+    { title: "Tirthan River", description: "Short trek down to the pristine waters." },
+    { title: "Stargazing Deck", description: "Unobstructed views of the night sky." }
+  ],
+  mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13636.550186716075!2d77.348123!3d31.636605!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3905a5a1f1073843%3A0xb35b44ec82bb2b45!2sJibhi%2C%20Himachal%20Pradesh%20175123!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin",
+  chipText: "2 Rooms · Jibhi, HP · Canopy Stay",
   faq: []
 }
