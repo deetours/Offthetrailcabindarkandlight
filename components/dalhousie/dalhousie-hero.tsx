@@ -8,7 +8,7 @@ export function DalhousieHero() {
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/highlights/spiti-road.jpg" // TODO: Replace with real photography
+          src="/images/offthetrail7.jpeg" // Replaced with user's specific photography
           alt="Dalhousie Estate"
           fill
           priority
