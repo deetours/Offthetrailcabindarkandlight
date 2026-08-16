@@ -95,9 +95,38 @@ export async function middleware(request: NextRequest) {
         }
     }
 
+    // Subdomain routing
+    const hostname = request.headers.get('host') || ''
+    
+    // Support testing on localhost as well as production
+    const isDalhousie = hostname === 'dalhousie.offthetrail.in' || hostname.startsWith('dalhousie.localhost')
+    const isJibhi = hostname === 'jibhi.offthetrail.in' || hostname.startsWith('jibhi.localhost')
+
+    // If it's a subdomain, rewrite to the specific folder
+    if (isDalhousie && !request.nextUrl.pathname.startsWith('/dalhousie')) {
+        const url = request.nextUrl.clone()
+        url.pathname = `/dalhousie${request.nextUrl.pathname}`
+        return NextResponse.rewrite(url)
+    }
+
+    if (isJibhi && !request.nextUrl.pathname.startsWith('/jibhi')) {
+        const url = request.nextUrl.clone()
+        url.pathname = `/jibhi${request.nextUrl.pathname}`
+        return NextResponse.rewrite(url)
+    }
+
     return response
 }
 
 export const config = {
-    matcher: ['/admin/:path*', '/memories/:path*', '/return/:path*'],
+    matcher: [
+        /*
+         * Match all request paths except for the ones starting with:
+         * - api (API routes)
+         * - _next/static (static files)
+         * - _next/image (image optimization files)
+         * - favicon.ico, sitemap.xml, robots.txt (metadata files)
+         */
+        '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)',
+    ],
 }
