@@ -56,8 +56,9 @@ export function StayBookingFlow({ stay }: StayBookingFlowProps) {
   const availableActivities = OFFTHETRAIL_DATA.activities?.filter(
     (a) => a.location.toLowerCase() === stay.location.toLowerCase()
   ) || []
+  const today = new Date().toLocaleDateString("en-CA")
 
-  const basePrice = stay.roomTypes[bookingData.roomType].price * nights * bookingData.guests
+  const basePrice = stay.roomTypes[bookingData.roomType].price * nights
   const activitiesPrice = selectedActivities.reduce((total, activityId) => {
     const activity = availableActivities.find((a) => a.id === activityId)
     return total + (activity?.price || 0) * bookingData.guests
@@ -253,33 +254,42 @@ export function StayBookingFlow({ stay }: StayBookingFlowProps) {
 
                     <div className="grid md:grid-cols-2 gap-8">
                       <div className="space-y-4">
-                        <label className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground/40 font-bold ml-2">Check In</label>
+                        <label htmlFor="booking-check-in" className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground/40 font-bold ml-2">Check In</label>
                         <input
+                          id="booking-check-in"
                           type="date"
                           value={bookingData.checkIn}
                           onChange={(e) => setBookingData({ ...bookingData, checkIn: e.target.value })}
+                          min={today}
+                          required
                           className="w-full bg-card dark:bg-white/[0.03] border border-border dark:border-white/10 rounded-xl px-6 py-4 text-foreground focus:outline-none focus:border-primary/50 transition-all font-sans text-sm"
                         />
                       </div>
                       <div className="space-y-4">
-                        <label className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground/40 font-bold ml-2">Check Out</label>
+                        <label htmlFor="booking-check-out" className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground/40 font-bold ml-2">Check Out</label>
                         <input
+                          id="booking-check-out"
                           type="date"
                           value={bookingData.checkOut}
                           onChange={(e) => setBookingData({ ...bookingData, checkOut: e.target.value })}
-                          min={bookingData.checkIn}
+                          min={bookingData.checkIn || today}
+                          required
                           className="w-full bg-card dark:bg-white/[0.03] border border-border dark:border-white/10 rounded-xl px-6 py-4 text-foreground focus:outline-none focus:border-primary/50 transition-all font-sans text-sm"
                         />
                       </div>
                     </div>
 
                     <div className="space-y-4">
-                      <label className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground/40 font-bold ml-2">Guests</label>
-                      <div className="flex gap-4">
+                      <fieldset className="space-y-4">
+                        <legend className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground/40 font-bold ml-2">Guests</legend>
+                        <div className="flex gap-4">
                         {[1, 2, 3, 4].map((n) => (
                           <button
                             key={n}
+                            type="button"
                             onClick={() => setBookingData({ ...bookingData, guests: n })}
+                            aria-pressed={bookingData.guests === n}
+                            aria-label={`${n} guest${n === 1 ? "" : "s"}`}
                             className={`flex-1 h-14 rounded-xl border font-serif text-lg transition-all duration-500 ${
                               bookingData.guests === n
                                 ? "border-primary bg-primary text-primary-foreground shadow-lg shadow-primary/20"
@@ -289,7 +299,8 @@ export function StayBookingFlow({ stay }: StayBookingFlowProps) {
                             {n}
                           </button>
                         ))}
-                      </div>
+                        </div>
+                      </fieldset>
                     </div>
                   </div>
                 )}
@@ -363,21 +374,27 @@ export function StayBookingFlow({ stay }: StayBookingFlowProps) {
                     <div className="grid gap-8">
                       <div className="grid md:grid-cols-2 gap-6">
                         <div className="space-y-2">
-                          <label className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground/40 font-bold ml-2">First Name</label>
+                          <label htmlFor="booking-first-name" className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground/40 font-bold ml-2">First Name</label>
                           <input
+                            id="booking-first-name"
                             type="text"
                             value={bookingData.firstName}
                             onChange={(e) => setBookingData({ ...bookingData, firstName: e.target.value })}
+                            required
+                            autoComplete="given-name"
                             className="w-full bg-card dark:bg-white/[0.03] border border-border dark:border-white/10 rounded-xl px-6 py-4 text-foreground focus:outline-none focus:border-primary/50 transition-all font-serif text-lg placeholder:text-muted-foreground/30 dark:placeholder:text-white/5"
                             placeholder="e.g. Elena"
                           />
                         </div>
                         <div className="space-y-2">
-                          <label className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground/40 font-bold ml-2">Last Name</label>
+                          <label htmlFor="booking-last-name" className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground/40 font-bold ml-2">Last Name</label>
                           <input
+                            id="booking-last-name"
                             type="text"
                             value={bookingData.lastName}
                             onChange={(e) => setBookingData({ ...bookingData, lastName: e.target.value })}
+                            required
+                            autoComplete="family-name"
                             className="w-full bg-card dark:bg-white/[0.03] border border-border dark:border-white/10 rounded-xl px-6 py-4 text-foreground focus:outline-none focus:border-primary/50 transition-all font-serif text-lg placeholder:text-muted-foreground/30 dark:placeholder:text-white/5"
                             placeholder="e.g. Vance"
                           />
@@ -385,13 +402,16 @@ export function StayBookingFlow({ stay }: StayBookingFlowProps) {
                       </div>
 
                       <div className="space-y-2">
-                        <label className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground/40 font-bold ml-2">Email</label>
+                        <label htmlFor="booking-email" className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground/40 font-bold ml-2">Email</label>
                         <div className="relative">
                           <Zap className="absolute left-6 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground/20" />
                           <input
+                            id="booking-email"
                             type="email"
                             value={bookingData.email}
                             onChange={(e) => setBookingData({ ...bookingData, email: e.target.value })}
+                            required
+                            autoComplete="email"
                             className="w-full bg-card dark:bg-white/[0.03] border border-border dark:border-white/10 rounded-xl pl-16 pr-6 py-4 text-foreground focus:outline-none focus:border-primary/50 transition-all font-serif text-lg placeholder:text-muted-foreground/30 dark:placeholder:text-white/5"
                             placeholder="elena@ethereal.voyage"
                           />
@@ -399,13 +419,16 @@ export function StayBookingFlow({ stay }: StayBookingFlowProps) {
                       </div>
 
                       <div className="space-y-2">
-                        <label className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground/40 font-bold ml-2">WhatsApp Number</label>
+                        <label htmlFor="booking-phone" className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground/40 font-bold ml-2">WhatsApp Number</label>
                         <div className="relative">
                           <Info className="absolute left-6 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground/20" />
                           <input
+                            id="booking-phone"
                             type="tel"
                             value={bookingData.phone}
                             onChange={(e) => setBookingData({ ...bookingData, phone: e.target.value })}
+                            required
+                            autoComplete="tel"
                             className="w-full bg-card dark:bg-white/[0.03] border border-border dark:border-white/10 rounded-xl pl-16 pr-6 py-4 text-foreground focus:outline-none focus:border-primary/50 transition-all font-serif text-lg placeholder:text-muted-foreground/30 dark:placeholder:text-white/5"
                             placeholder="+91 ···· ····"
                           />
@@ -516,4 +539,3 @@ export function StayBookingFlow({ stay }: StayBookingFlowProps) {
     </main>
   )
 }
-

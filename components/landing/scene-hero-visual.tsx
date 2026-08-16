@@ -25,6 +25,7 @@ interface SceneHeroVisualProps {
 
 export function SceneHeroVisual({ scrollYProgress }: SceneHeroVisualProps) {
   const [index, setIndex] = useState(0)
+  const { scrollYProgress: defaultScroll } = useScroll()
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -33,9 +34,7 @@ export function SceneHeroVisual({ scrollYProgress }: SceneHeroVisualProps) {
     return () => clearInterval(timer)
   }, [])
 
-  // Parallax offset
-  const { scrollYProgress: defaultScroll } = useScroll()
-  const activeScroll = (scrollYProgress || defaultScroll) as MotionValue<number>
+  const activeScroll = scrollYProgress ?? defaultScroll
   
   const y = useTransform(activeScroll, [0, 1], ["0%", "20%"])
   const scale = useTransform(activeScroll, [0, 1], [1, 1.1])
@@ -79,4 +78,3 @@ export function SceneHeroVisual({ scrollYProgress }: SceneHeroVisualProps) {
     </motion.div>
   )
 }
-

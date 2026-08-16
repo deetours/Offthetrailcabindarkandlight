@@ -54,7 +54,7 @@ export const OFFTHETRAIL_DATA = {
       id: "jibhi-zipline",
       location: "jibhi",
       title: "ZIP line at Jibhi",
-      heroImage: "/stays/bir-1.jpg", // Placeholder until images are provided
+      heroImage: "/images/zipline.jpg",
       difficulty: "Challenging",
       duration: "2 Hours",
       season: "Closed from 1st Jul to 15th Sep",
@@ -90,16 +90,16 @@ export const OFFTHETRAIL_DATA = {
         { question: "Is there a weight limit?", answer: "Yes, for safety reasons, participants must be between 30kg and 100kg." }
       ],
       gallery: [
-        "/stays/bir-2.jpg",
-        "/stays/bir-3.jpg",
-        "/stays/bir-4.jpg"
+        "/images/zipline.jpg",
+        "/images/zipline2.jpg",
+        "/images/zipline3.jpg"
       ]
     },
     {
       id: "jibhi-paragliding",
       location: "jibhi",
       title: "Paragliding at Jibhi",
-      heroImage: "/stays/bir-1.jpg", // Placeholder until images are provided
+      heroImage: "/images/para1.jpg",
       difficulty: "Challenging",
       duration: "2 Hours",
       season: "Closed from 1st Jul to 15th Sep",
@@ -136,16 +136,16 @@ export const OFFTHETRAIL_DATA = {
         { question: "Do I need previous experience?", answer: "No prior knowledge is required. You will be flying tandem with a professional pilot." }
       ],
       gallery: [
-        "/stays/bir-2.jpg",
-        "/stays/bir-3.jpg",
-        "/stays/bir-4.jpg"
+        "/images/para1.jpg",
+        "/images/para2.jpg",
+        "/images/para3.jpg"
       ]
     },
     {
       id: "jibhi-bird-watching",
       location: "jibhi",
       title: "Bird Watching",
-      heroImage: "/stays/bir-1.jpg", // Placeholder
+      heroImage: "/images/BIRD1.jpg",
       difficulty: "Easy",
       duration: "3 Hours",
       season: "Mar - Jun, Aug-Sep",
@@ -179,9 +179,9 @@ export const OFFTHETRAIL_DATA = {
         { question: "Is this activity physically demanding?", answer: "No, this is an easy 3-hour walk through scenic landscapes, suitable for most fitness levels." }
       ],
       gallery: [
-        "/stays/bir-2.jpg",
-        "/stays/bir-3.jpg",
-        "/stays/bir-4.jpg"
+        "/images/BIRD1.jpg",
+        "/images/BIRD2.jpg",
+        "/images/BIRD3.jpg"
       ]
     }
   ],

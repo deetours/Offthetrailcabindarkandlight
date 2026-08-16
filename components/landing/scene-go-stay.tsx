@@ -227,20 +227,24 @@ function AnimatedPane({
   textOpacity: ReturnType<typeof useTransform<number, number>>
   borderOpacity: ReturnType<typeof useTransform<number, number>>
 }) {
-  const imageScale =
-    option.key === "stay"
-      ? useTransform(progress, [0.08, 0.48, 1], [1.07, 1.02, 0.99])
-      : useTransform(progress, [0.2, 0.75, 1], [1.09, 1.03, 1])
+  const isStay = option.key === "stay"
+  const imageScale = useTransform(
+    progress,
+    isStay ? [0.08, 0.48, 1] : [0.2, 0.75, 1],
+    isStay ? [1.07, 1.02, 0.99] : [1.09, 1.03, 1],
+  )
 
-  const imageX =
-    option.key === "stay"
-      ? useTransform(progress, [0.08, 0.52, 1], ["-1.5%", "0%", "0.8%"])
-      : useTransform(progress, [0.08, 0.72, 1], ["1.5%", "0%", "-0.8%"])
+  const imageX = useTransform(
+    progress,
+    isStay ? [0.08, 0.52, 1] : [0.08, 0.72, 1],
+    isStay ? ["-1.5%", "0%", "0.8%"] : ["1.5%", "0%", "-0.8%"],
+  )
 
-  const labelOpacity =
-    option.key === "stay"
-      ? useTransform(progress, [0.1, 0.24, 0.56], [0.62, 1, 0.9])
-      : useTransform(progress, [0.34, 0.56, 1], [0.58, 1, 1])
+  const labelOpacity = useTransform(
+    progress,
+    isStay ? [0.1, 0.24, 0.56] : [0.34, 0.56, 1],
+    isStay ? [0.62, 1, 0.9] : [0.58, 1, 1],
+  )
 
   return (
     <motion.article style={{ scale, opacity, y }} className="relative">

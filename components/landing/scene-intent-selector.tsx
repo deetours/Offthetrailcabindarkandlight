@@ -9,7 +9,7 @@ interface SceneIntentSelectorProps {
 
 export function SceneIntentSelector({ onOpenModal }: SceneIntentSelectorProps) {
   return (
-    <div className="absolute bottom-[5.5rem] md:bottom-12 left-1/2 md:left-[56%] -translate-x-1/2 w-[calc(100%-2rem)] max-w-md z-30 pointer-events-none">
+    <div className="absolute bottom-[5.5rem] md:bottom-12 left-1/2 md:left-[56%] -translate-x-1/2 w-[calc(100%-2rem)] max-w-md z-30 pointer-events-none lg:left-auto lg:right-10 lg:translate-x-0">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

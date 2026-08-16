@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef } from "react"
-import { motion, useScroll, useTransform } from "framer-motion"
+import { motion, useScroll, useTransform, MotionValue } from "framer-motion"
 
 const STATS = [
   { value: "2", label: "Hidden Sanctuaries", sub: "tucked away in dalhousie & jibhi." },
@@ -36,31 +36,9 @@ export function SceneProof() {
           </motion.p>
 
           <div className="grid md:grid-cols-3 gap-0">
-            {STATS.map((stat, i) => {
-              const startIn = 0.15 + i * 0.1
-              const endIn = 0.35 + i * 0.1
-              const statOpacity = useTransform(scrollYProgress, [startIn, endIn], [0, 1])
-              const statY = useTransform(scrollYProgress, [startIn, endIn], [50, 0])
-
-              return (
-                <motion.div
-                  key={i}
-                  style={{ opacity: statOpacity, y: statY }}
-                  className={`px-10 py-16 text-center ${i < 2 ? "md:border-r border-white/5" : ""}`}
-                >
-                  {/* Giant Number */}
-                  <p className="font-serif text-[clamp(4rem,10vw,8rem)] leading-none text-foreground tracking-tightest mb-4">
-                    {stat.value}
-                  </p>
-                  <p className="font-sans text-[10px] uppercase tracking-[0.5em] text-primary/60 font-bold mb-3">
-                    {stat.label}
-                  </p>
-                  <p className="font-serif italic text-muted-foreground/30 text-sm lowercase">
-                    {stat.sub}
-                  </p>
-                </motion.div>
-              )
-            })}
+            {STATS.map((stat, i) => (
+              <ProofStatCard key={i} stat={stat} index={i} progress={scrollYProgress} />
+            ))}
           </div>
 
           {/* Bottom Divider */}
@@ -78,5 +56,35 @@ export function SceneProof() {
         </motion.div>
       </div>
     </div>
+  )
+}
+
+function ProofStatCard({
+  stat,
+  index,
+  progress,
+}: {
+  stat: (typeof STATS)[number]
+  index: number
+  progress: MotionValue<number>
+}) {
+  const startIn = 0.15 + index * 0.1
+  const endIn = 0.35 + index * 0.1
+  const statOpacity = useTransform(progress, [startIn, endIn], [0, 1])
+  const statY = useTransform(progress, [startIn, endIn], [50, 0])
+
+  return (
+    <motion.div
+      style={{ opacity: statOpacity, y: statY }}
+      className={`px-10 py-16 text-center ${index < 2 ? "md:border-r border-white/5" : ""}`}
+    >
+      <p className="font-serif text-[clamp(4rem,10vw,8rem)] leading-none text-foreground tracking-tightest mb-4">
+        {stat.value}
+      </p>
+      <p className="font-sans text-[10px] uppercase tracking-[0.5em] text-primary/60 font-bold mb-3">
+        {stat.label}
+      </p>
+      <p className="font-serif italic text-muted-foreground/30 text-sm lowercase">{stat.sub}</p>
+    </motion.div>
   )
 }

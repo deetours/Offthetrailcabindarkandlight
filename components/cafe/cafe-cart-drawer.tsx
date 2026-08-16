@@ -5,6 +5,8 @@ import { X, ShoppingBag, Send, QrCode, Copy, CheckCircle2, Lock, AlertCircle, Ar
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet"
 import { CartItem } from "./cafe-menu"
 
+const SUPPORT_WHATSAPP_NUMBER = "919816315898"
+
 interface CafeCartDrawerProps {
   isOpen: boolean
   onClose: () => void
@@ -56,7 +58,7 @@ export function CafeCartDrawer({ isOpen, onClose, cart, onRemoveItem, onAddItem,
     const orderDetails = cart.map((item) => `${item.quantity}x ${item.name} (Rs.${item.price})`).join("\n")
     const message = `Cafe Order Enquiry\n\nName: ${name}\nPhone: ${phone}\nMode: ${orderMode}\nLocation/Table: ${locationInfo || "N/A"}\n\nOrder:\n${orderDetails}\n\nEstimated Total: Rs.${subtotal}\nUTR: ${utr}\nStatus: Order submitted, payment pending verification.`
 
-    const link = `https://wa.me/917629877144?text=${encodeURIComponent(message)}`
+    const link = `https://wa.me/${SUPPORT_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`
     window.open(link, "_blank")
     onClose()
   }
@@ -179,27 +181,32 @@ export function CafeCartDrawer({ isOpen, onClose, cart, onRemoveItem, onAddItem,
                   <h3 className="text-sm font-bold uppercase tracking-widest text-foreground/80">Details</h3>
 
                   <div className="space-y-2">
-                    <label className="text-[10px] uppercase tracking-widest text-muted-foreground">Order Mode *</label>
+                    <fieldset className="space-y-2">
+                    <legend className="text-[10px] uppercase tracking-widest text-muted-foreground">Order Mode *</legend>
                     <div className="grid grid-cols-3 gap-2">
                       {(["dine-in", "room-service", "pickup"] as const).map((mode) => (
                         <button
                           key={mode}
                           type="button"
                           onClick={() => setOrderMode(mode)}
+                          aria-pressed={orderMode === mode}
                           className={`py-3 md:py-2 text-[10px] uppercase tracking-wider rounded-lg border transition-all ${orderMode === mode ? "border-primary bg-primary/20 text-primary" : "border-border text-muted-foreground hover:border-primary/30 hover:text-foreground"}`}
                         >
                           {mode.replace("-", " ")}
                         </button>
                       ))}
                     </div>
+                    </fieldset>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <label className="text-[10px] uppercase tracking-widest text-muted-foreground">Name *</label>
+                      <label htmlFor="cafe-name" className="text-[10px] uppercase tracking-widest text-muted-foreground">Name *</label>
                       <input
+                        id="cafe-name"
                         required
                         type="text"
+                        autoComplete="name"
                         className="w-full bg-card border border-border rounded-lg p-4 md:p-3 text-sm text-foreground focus:border-primary focus:outline-none"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
@@ -207,10 +214,12 @@ export function CafeCartDrawer({ isOpen, onClose, cart, onRemoveItem, onAddItem,
                     </div>
 
                     <div className="space-y-2">
-                      <label className="text-[10px] uppercase tracking-widest text-muted-foreground">WhatsApp Number *</label>
+                      <label htmlFor="cafe-phone" className="text-[10px] uppercase tracking-widest text-muted-foreground">WhatsApp Number *</label>
                       <input
+                        id="cafe-phone"
                         required
                         type="tel"
+                        autoComplete="tel"
                         className="w-full bg-card border border-border rounded-lg p-4 md:p-3 text-sm text-foreground focus:border-primary focus:outline-none"
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
@@ -220,10 +229,11 @@ export function CafeCartDrawer({ isOpen, onClose, cart, onRemoveItem, onAddItem,
 
                   {orderMode !== "pickup" && (
                     <div className="space-y-2">
-                      <label className="text-[10px] uppercase tracking-widest text-muted-foreground">
+                      <label htmlFor="cafe-location" className="text-[10px] uppercase tracking-widest text-muted-foreground">
                         {orderMode === "dine-in" ? "Table Number *" : "Room Number *"}
                       </label>
                       <input
+                        id="cafe-location"
                         required
                         type="text"
                         placeholder={orderMode === "dine-in" ? "e.g. Table 4" : "e.g. Jibhi Room 2"}
@@ -262,8 +272,9 @@ export function CafeCartDrawer({ isOpen, onClose, cart, onRemoveItem, onAddItem,
                     </div>
 
                     <div className="space-y-2 pt-4">
-                      <label className="text-[10px] uppercase tracking-widest text-muted-foreground">UTR / Reference No. *</label>
+                      <label htmlFor="cafe-utr" className="text-[10px] uppercase tracking-widest text-muted-foreground">UTR / Reference No. *</label>
                       <input
+                        id="cafe-utr"
                         type="text"
                         placeholder="e.g. 301234567890"
                         className="w-full bg-card border border-border rounded-lg p-4 md:p-3 text-sm text-foreground focus:border-primary focus:outline-none"

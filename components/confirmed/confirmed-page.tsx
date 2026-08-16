@@ -3,21 +3,17 @@
 import { useState, useEffect, Suspense } from "react"
 import { useSearchParams } from "next/navigation"
 import Link from "next/link"
-import { Check, MessageCircle, ArrowRight } from "lucide-react"
+import { AlertCircle, ArrowRight, MessageCircle } from "lucide-react"
 
 function ConfirmedContent() {
   const searchParams = useSearchParams()
   const [mounted, setMounted] = useState(false)
-  const [showConfetti, setShowConfetti] = useState(false)
 
   const type = searchParams.get("type")
   const id = searchParams.get("id")
 
   useEffect(() => {
     setMounted(true)
-    // Delayed confetti effect
-    const timer = setTimeout(() => setShowConfetti(true), 500)
-    return () => clearTimeout(timer)
   }, [])
 
   const staysData: Record<string, { name: string; location: string }> = {
@@ -37,59 +33,38 @@ function ConfirmedContent() {
   }
 
   const booking = type === "stay" ? staysData[id || ""] : tripsData[id || ""]
+  const hasReference = Boolean(type || id)
 
   return (
     <main className="grain min-h-screen bg-background flex items-center justify-center px-6">
-      {/* Confetti-like subtle animation */}
-      {showConfetti && (
-        <div className="fixed inset-0 pointer-events-none overflow-hidden">
-          {[...Array(12)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute w-2 h-2 rounded-full bg-primary/20 animate-fade-up"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 50 + 30}%`,
-                animationDelay: `${i * 100}ms`,
-                animationDuration: "2s",
-              }}
-            />
-          ))}
-        </div>
-      )}
-
       <div className="max-w-lg text-center">
-        {/* Success icon */}
         <div
           className={`mx-auto mb-8 flex h-20 w-20 items-center justify-center rounded-full bg-primary/20 transition-all duration-700 ease-out ${
             mounted ? "opacity-100 scale-100" : "opacity-0 scale-50"
           }`}
         >
-          <Check className="h-10 w-10 text-primary" />
+          <AlertCircle className="h-10 w-10 text-primary" />
         </div>
 
-        {/* Main heading */}
         <h1
           className={`font-serif text-5xl md:text-6xl text-foreground transition-all duration-700 ease-out ${
             mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
           style={{ transitionDelay: "200ms" }}
         >
-          You're in.
+          Verification required.
         </h1>
 
-        {/* Subheading */}
         <p
           className={`mt-4 font-serif text-xl md:text-2xl text-muted-foreground transition-all duration-700 ease-out ${
             mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
           }`}
           style={{ transitionDelay: "400ms" }}
         >
-          We'll handle the rest.
+          We could not verify a confirmed booking from this link alone.
         </p>
 
-        {/* Booking info */}
-        {booking && (
+        {hasReference && (
           <div
             className={`mt-8 rounded-xl bg-card p-6 transition-all duration-700 ease-out ${
               mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
@@ -97,17 +72,31 @@ function ConfirmedContent() {
             style={{ transitionDelay: "600ms" }}
           >
             <p className="font-serif text-lg text-foreground">
-              {type === "stay" ? (booking as { name: string; location: string }).name : booking.name}
+              {booking?.name || "Booking reference received"}
             </p>
             <p className="text-sm text-muted-foreground">
               {type === "stay"
-                ? (booking as { name: string; location: string }).location
-                : (booking as { name: string; duration: string }).duration}
+                ? booking && "location" in booking
+                  ? booking.location
+                  : "Stay verification pending"
+                : booking && "duration" in booking
+                  ? booking.duration
+                  : "Trip verification pending"}
             </p>
           </div>
         )}
 
-        {/* WhatsApp notification */}
+        <div
+          className={`mt-8 rounded-2xl border border-primary/20 bg-primary/5 p-6 text-left transition-all duration-700 ease-out ${
+            mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+          }`}
+          style={{ transitionDelay: "700ms" }}
+        >
+          <p className="text-sm text-primary/80">
+            A successful redirect or shared URL is not proof of payment verification or room confirmation. Please use the payment page or contact the team so availability and payment can be checked manually.
+          </p>
+        </div>
+
         <div
           className={`mt-8 flex items-center justify-center gap-2 text-sm text-muted-foreground transition-all duration-700 ease-out ${
             mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
@@ -115,39 +104,18 @@ function ConfirmedContent() {
           style={{ transitionDelay: "800ms" }}
         >
           <MessageCircle className="h-4 w-4" />
-          <span>Our team will message you on WhatsApp with details</span>
+          <span>Our team can verify the status with you on WhatsApp</span>
         </div>
 
-        {/* Packing message */}
         <p
           className={`mt-12 font-serif text-lg text-foreground/60 italic transition-all duration-700 ease-out ${
             mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
           }`}
           style={{ transitionDelay: "1000ms" }}
         >
-          Start packing slowly.
+          Hold the plan lightly until verification is complete.
         </p>
 
-        {/* Post-Booking Cross-sell */}
-        {type === "stay" && (
-          <div
-            className={`mt-12 rounded-2xl border border-[#e6b873]/20 bg-[#e6b873]/5 p-6 text-left transition-all duration-700 ease-out ${
-              mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-            }`}
-            style={{ transitionDelay: "1100ms" }}
-          >
-            <h3 className="font-serif text-lg text-foreground mb-2">Turn your stay into a full escape.</h3>
-            <p className="text-sm text-muted-foreground mb-4">Discover curated activities and adventures near your location.</p>
-            <Link 
-              href="/activities" 
-              className="inline-flex items-center gap-2 text-xs uppercase tracking-widest font-bold text-primary hover:text-primary/80 transition-colors"
-            >
-              Explore Activities <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-        )}
-
-        {/* Navigation */}
         <div
           className={`mt-12 flex flex-col items-center gap-4 transition-all duration-700 ease-out ${
             mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
@@ -155,10 +123,24 @@ function ConfirmedContent() {
           style={{ transitionDelay: "1200ms" }}
         >
           <Link
+            href={type && id ? `/payment?type=${encodeURIComponent(type)}&id=${encodeURIComponent(id)}` : "/payment"}
+            className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-[10px] font-bold uppercase tracking-[0.3em] text-primary-foreground transition-transform hover:scale-[1.02]"
+          >
+            Review payment status
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+          <Link
             href="/"
             className="group inline-flex items-center gap-2 text-primary hover:underline transition-colors"
           >
             Continue exploring
+            <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+          </Link>
+          <Link
+            href="/activities"
+            className="group inline-flex items-center gap-2 text-primary hover:underline transition-colors"
+          >
+            Explore activities
             <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>

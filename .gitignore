@@ -10,6 +10,12 @@
 # production
 /build
 
+# test artifacts
+/playwright-report/
+/test-results/
+/.lighthouseci/
+/test-artifacts/
+
 # debug
 npm-debug.log*
 yarn-debug.log*

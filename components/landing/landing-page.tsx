@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import { motion, useScroll, useSpring, useTransform, AnimatePresence } from "framer-motion"
+import { motion, useScroll, useSpring, useTransform, AnimatePresence, MotionValue } from "framer-motion"
 import { SceneDiscoveryHero } from "./scene-discovery-hero"
 import { SceneStaysGrid } from "./scene-stays-grid"
 import { SceneJourneys } from "./scene-journeys"
@@ -109,17 +109,7 @@ export function LandingPage() {
       
       <div className="fixed top-1/2 right-4 -translate-y-1/2 flex-col gap-4 z-40 mix-blend-difference hidden md:flex">
         {[...Array(16)].map((_, i) => (
-          <motion.div 
-            key={i}
-            className="w-1.5 h-1.5 rounded-full bg-white/20"
-            style={{ 
-              backgroundColor: useTransform(
-                scrollYProgress, 
-                [i / 16, (i + 1) / 16], 
-                ["rgba(255,255,255,0.2)", "#e6b873"]
-              ) 
-            }}
-          />
+          <ProgressMarker key={i} index={i} progress={scrollYProgress} />
         ))}
       </div>
 
@@ -147,4 +137,14 @@ export function LandingPage() {
       />
     </main>
   )
+}
+
+function ProgressMarker({ index, progress }: { index: number; progress: MotionValue<number> }) {
+  const backgroundColor = useTransform(
+    progress,
+    [index / 16, (index + 1) / 16],
+    ["rgba(255,255,255,0.2)", "#e6b873"],
+  )
+
+  return <motion.div className="w-1.5 h-1.5 rounded-full bg-white/20" style={{ backgroundColor }} />
 }

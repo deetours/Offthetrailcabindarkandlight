@@ -135,7 +135,7 @@ export function FrontendEnquiryModal({ isOpen, onClose, initialTab = "stay", ini
           </div>
         </SheetHeader>
 
-        {(!tab || (tab === "stay" && stayStep === 1)) && (
+        {(tab === "stay" && stayStep === 1) && (
           <div className="flex border-b border-border">
             <button 
               className={`flex-1 py-4 text-sm font-bold uppercase tracking-widest transition-colors ${tab === "stay" ? "text-primary border-b-2 border-primary" : "text-muted-foreground hover:text-foreground"}`}
@@ -144,7 +144,7 @@ export function FrontendEnquiryModal({ isOpen, onClose, initialTab = "stay", ini
               Find a Stay
             </button>
             <button 
-              className={`flex-1 py-4 text-sm font-bold uppercase tracking-widest transition-colors ${tab === "adventure" ? "text-primary border-b-2 border-primary" : "text-muted-foreground hover:text-foreground"}`}
+              className="flex-1 py-4 text-sm font-bold uppercase tracking-widest transition-colors text-muted-foreground hover:text-foreground"
               onClick={() => setTab("adventure")}
             >
               Adventure

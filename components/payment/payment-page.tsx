@@ -6,6 +6,8 @@ import { Navbar } from "../ui/navbar"
 import { Copy, Lock, CheckCircle2, AlertCircle } from "lucide-react"
 import Image from "next/image"
 
+const SUPPORT_WHATSAPP_NUMBER = "919816315898"
+
 function PaymentContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
@@ -59,7 +61,7 @@ UTR: ${utr}
 Status: Payment submitted for verification.`
     }
 
-    const whatsappLink = `https://wa.me/917629877144?text=${encodeURIComponent(message)}`
+    const whatsappLink = `https://wa.me/${SUPPORT_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`
     window.open(whatsappLink, "_blank")
   }
 
@@ -139,8 +141,14 @@ Status: Payment submitted for verification.`
 
                 <div className="rounded-2xl border border-border bg-card p-8 mb-8 space-y-4">
                   <div>
-                    <label className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground/40 font-bold ml-2">UTR / Transaction Reference</label>
+                    <label
+                      htmlFor="payment-utr"
+                      className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground/40 font-bold ml-2"
+                    >
+                      UTR / Transaction Reference
+                    </label>
                     <input
+                      id="payment-utr"
                       type="text"
                       value={utr}
                       onChange={(e) => setUtr(e.target.value)}

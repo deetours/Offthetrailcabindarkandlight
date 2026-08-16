@@ -65,14 +65,22 @@ export function CafeMenu({ cart, onAddToCart, onUpdateQuantity }: CafeMenuProps)
                   const quantity = cartItem?.quantity || 0
 
                   return (
-                    <div key={item.id} className={`group relative rounded-xl border ${quantity > 0 ? 'border-primary/50 bg-primary/5' : 'border-border bg-card/70'} p-5 hover:bg-card transition-colors`}>
+                    <article
+                      key={item.id}
+                      aria-labelledby={`cafe-item-${item.id}`}
+                      className={`group relative rounded-xl border ${quantity > 0 ? 'border-primary/50 bg-primary/5' : 'border-border bg-card/70'} p-5 hover:bg-card transition-colors`}
+                    >
                       <div className="flex justify-between items-start gap-4">
                         <div>
                           <div className="flex items-center gap-2 mb-1">
                             {item.isVeg !== undefined && (
-                              <span className={`w-2 h-2 rounded-full ${item.isVeg ? 'bg-green-500' : (item.containsEgg ? 'bg-yellow-500' : 'bg-red-500')}`} title={item.isVeg ? "Vegetarian" : "Non-Vegetarian"} />
+                              <span
+                                aria-label={item.isVeg ? "Vegetarian" : item.containsEgg ? "Contains egg" : "Non-vegetarian"}
+                                className={`w-2 h-2 rounded-full ${item.isVeg ? 'bg-green-500' : (item.containsEgg ? 'bg-yellow-500' : 'bg-red-500')}`}
+                                title={item.isVeg ? "Vegetarian" : "Non-Vegetarian"}
+                              />
                             )}
-                            <h3 className="font-bold text-foreground text-base">{item.name}</h3>
+                            <h3 id={`cafe-item-${item.id}`} className="font-bold text-foreground text-base">{item.name}</h3>
                           </div>
                           <p className="text-xs text-muted-foreground leading-relaxed mb-3">{item.description}</p>
                         </div>
@@ -87,6 +95,7 @@ export function CafeMenu({ cart, onAddToCart, onUpdateQuantity }: CafeMenuProps)
                         <div className="flex items-center justify-between bg-background border border-primary/20 rounded-lg mt-2 overflow-hidden h-10">
                           <button 
                             onClick={() => onUpdateQuantity(item.id, -1)}
+                            aria-label={`Decrease quantity for ${item.name}`}
                             className="px-6 h-full text-primary hover:bg-primary/10 transition-colors flex items-center justify-center active:scale-95"
                           >
                             -
@@ -94,6 +103,7 @@ export function CafeMenu({ cart, onAddToCart, onUpdateQuantity }: CafeMenuProps)
                           <span className="font-bold text-xs text-primary">{quantity}</span>
                           <button 
                             onClick={() => onUpdateQuantity(item.id, 1)}
+                            aria-label={`Increase quantity for ${item.name}`}
                             className="px-6 h-full text-primary hover:bg-primary/10 transition-colors flex items-center justify-center active:scale-95"
                           >
                             +
@@ -102,12 +112,13 @@ export function CafeMenu({ cart, onAddToCart, onUpdateQuantity }: CafeMenuProps)
                       ) : (
                         <button 
                           onClick={() => onAddToCart({ itemId: item.id, name: item.name, price: item.basePrice, quantity: 1 })}
+                          aria-label={`Add ${item.name}`}
                           className="w-full flex items-center justify-center gap-2 bg-secondary hover:bg-accent border border-border text-foreground h-10 rounded-lg text-xs font-bold uppercase tracking-widest transition-colors mt-2 active:scale-95"
                         >
                           <Plus className="w-3 h-3" /> Add
                         </button>
                       )}
-                    </div>
+                    </article>
                   )
                 })}
               </div>
