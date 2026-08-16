@@ -85,10 +85,29 @@ export const jibhiConfig: LandingPageConfig = {
   name: "Jibhi Canopy Cottages",
   tagline: "High above the Tirthan, where the canopy meets the sky.",
   heroImage: "/images/offthetrail7.jpeg", // Replace later
+  storyImage: "/images/offthetrail5.jpeg", // Replace later
   ownerWhatsapp: "+919816315898",
   narrative: [
-    "Coming soon."
+    "A retreat built into the pine canopy. Waking up here means eye-level views of the mist moving through the branches, far removed from the valley floor.",
+    "Coming soon to Jibhi."
   ],
-  rooms: [],
+  rooms: [
+    {
+      id: "duplex",
+      name: "Duplex Cottage (Duplex Room)",
+      description: "Spacious multi-level stay in the canopy.",
+      price: 4500,
+      available: 0,
+      numbers: ""
+    },
+    {
+      id: "single",
+      name: "Single Room",
+      description: "Cozy retreat for solo travelers.",
+      price: 2200,
+      available: 0,
+      numbers: ""
+    }
+  ],
   faq: []
 }

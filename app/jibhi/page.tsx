@@ -1,15 +1,32 @@
+import { jibhiConfig } from "@/lib/landing-configs"
+import { SmoothScroll } from "@/components/landing-system/smooth-scroll"
+import { FilmGrain } from "@/components/landing-system/film-grain"
+import { ScrollHero } from "@/components/landing-system/scroll-hero"
+import { StoryScene } from "@/components/landing-system/story-scene"
+import { ComingSoonEngine } from "@/components/landing-system/coming-soon-engine"
+import { Footer } from "@/components/ui/footer"
+
 export const metadata = {
-  title: "Jibhi | OffTheTrail",
-  description: "Jibhi landing page.",
+  title: `${jibhiConfig.name} | OffTheTrail`,
+  description: jibhiConfig.tagline,
 }
 
 export default function JibhiPage() {
   return (
-    <main className="min-h-screen bg-background grain flex items-center justify-center p-6">
-      <div className="text-center">
-        <h1 className="font-serif text-4xl text-foreground mb-4">Jibhi</h1>
-        <p className="font-sans text-muted-foreground">Coming soon.</p>
-      </div>
-    </main>
+    <SmoothScroll>
+      <FilmGrain />
+      <main className="min-h-screen bg-ink selection:bg-brass selection:text-ink font-sans">
+        <ScrollHero 
+          title={jibhiConfig.name} 
+          tagline={jibhiConfig.tagline} 
+          imagePath={jibhiConfig.heroImage}
+          eyebrow="Coming Soon"
+          hideCta={true}
+        />
+        <StoryScene config={jibhiConfig} />
+        <ComingSoonEngine config={jibhiConfig} />
+        <Footer />
+      </main>
+    </SmoothScroll>
   )
 }

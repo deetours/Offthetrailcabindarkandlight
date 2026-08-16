@@ -9,9 +9,11 @@ interface ScrollHeroProps {
   title: string
   tagline: string
   imagePath: string
+  eyebrow?: string
+  hideCta?: boolean
 }
 
-export function ScrollHero({ title, tagline, imagePath }: ScrollHeroProps) {
+export function ScrollHero({ title, tagline, imagePath, eyebrow, hideCta = false }: ScrollHeroProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const prefersReducedMotion = useReducedMotion()
 
@@ -107,8 +109,18 @@ export function ScrollHero({ title, tagline, imagePath }: ScrollHeroProps) {
           initial={{ clipPath: prefersReducedMotion ? "inset(0 0 0 0)" : "inset(100% 0 0 0)" }}
           animate={{ clipPath: "inset(0 0 0 0)" }}
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          className="pb-2" // padding to prevent cutting off descenders
+          className="pb-2 flex flex-col items-center" // padding to prevent cutting off descenders
         >
+          {eyebrow && (
+            <motion.span 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              className="mb-4 font-sans text-xs uppercase tracking-[0.2em] text-moss bg-ink/50 px-3 py-1 rounded-full border border-moss/20"
+            >
+              {eyebrow}
+            </motion.span>
+          )}
           <motion.h1 
             initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -129,30 +141,32 @@ export function ScrollHero({ title, tagline, imagePath }: ScrollHeroProps) {
         </motion.p>
 
         {/* Magnetic CTA */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          transition={{ duration: 1, delay: 0.6 }}
-          className="mt-16 relative"
-          onMouseEnter={() => setIsHoveringCTA(true)}
-          onMouseLeave={() => setIsHoveringCTA(false)}
-          animate={{
-            opacity: 1,
-            ...(prefersReducedMotion ? {} : {
-              x: isHoveringCTA ? mousePosition.x * 15 : 0,
-              y: isHoveringCTA ? mousePosition.y * 15 : 0,
-            })
-          }}
-        >
-          <button
-            onClick={() => {
-              document.getElementById("booking-ledger")?.scrollIntoView({ behavior: "smooth" })
+        {!hideCta && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            transition={{ duration: 1, delay: 0.6 }}
+            className="mt-16 relative"
+            onMouseEnter={() => setIsHoveringCTA(true)}
+            onMouseLeave={() => setIsHoveringCTA(false)}
+            animate={{
+              opacity: 1,
+              ...(prefersReducedMotion ? {} : {
+                x: isHoveringCTA ? mousePosition.x * 15 : 0,
+                y: isHoveringCTA ? mousePosition.y * 15 : 0,
+              })
             }}
-            className="group px-8 py-4 bg-transparent border border-parchment/30 text-parchment font-sans text-sm font-medium uppercase tracking-widest rounded-full hover:border-brass hover:bg-brass hover:text-ink transition-all duration-500 ease-out flex items-center gap-3 overflow-hidden"
           >
-            See rooms & rates
-            <ArrowRight className="w-4 h-4 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all duration-500 ease-out" />
-          </button>
-        </motion.div>
+            <button
+              onClick={() => {
+                document.getElementById("booking-ledger")?.scrollIntoView({ behavior: "smooth" })
+              }}
+              className="group px-8 py-4 bg-transparent border border-parchment/30 text-parchment font-sans text-sm font-medium uppercase tracking-widest rounded-full hover:border-brass hover:bg-brass hover:text-ink transition-all duration-500 ease-out flex items-center gap-3 overflow-hidden"
+            >
+              See rooms & rates
+              <ArrowRight className="w-4 h-4 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all duration-500 ease-out" />
+            </button>
+          </motion.div>
+        )}
       </motion.div>
 
       {/* Scroll Cue Affordance */}
