@@ -62,7 +62,7 @@ export function SceneHumanFace() {
                 <span className="italic text-foreground/60">I stayed 3 weeks.</span>
               </p>
               <p className="font-serif text-2xl md:text-3xl text-foreground/40 italic">
-                I still don't know why I left.
+                I still don&apos;t know why I left.
               </p>
               <div className="h-px w-16 bg-primary/20" />
               <p className="font-sans text-xs uppercase tracking-[0.4em] text-muted-foreground/30">

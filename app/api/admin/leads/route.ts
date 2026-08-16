@@ -28,9 +28,9 @@ export async function GET() {
         }
 
         return NextResponse.json({ data })
-    } catch (err: any) {
-        console.error('[API/admin/leads] exception:', err.message)
-        return NextResponse.json({ error: err.message }, { status: 500 })
+    } catch (err: unknown) {
+        console.error('[API/admin/leads] exception:', (err as Error).message)
+        return NextResponse.json({ error: (err as Error).message }, { status: 500 })
     }
 }
 
@@ -51,8 +51,8 @@ export async function PATCH(request: Request) {
 
         if (error) return NextResponse.json({ error: error.message }, { status: 500 })
         return NextResponse.json({ success: true })
-    } catch (err: any) {
-        return NextResponse.json({ error: err.message }, { status: 500 })
+    } catch (err: unknown) {
+        return NextResponse.json({ error: (err as Error).message }, { status: 500 })
     }
 }
 
@@ -71,7 +71,7 @@ export async function DELETE(request: Request) {
 
         if (error) return NextResponse.json({ error: error.message }, { status: 500 })
         return NextResponse.json({ success: true })
-    } catch (err: any) {
-        return NextResponse.json({ error: err.message }, { status: 500 })
+    } catch (err: unknown) {
+        return NextResponse.json({ error: (err as Error).message }, { status: 500 })
     }
 }

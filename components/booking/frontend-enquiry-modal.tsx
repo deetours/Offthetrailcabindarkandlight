@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { useState } from "react"
-import { X, ArrowLeft, Send, ArrowRight } from "lucide-react"
+import { ArrowLeft, Send, ArrowRight } from "lucide-react"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet"
 import { OFFTHETRAIL_DATA } from "@/lib/frontend-data"
 import { useRouter } from "next/navigation"
@@ -198,7 +198,7 @@ export function FrontendEnquiryModal({ isOpen, onClose, initialTab = "stay", ini
               <form id="stay-enquiry-form" onSubmit={handleStayEnquirySubmit} className="space-y-6 animate-in fade-in slide-in-from-right-4">
                 <div className="space-y-4">
                   <h3 className="font-serif text-xl text-foreground">Enquiry Details</h3>
-                  <p className="text-sm text-muted-foreground">We'll get back to you via WhatsApp to help plan your stay.</p>
+                  <p className="text-sm text-muted-foreground">We&apos;ll get back to you via WhatsApp to help plan your stay.</p>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">

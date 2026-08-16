@@ -1,5 +1,4 @@
 import { TripBookingFlow } from "@/components/booking/trip-booking-flow"
-import { notFound } from "next/navigation"
 
 const tripsData: Record<
   string,

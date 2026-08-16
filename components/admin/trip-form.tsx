@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { createClientComponentClient } from '@/lib/supabase-client'
-import { Plus, X, Upload, Image as ImageIcon, ChevronDown, ChevronUp } from 'lucide-react'
+import { Plus, X, Upload, Image as ImageIcon } from 'lucide-react'
 
 interface TripFormProps {
   trip?: any

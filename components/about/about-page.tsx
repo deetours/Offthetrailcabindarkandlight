@@ -58,8 +58,8 @@ function ManifestoSection() {
               <span className="text-foreground not-italic">world is made of people</span>, not pins on a map.
             </motion.p>
             <motion.p style={{ opacity: p2Opacity, y: p2Y }} className="text-muted-foreground/40 font-serif text-xl md:text-2xl italic">
-              We're building Offthetrail because the travel industry has forgotten this.<br />
-              It's turned journeys into consumption. We reject that.
+              We&apos;re building Offthetrail because the travel industry has forgotten this.<br />
+              It&apos;s turned journeys into consumption. We reject that.
             </motion.p>
             <motion.div style={{ opacity: p3Opacity, y: p3Y }} className="flex flex-col items-center gap-6 pt-8">
               <div className="h-px w-48 bg-gradient-to-r from-transparent via-primary/20 to-transparent" />

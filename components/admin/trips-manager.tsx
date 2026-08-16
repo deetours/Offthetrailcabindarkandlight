@@ -28,10 +28,10 @@ export function TripsManager() {
       }
 
       setTrips(result.data || [])
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Trips fetch error:', err)
       setTrips([])
-      setError(err?.message || 'Failed to load trips')
+      setError((err as Error)?.message || 'Failed to load trips')
     } finally {
       setLoading(false)
     }
@@ -48,8 +48,8 @@ export function TripsManager() {
         }
 
         fetchTrips()
-      } catch (err: any) {
-        setError(err?.message || 'Failed to delete trip')
+      } catch (err: unknown) {
+        setError((err as Error)?.message || 'Failed to delete trip')
       }
     }
   }

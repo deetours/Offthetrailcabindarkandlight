@@ -19,7 +19,7 @@ export async function GET() {
     }
 
     return NextResponse.json({ data: data || [] })
-  } catch (err: any) {
-    return NextResponse.json({ error: err?.message || 'Failed to fetch bookings' }, { status: 500 })
+  } catch (err: unknown) {
+    return NextResponse.json({ error: (err as Error)?.message || 'Failed to fetch bookings' }, { status: 500 })
   }
 }

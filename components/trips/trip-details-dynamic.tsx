@@ -1,14 +1,13 @@
 "use client"
 
 import { useEffect, useState, useRef } from "react"
-import { motion, useScroll, useSpring, useTransform, AnimatePresence } from "framer-motion"
+import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion"
 import { createClientComponentClient } from "@/lib/supabase-client"
 import { Navbar } from "../ui/navbar"
 import Link from "next/link"
 import {
-  Check, Calendar, Users, Mountain, CreditCard,
-  AlertTriangle, FileText, MinusCircle, ShieldCheck,
-  Backpack, Thermometer, MapPin, ChevronRight, ArrowDown
+  Check, Users, MinusCircle, ShieldCheck,
+  Backpack, Thermometer, ArrowDown
 } from "lucide-react"
 import { Footer } from "../ui/footer"
 import { Magnetic } from "../ui/magnetic"

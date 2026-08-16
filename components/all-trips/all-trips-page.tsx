@@ -342,7 +342,7 @@ export function AllTripsPage() {
       {secondHalf.length > 0 && (
         <section ref={midPauseRef} className="px-6 py-24 text-center md:px-16 lg:px-24">
           <div className="mx-auto max-w-2xl space-y-3">
-            <p className="font-serif text-xl md:text-2xl text-muted-foreground">We don't add journeys often.</p>
+            <p className="font-serif text-xl md:text-2xl text-muted-foreground">We don&apos;t add journeys often.</p>
             <p className="font-serif text-xl md:text-2xl text-foreground">Each one earns its place.</p>
           </div>
         </section>
@@ -368,7 +368,7 @@ export function AllTripsPage() {
         <div className="mx-auto max-w-2xl space-y-8">
           <div className="space-y-3">
             <p className="font-serif text-xl md:text-2xl text-muted-foreground">
-              If you're unsure, start with one journey.
+              If you&apos;re unsure, start with one journey.
             </p>
             <p className="font-serif text-xl md:text-2xl text-foreground">The rest make sense later.</p>
           </div>

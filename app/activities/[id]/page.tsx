@@ -8,8 +8,9 @@ export function generateStaticParams() {
   }))
 }
 
-export function generateMetadata({ params }: { params: { id: string } }) {
-  const activity = OFFTHETRAIL_DATA.activities.find((a) => a.id === params.id)
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = await params
+  const activity = OFFTHETRAIL_DATA.activities.find((a) => a.id === resolvedParams.id)
   
   if (!activity) {
     return {
@@ -23,8 +24,9 @@ export function generateMetadata({ params }: { params: { id: string } }) {
   }
 }
 
-export default function Page({ params }: { params: { id: string } }) {
-  const activity = OFFTHETRAIL_DATA.activities.find((a) => a.id === params.id)
+export default async function Page({ params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = await params
+  const activity = OFFTHETRAIL_DATA.activities.find((a) => a.id === resolvedParams.id)
   
   if (!activity) {
     notFound()

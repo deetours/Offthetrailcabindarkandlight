@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, use } from 'react'
 import { createClientComponentClient } from '@/lib/supabase-client'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
@@ -9,7 +9,8 @@ import { ArrowLeft, MapPin, Calendar, Users, Camera, MessageCircle } from 'lucid
 import { LikeButton } from '@/components/social/like-button'
 import { CommentDrawer } from '@/components/social/comment-drawer'
 
-export default function CampfireFeed({ params }: { params: { id: string } }) {
+export default function CampfireFeed({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = use(params)
     const [trip, setTrip] = useState<any>(null)
     const [memories, setMemories] = useState<any[]>([])
     const [userId, setUserId] = useState<string | null>(null)
@@ -21,7 +22,7 @@ export default function CampfireFeed({ params }: { params: { id: string } }) {
 
     useEffect(() => {
         validateAccessAndFetch()
-    }, [params.id])
+    }, [id])
 
     const validateAccessAndFetch = async () => {
         const { data: { user } } = await supabase.auth.getUser()
@@ -38,7 +39,7 @@ export default function CampfireFeed({ params }: { params: { id: string } }) {
             .from('bookings')
             .select('id')
             .eq('user_id', user.id)
-            .eq('trip_id', params.id)
+            .eq('trip_id', id)
             .eq('status', 'confirmed')
             .maybeSingle()
 
@@ -55,7 +56,7 @@ export default function CampfireFeed({ params }: { params: { id: string } }) {
         const { data: tripData } = await supabase
             .from('trips')
             .select('*')
-            .eq('id', params.id)
+            .eq('id', id)
             .single()
 
         setTrip(tripData)

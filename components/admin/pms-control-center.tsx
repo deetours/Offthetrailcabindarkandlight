@@ -34,8 +34,8 @@ export function PmsControlCenter() {
 
         setProperties(result.data || [])
         setMigrationPending(Boolean(result.migrationPending))
-      } catch (err: any) {
-        setError(err?.message || 'Failed to load PMS data')
+      } catch (err: unknown) {
+        setError((err as Error)?.message || 'Failed to load PMS data')
       } finally {
         setLoading(false)
       }

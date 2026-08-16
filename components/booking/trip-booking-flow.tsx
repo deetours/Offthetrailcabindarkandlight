@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Navbar } from "../ui/navbar"
-import { ArrowLeft, ArrowRight, Check, Calendar, Users, ShieldCheck, Mail, Phone, Zap } from "lucide-react"
+import { ArrowLeft, ArrowRight, Check, Calendar, ShieldCheck, Mail, Phone, Zap } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Magnetic } from "../ui/magnetic"

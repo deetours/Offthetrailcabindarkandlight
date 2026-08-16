@@ -4,8 +4,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { createClientComponentClient } from '@/lib/supabase-client'
 import { useRouter } from 'next/navigation'
-import Link from 'next/link'
-import { Eye, EyeOff, Mail, Lock, User, Phone, LogIn, Zap, Info } from 'lucide-react'
+import { Eye, EyeOff, Mail, Lock, User, Phone, LogIn } from 'lucide-react'
 import { signInWithGoogle, login, signup } from '@/app/auth/actions'
 import { Magnetic } from '../ui/magnetic'
 
@@ -36,8 +35,8 @@ export function ReturnForm() {
       } else if (result?.url) {
         window.location.href = result.url
       }
-    } catch (err: any) {
-      setError(err.message)
+    } catch (err: unknown) {
+      setError((err as Error).message)
     } finally {
       setLoading(false)
     }
@@ -64,8 +63,8 @@ export function ReturnForm() {
         if (result?.error) throw new Error(result.error)
         if (result?.success && result?.redirectUrl) window.location.href = result.redirectUrl
       }
-    } catch (err: any) {
-      setError(err.message)
+    } catch (err: unknown) {
+      setError((err as Error).message)
     } finally {
       setLoading(false)
     }

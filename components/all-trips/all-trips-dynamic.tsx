@@ -2,10 +2,8 @@
 
 import { useState, useEffect, useMemo, useRef } from 'react'
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
-import { createClientComponentClient } from '@/lib/supabase-client'
-import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowRight, ChevronDown, Search } from 'lucide-react'
+import { ChevronDown, Search } from 'lucide-react'
 import { Navbar } from '../ui/navbar'
 import { TripGridCard } from './trip-grid-card'
 import { TripFilters } from './trip-filters'

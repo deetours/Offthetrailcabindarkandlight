@@ -24,10 +24,10 @@ export function BookingsViewer() {
       }
 
       setBookings(result.data || [])
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Bookings fetch exception:', err)
       setBookings([])
-      setError(err?.message || 'Failed to load bookings')
+      setError((err as Error)?.message || 'Failed to load bookings')
     } finally {
       setLoading(false)
     }

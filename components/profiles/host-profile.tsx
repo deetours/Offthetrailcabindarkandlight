@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import { MessageCircle, Users, MapPin } from 'lucide-react'
+import { MessageCircle, MapPin } from 'lucide-react'
 
 interface Host {
   id: string

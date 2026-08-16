@@ -19,8 +19,8 @@ export async function GET() {
     }
 
     return NextResponse.json({ data: data || [] })
-  } catch (err: any) {
-    return NextResponse.json({ error: err?.message || 'Failed to fetch trips' }, { status: 500 })
+  } catch (err: unknown) {
+    return NextResponse.json({ error: (err as Error)?.message || 'Failed to fetch trips' }, { status: 500 })
   }
 }
 
@@ -44,8 +44,8 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json({ data }, { status: 201 })
-  } catch (err: any) {
-    return NextResponse.json({ error: err?.message || 'Failed to create trip' }, { status: 500 })
+  } catch (err: unknown) {
+    return NextResponse.json({ error: (err as Error)?.message || 'Failed to create trip' }, { status: 500 })
   }
 }
 
@@ -74,8 +74,8 @@ export async function PATCH(request: Request) {
     }
 
     return NextResponse.json({ data })
-  } catch (err: any) {
-    return NextResponse.json({ error: err?.message || 'Failed to update trip' }, { status: 500 })
+  } catch (err: unknown) {
+    return NextResponse.json({ error: (err as Error)?.message || 'Failed to update trip' }, { status: 500 })
   }
 }
 
@@ -101,7 +101,7 @@ export async function DELETE(request: Request) {
     }
 
     return NextResponse.json({ success: true })
-  } catch (err: any) {
-    return NextResponse.json({ error: err?.message || 'Failed to delete trip' }, { status: 500 })
+  } catch (err: unknown) {
+    return NextResponse.json({ error: (err as Error)?.message || 'Failed to delete trip' }, { status: 500 })
   }
 }

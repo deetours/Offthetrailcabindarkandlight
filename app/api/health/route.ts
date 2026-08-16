@@ -67,12 +67,12 @@ export async function GET(request: NextRequest) {
       },
       { status: 200 }
     )
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error('❌ Health check exception:', err)
     return NextResponse.json(
       { 
         status: 'error', 
-        message: 'Internal server error: ' + (err?.message || 'Unknown error'),
+        message: 'Internal server error: ' + ((err as Error)?.message || 'Unknown error'),
         environment: process.env.NODE_ENV
       },
       { status: 500 }

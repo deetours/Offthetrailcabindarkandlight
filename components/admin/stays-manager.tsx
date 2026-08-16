@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Plus, Edit2, Trash2, MapPin, IndianRupee, Bed, Users, X, Eye, RefreshCcw } from 'lucide-react'
+import { Plus, Edit2, Trash2, MapPin, Bed, Users, X, Eye, RefreshCcw } from 'lucide-react'
 import { StayForm } from './stay-form'
 import { motion, AnimatePresence } from 'framer-motion'
 
@@ -29,10 +29,10 @@ export function StaysManager() {
       }
 
       setStays(result.data || [])
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Stays fetch error:', err)
       setStays([])
-      setError(err?.message || 'Failed to load stays')
+      setError((err as Error)?.message || 'Failed to load stays')
     } finally {
       setLoading(false)
     }
@@ -59,8 +59,8 @@ export function StaysManager() {
         }
 
         fetchStays()
-      } catch (err: any) {
-        setError(err?.message || 'Failed to delete stay')
+      } catch (err: unknown) {
+        setError((err as Error)?.message || 'Failed to delete stay')
       }
     }
   }
@@ -81,8 +81,8 @@ export function StaysManager() {
       }
 
       setStays(prev => prev.map(s => s.id === stay.id ? { ...s, status: newStatus } : s))
-    } catch (err: any) {
-      setError(err?.message || 'Failed to update stay status')
+    } catch (err: unknown) {
+      setError((err as Error)?.message || 'Failed to update stay status')
     } finally {
       setTogglingId(null)
     }

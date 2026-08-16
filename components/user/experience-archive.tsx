@@ -4,11 +4,11 @@ import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { createClientComponentClient } from '@/lib/supabase-client'
-import { Bookmark, Share2, MessageCircle, ArrowRight, Calendar, MapPin, Clock } from 'lucide-react'
+import { ArrowRight, Calendar, MapPin, Clock } from 'lucide-react'
 import { UserOnboarding } from './user-onboarding'
 import { WhatsappRequirement } from './whatsapp-requirement'
 import { motion } from 'framer-motion'
-import { isAfter, isBefore, isWithinInterval, parseISO, addDays, formatDistanceToNow } from 'date-fns'
+import { isAfter, isWithinInterval, parseISO, addDays, formatDistanceToNow } from 'date-fns'
 import { Magnetic } from '../ui/magnetic'
 
 interface Journey {

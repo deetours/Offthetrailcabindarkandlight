@@ -120,7 +120,7 @@ export function ExploreStays() {
               mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
-            Places you don't just check into.
+            Places you don&apos;t just check into.
           </h1>
           <p
             className={`mt-6 font-sans text-lg md:text-xl text-muted-foreground transition-all duration-700 ease-out ${
@@ -157,7 +157,7 @@ export function ExploreStays() {
         <section className="px-6 py-16 text-center md:px-16 lg:px-24">
           <div className="mx-auto max-w-2xl space-y-2">
             <p className="font-serif text-lg md:text-xl text-muted-foreground">Most people stay for a night.</p>
-            <p className="font-serif text-lg md:text-xl text-foreground">Some extend. A few don't leave on time.</p>
+            <p className="font-serif text-lg md:text-xl text-foreground">Some extend. A few don&apos;t leave on time.</p>
           </div>
         </section>
       )}

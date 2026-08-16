@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { createClientComponentClient } from '@/lib/supabase-client'
-import { UserCheck, Clock, CheckCircle2, XCircle, RefreshCcw, Search, Phone, Mail, Trash2, MessageSquare } from 'lucide-react'
+import { Clock, RefreshCcw, Search, Phone, Mail, Trash2, MessageSquare } from 'lucide-react'
 
 export function LeadsManager() {
     const [leads, setLeads] = useState<any[]>([])

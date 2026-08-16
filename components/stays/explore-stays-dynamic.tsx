@@ -159,7 +159,7 @@ export function ExploreStaysDynamic({ initialStays = [] }: { initialStays?: any[
             <div className="h-10 w-px bg-border dark:bg-white/5" />
             <div>
               <span className="font-serif text-4xl text-foreground">NE</span>
-              <p className="text-[9px] uppercase tracking-[0.4em] text-muted-foreground/30 font-bold mt-1">India's finest</p>
+              <p className="text-[9px] uppercase tracking-[0.4em] text-muted-foreground/30 font-bold mt-1">India&apos;s finest</p>
             </div>
             <div className="h-10 w-px bg-border dark:bg-white/5" />
             <div>
@@ -349,7 +349,7 @@ export function ExploreStaysDynamic({ initialStays = [] }: { initialStays?: any[
           </p>
           <div className="h-px w-24 bg-primary/20 mx-auto mt-10" />
           <p className="mt-8 font-serif italic text-xl text-muted-foreground/40 lowercase">
-            a few don't leave on time.<br />that's how we know we're doing something right.
+            a few don&apos;t leave on time.<br />that&apos;s how we know we&apos;re doing something right.
           </p>
         </div>
       </motion.section>

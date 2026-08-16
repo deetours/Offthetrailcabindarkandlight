@@ -37,9 +37,9 @@ export async function POST(req: Request) {
         if (error) throw error
 
         return NextResponse.json({ message: 'Lead captured', lead: data }, { status: 201 })
-    } catch (err: any) {
+    } catch (err: unknown) {
         console.error('Lead capture error:', err)
-        return NextResponse.json({ error: err?.message || 'Failed to capture lead' }, { status: 500 })
+        return NextResponse.json({ error: (err as Error)?.message || 'Failed to capture lead' }, { status: 500 })
     }
 }
 

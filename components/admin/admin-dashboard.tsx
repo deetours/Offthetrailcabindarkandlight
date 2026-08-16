@@ -47,9 +47,9 @@ export function AdminDashboard() {
         } else {
           setConnectionStatus('connected')
         }
-      } catch (err: any) {
+      } catch (err: unknown) {
         setConnectionStatus('error')
-        setErrorMessage(err?.message || 'Network failure')
+        setErrorMessage((err as Error)?.message || 'Network failure')
       }
     }
     checkConnection()

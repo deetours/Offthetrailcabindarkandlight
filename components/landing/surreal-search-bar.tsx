@@ -1,9 +1,8 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
-import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "framer-motion"
-import { Search, MapPin, Compass, Users, Calendar, Sparkles } from "lucide-react"
-import { createClientComponentClient } from "@/lib/supabase-client"
+import { useState, useEffect } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { Search, MapPin, Sparkles } from "lucide-react"
 
 // Placeholder texts for the surreal search bar
 const placeholders = [

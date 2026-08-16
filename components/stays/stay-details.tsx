@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useRef, useEffect } from "react"
-import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion"
+import { motion, useScroll, useTransform, useSpring } from "framer-motion"
 import { Navbar } from "../ui/navbar"
 import { Footer } from "../ui/footer"
 import { Check, ArrowDown, MapPin, Bed, Users, Wifi, Coffee, Wind, Mountain } from "lucide-react"

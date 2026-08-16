@@ -69,7 +69,7 @@ export function ExploreTrips() {
             className={`font-serif text-4xl md:text-6xl lg:text-7xl text-foreground transition-all duration-700 ease-out ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               }`}
           >
-            Journeys for people who don't rush places.
+            Journeys for people who don&apos;t rush places.
           </h1>
           <p
             className={`mt-6 font-sans text-lg md:text-xl text-muted-foreground transition-all duration-700 ease-out ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"

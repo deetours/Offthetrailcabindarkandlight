@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Users, ShieldCheck, RefreshCcw, Search, Shield, User } from 'lucide-react'
+import { ShieldCheck, RefreshCcw, Search, Shield, User } from 'lucide-react'
 import { GLOBAL_ROLES } from '@/lib/pms/types'
 
 interface Profile {
@@ -38,9 +38,9 @@ export function UsersManager() {
       } else {
         setProfiles(json.data || [])
       }
-    } catch (err: any) {
-      setError(err.message || 'Network error')
-      console.error('[UsersManager] fetch exception:', err.message)
+    } catch (err: unknown) {
+      setError((err as Error).message || 'Network error')
+      console.error('[UsersManager] fetch exception:', (err as Error).message)
     } finally {
       setLoading(false)
     }
@@ -76,8 +76,8 @@ export function UsersManager() {
         const json = await res.json()
         alert(`Failed to update role: ${json.error}`)
       }
-    } catch (err: any) {
-      alert(`Network error: ${err.message}`)
+    } catch (err: unknown) {
+      alert(`Network error: ${(err as Error).message}`)
     } finally {
       setUpdatingId(null)
     }

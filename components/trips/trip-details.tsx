@@ -1,9 +1,9 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
-import { motion, useScroll, useSpring, useTransform } from "framer-motion"
+import { useState, useRef } from "react"
+import { motion, useScroll, useSpring } from "framer-motion"
 import { Navbar } from "../ui/navbar"
-import { Check, Users, Calendar, Mountain, ArrowDown } from "lucide-react"
+import { Check, Users, ArrowDown } from "lucide-react"
 import Link from "next/link"
 import { Magnetic } from "../ui/magnetic"
 
@@ -141,7 +141,7 @@ export function TripDetails({ trip }: TripDetailsProps) {
         >
           <Users className="h-10 w-10 text-primary mx-auto mb-10 opacity-50" />
           <p className="font-serif text-3xl md:text-5xl text-foreground tracking-tight">{trip.groupInfo}</p>
-          <p className="mt-8 text-muted-foreground font-serif text-xl italic lowercase">You'll return with fewer goodbyes.</p>
+          <p className="mt-8 text-muted-foreground font-serif text-xl italic lowercase">You&apos;ll return with fewer goodbyes.</p>
         </motion.div>
       </section>
 

@@ -54,7 +54,7 @@ export default function MemoriesPage() {
               Your memories
             </h1>
             <p className="font-sans text-muted-foreground">
-              Every journey you've taken with us
+              Every journey you&apos;ve taken with us
             </p>
           </div>
           <button

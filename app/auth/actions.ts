@@ -56,7 +56,7 @@ export async function login(email: string, password: string) {
         console.log(`Redirecting to: ${redirectUrl}`)
         return { success: true, redirectUrl }
 
-    } catch (err: any) {
+    } catch (err: unknown) {
         console.error('UNEXPECTED LOGIN ACTION ERROR:', err)
         return { error: 'An unexpected server error occurred during login.' }
     } finally {
@@ -169,9 +169,9 @@ export async function signup(email: string, password: string, fullName: string, 
         console.log('Signup process completed successfully')
         return { success: true, redirectUrl: '/return' }
 
-    } catch (err: any) {
+    } catch (err: unknown) {
         console.error('UNEXPECTED SIGNUP ACTION ERROR:', err)
-        return { error: err.message || 'An unexpected server error occurred during sign up.' }
+        return { error: (err as Error).message || 'An unexpected server error occurred during sign up.' }
     } finally {
         console.log('--- SIGNUP ACTION END ---')
     }

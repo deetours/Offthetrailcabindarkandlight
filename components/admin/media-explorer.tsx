@@ -3,9 +3,9 @@
 import { useState, useEffect } from 'react'
 import { createClientComponentClient } from '@/lib/supabase-client'
 import { 
-    Upload, Search, Copy, Check, Grid, List, 
-    Image as ImageIcon, Filter, ChevronRight, 
-    ExternalLink, Calendar, MapPin 
+    Upload, Search, Copy, Check, 
+    Image as ImageIcon, 
+    ExternalLink, Calendar 
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 

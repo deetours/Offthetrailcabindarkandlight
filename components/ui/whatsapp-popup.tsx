@@ -82,7 +82,7 @@ export function WhatsAppPopup() {
             </div>
 
             <p className="text-sm text-muted-foreground mb-4">
-              Have questions? Send your WhatsApp number and we'll reach out with personalized recommendations.
+              Have questions? Send your WhatsApp number and we&apos;ll reach out with personalized recommendations.
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-3">

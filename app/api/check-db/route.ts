@@ -34,11 +34,11 @@ export async function GET() {
             message: 'Server-side connectivity to Supabase is healthy',
             count
         })
-    } catch (err: any) {
+    } catch (err: unknown) {
         return NextResponse.json({
             status: 'error',
             message: 'Server-side fetch failed (Timeout or Network)',
-            error: err.message
+            error: (err as Error).message
         }, { status: 500 })
     }
 }

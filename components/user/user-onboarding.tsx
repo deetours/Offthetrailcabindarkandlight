@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { X, Sparkles, Map, Camera, Heart } from 'lucide-react'
+import { Sparkles, Map, Camera, Heart } from 'lucide-react'
 import { createClientComponentClient } from '@/lib/supabase-client'
 
 export function UserOnboarding({ userId }: { userId: string }) {
