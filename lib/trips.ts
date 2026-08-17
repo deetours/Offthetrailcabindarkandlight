@@ -1,42 +1,45 @@
-import { createSupabaseServerClient } from './supabase/server'
-
 export async function getTrips() {
-    try {
-        const supabase = await createSupabaseServerClient()
-        const { data, error } = await supabase
-            .from('trips')
-            .select('*')
-            .eq('status', 'published')
-            .not('name', 'is', null)
-            .order('created_at', { ascending: false })
-
-        if (error) {
-            console.error('Error fetching trips:', error)
-            return []
+    return [
+        {
+            id: 'demo-trip-1',
+            name: 'Spiti Valley Circuit',
+            status: 'published',
+            show_on_all_trips: true,
+            region: 'mountains',
+            terrain: 'high-altitude',
+            duration: 8,
+            price: 24999,
+            image_url: '/hero-campfire-spiti1.jpg',
+            tagline: 'A journey through the middle land.'
         }
-        return (data || []).filter((trip: any) => trip.show_on_all_trips !== false)
-    } catch (error) {
-        console.error('Error fetching trips:', error)
-        return []
-    }
+    ]
 }
 
 export async function getStays() {
-    try {
-        const supabase = await createSupabaseServerClient()
-        const { data, error } = await supabase
-            .from('stays')
-            .select('*')
-            .eq('status', 'published')
-            .order('created_at', { ascending: false })
-
-        if (error) {
-            console.error('Error fetching stays:', error)
-            return []
+    return [
+        {
+            id: 'dalhousie-estate',
+            name: 'Dalhousie Estate',
+            status: 'published',
+            type: 'heritage',
+            room_type: 'both',
+            vibe: 'forest',
+            location: 'Dalhousie, HP',
+            price: 4000,
+            image_url: '/hero1.png',
+            tagline: 'Trade the noise for silence.'
+        },
+        {
+            id: 'jibhi-canopy',
+            name: 'Jibhi Canopy Cottages',
+            status: 'published',
+            type: 'cottage',
+            room_type: 'both',
+            vibe: 'forest',
+            location: 'Jibhi, HP',
+            price: 4500,
+            image_url: '/offthetrail7.jpeg',
+            tagline: 'Amongst the branches.'
         }
-        return data || []
-    } catch (error) {
-        console.error('Error fetching stays:', error)
-        return []
-    }
+    ]
 }

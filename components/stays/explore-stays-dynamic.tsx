@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
-import { createClientComponentClient } from '@/lib/supabase-client'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Search, SlidersHorizontal, ChevronDown, ArrowRight } from 'lucide-react'
@@ -51,27 +50,11 @@ export function ExploreStaysDynamic({ initialStays = [] }: { initialStays?: any[
   const heroBgScale = useTransform(scrollYProgress, [0, 1], [1.0, 1.1])
 
   useEffect(() => {
-    if (initialStays.length === 0) {
-      const client = createClientComponentClient()
-      if (client) fetchStays(client)
+    // Relying on static data passed via props
+    if (initialStays.length > 0) {
+      setStays(initialStays)
     }
   }, [initialStays])
-
-  const fetchStays = async (client: any) => {
-    setLoading(true)
-    try {
-      const { data } = await client
-        .from('stays')
-        .select('*')
-        .eq('status', 'published')
-        .order('created_at', { ascending: false })
-      setStays(data || [])
-    } catch (err) {
-      console.error('Fetch stays error:', err)
-    } finally {
-      setLoading(false)
-    }
-  }
 
   const filteredStays = stays.filter((stay) => {
     // Only filter by vibe/type if stay actually has that field set

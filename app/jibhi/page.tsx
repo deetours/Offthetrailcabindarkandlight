@@ -3,6 +3,7 @@ import { Navbar } from "@/components/ui/navbar"
 import { ScrollHero } from "@/components/landing-system/scroll-hero"
 import { StoryScene } from "@/components/landing-system/story-scene"
 import { RoomLedger, RoomDef } from "@/components/landing-system/room-ledger"
+import { Footer } from "@/components/ui/footer"
 import { ArrowRight } from "lucide-react"
 
 export const metadata: Metadata = {
@@ -97,6 +98,7 @@ export default function JibhiCanopyCottagesPage() {
         </div>
       </section>
 
+      <Footer />
     </main>
   )
 }
