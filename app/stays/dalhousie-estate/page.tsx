@@ -52,9 +52,7 @@ export default function DalhousieEstatePage() {
         eyebrow="10 Rooms · Dalhousie, HP · Est. Retreat"
         imageSrc="/hero1.png"
         ctaText="Book a Room"
-        onCtaClick={() => {
-          document.getElementById('booking-section')?.scrollIntoView({ behavior: 'smooth' })
-        }}
+        ctaHref="#booking-section"
       />
 
       <StoryScene 

@@ -11,6 +11,7 @@ interface ScrollHeroProps {
   eyebrow: string
   imageSrc: string
   ctaText?: string
+  ctaHref?: string
   onCtaClick?: () => void
 }
 
@@ -146,37 +147,80 @@ export function ScrollHero({ headline, subhead, eyebrow, imageSrc, ctaText, onCt
             transition={{ duration: 1, delay: 0.8, ease: [0.23, 1, 0.32, 1] }}
             className="mt-10 md:mt-12 inline-block"
           >
-            <motion.button
-              onClick={onCtaClick}
-              onMouseEnter={() => setIsHoveringCta(true)}
-              onMouseLeave={() => setIsHoveringCta(false)}
-              animate={prefersReducedMotion ? {} : {
-                x: isHoveringCta ? (mousePosition.x * 10) : 0,
-                y: isHoveringCta ? (mousePosition.y * 10) : 0,
-              }}
-              transition={{ type: "spring", stiffness: 400, damping: 25 }}
-              className="group relative flex items-center gap-4 px-6 py-4 transition-colors duration-500 ease-out z-50 overflow-hidden"
-            >
-              {/* Magnetic background fill in hover state */}
-              <div 
-                className="absolute inset-0 bg-[#C9A227] transform scale-x-0 origin-left transition-transform duration-500 ease-[0.23,1,0.32,1] -z-10 group-hover:scale-x-100" 
-              />
-              
-              <span className="font-mono text-sm tracking-widest uppercase text-[#C9A227] group-hover:text-[#0C0F0D] transition-colors duration-500 z-10 relative">
-                {ctaText}
-              </span>
-              
-              <motion.div
-                animate={{ x: isHoveringCta ? 4 : 0 }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
-                className="text-[#C9A227] group-hover:text-[#0C0F0D] transition-colors duration-500 z-10"
+            {ctaHref ? (
+              <motion.a
+                href={ctaHref}
+                target={ctaHref.startsWith('#') ? undefined : "_blank"}
+                rel={ctaHref.startsWith('#') ? undefined : "noopener noreferrer"}
+                onClick={(e) => {
+                  if (ctaHref.startsWith('#')) {
+                    e.preventDefault()
+                    const targetId = ctaHref.substring(1)
+                    document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth' })
+                  }
+                }}
+                onMouseEnter={() => setIsHoveringCta(true)}
+                onMouseLeave={() => setIsHoveringCta(false)}
+                animate={prefersReducedMotion ? {} : {
+                  x: isHoveringCta ? (mousePosition.x * 10) : 0,
+                  y: isHoveringCta ? (mousePosition.y * 10) : 0,
+                }}
+                transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                className="group relative flex items-center gap-4 px-6 py-4 transition-colors duration-500 ease-out z-50 overflow-hidden"
               >
-                <ArrowRight size={18} strokeWidth={1.5} />
-              </motion.div>
+                {/* Magnetic background fill in hover state */}
+                <div 
+                  className="absolute inset-0 bg-[#C9A227] transform scale-x-0 origin-left transition-transform duration-500 ease-[0.23,1,0.32,1] -z-10 group-hover:scale-x-100" 
+                />
+                
+                <span className="font-mono text-sm tracking-widest uppercase text-[#C9A227] group-hover:text-[#0C0F0D] transition-colors duration-500 z-10 relative">
+                  {ctaText}
+                </span>
+                
+                <motion.div
+                  animate={{ x: isHoveringCta ? 4 : 0 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  className="text-[#C9A227] group-hover:text-[#0C0F0D] transition-colors duration-500 z-10"
+                >
+                  <ArrowRight size={18} strokeWidth={1.5} />
+                </motion.div>
 
-              {/* Draw-in underline */}
-              <div className="absolute bottom-0 left-0 w-full h-[1px] bg-[#C9A227] transform scale-x-0 origin-left transition-transform duration-500 ease-[0.23,1,0.32,1] group-hover:scale-x-100 opacity-50 group-hover:opacity-0" />
-            </motion.button>
+                {/* Draw-in underline */}
+                <div className="absolute bottom-0 left-0 w-full h-[1px] bg-[#C9A227] transform scale-x-0 origin-left transition-transform duration-500 ease-[0.23,1,0.32,1] group-hover:scale-x-100 opacity-50 group-hover:opacity-0" />
+              </motion.a>
+            ) : (
+              <motion.button
+                onClick={onCtaClick}
+                onMouseEnter={() => setIsHoveringCta(true)}
+                onMouseLeave={() => setIsHoveringCta(false)}
+                animate={prefersReducedMotion ? {} : {
+                  x: isHoveringCta ? (mousePosition.x * 10) : 0,
+                  y: isHoveringCta ? (mousePosition.y * 10) : 0,
+                }}
+                transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                className="group relative flex items-center gap-4 px-6 py-4 transition-colors duration-500 ease-out z-50 overflow-hidden"
+              >
+                {/* Magnetic background fill in hover state */}
+                <div 
+                  className="absolute inset-0 bg-[#C9A227] transform scale-x-0 origin-left transition-transform duration-500 ease-[0.23,1,0.32,1] -z-10 group-hover:scale-x-100" 
+                />
+                
+                <span className="font-mono text-sm tracking-widest uppercase text-[#C9A227] group-hover:text-[#0C0F0D] transition-colors duration-500 z-10 relative">
+                  {ctaText}
+                </span>
+                
+                <motion.div
+                  animate={{ x: isHoveringCta ? 4 : 0 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  className="text-[#C9A227] group-hover:text-[#0C0F0D] transition-colors duration-500 z-10"
+                >
+                  <ArrowRight size={18} strokeWidth={1.5} />
+                </motion.div>
+
+                {/* Draw-in underline */}
+                <div className="absolute bottom-0 left-0 w-full h-[1px] bg-[#C9A227] transform scale-x-0 origin-left transition-transform duration-500 ease-[0.23,1,0.32,1] group-hover:scale-x-100 opacity-50 group-hover:opacity-0" />
+              </motion.button>
+            )}
           </motion.div>
         )}
       </motion.div>

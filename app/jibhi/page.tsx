@@ -43,9 +43,7 @@ export default function JibhiCanopyCottagesPage() {
         eyebrow="Coming Soon"
         imageSrc="/hero1.png" // Placeholder
         ctaText="Notify me when bookings open"
-        onCtaClick={() => {
-          window.open(waLink, '_blank')
-        }}
+        ctaHref={waLink}
       />
 
       <StoryScene 
