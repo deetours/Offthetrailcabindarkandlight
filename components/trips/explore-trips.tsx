@@ -15,15 +15,28 @@ export function ExploreTrips() {
   }, [])
 
   useEffect(() => {
+    let isCancelled = false
+    
     const fetchSupabaseTrips = async () => {
       try {
         const supabase = createClientComponentClient()
-        const { data, error } = await supabase
+        
+        const fetchPromise = supabase
           .from("trips")
           .select("id, name, tagline, duration, image_url, terrain, price, group_size, show_on_all_trips")
           .eq("status", "published")
           .not("name", "is", null)
           .order("created_at", { ascending: false })
+
+        const timeoutPromise = new Promise((_, reject) => {
+          setTimeout(() => reject(new Error("Request timeout")), 8000)
+        })
+
+        const response = await Promise.race([fetchPromise, timeoutPromise]) as any
+        
+        if (isCancelled) return
+
+        const { data, error } = response
 
         if (error || !data) {
           setTrips([])
@@ -35,26 +48,34 @@ export function ExploreTrips() {
         const supabaseTrips = data
           .filter((trip: any) => trip.show_on_all_trips !== false)
           .map((trip: any) => ({
-          id: trip.id,
-          name: trip.name,
-          tagline: trip.tagline,
-          duration: trip.duration,
-          images: [trip.image_url || "/placeholder.jpg"],
-          difficulty: trip.terrain || "Moderate",
-          groupSize: trip.group_size || "8",
-        }))
+            id: trip.id,
+            name: trip.name,
+            tagline: trip.tagline,
+            duration: trip.duration,
+            images: [trip.image_url || "/placeholder.jpg"],
+            difficulty: trip.terrain || "Moderate",
+            groupSize: trip.group_size || "8",
+          }))
 
         setTrips(supabaseTrips)
       } catch (error) {
-        console.error("Error fetching trips:", error)
-        setTrips([])
+        if (!isCancelled) {
+          console.error("Error fetching trips:", error)
+          setTrips([])
+        }
       } finally {
-        setLoading(false)
+        if (!isCancelled) {
+          setLoading(false)
+        }
       }
     }
 
     if (mounted) {
       fetchSupabaseTrips()
+    }
+
+    return () => {
+      isCancelled = true
     }
   }, [mounted])
 

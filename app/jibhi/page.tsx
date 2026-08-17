@@ -1,9 +1,7 @@
 import { Metadata } from "next"
-import { Navbar } from "@/components/ui/navbar"
 import { ScrollHero } from "@/components/landing-system/scroll-hero"
 import { StoryScene } from "@/components/landing-system/story-scene"
 import { RoomLedger, RoomDef } from "@/components/landing-system/room-ledger"
-import { Footer } from "@/components/ui/footer"
 import { ArrowRight } from "lucide-react"
 
 export const metadata: Metadata = {
@@ -34,8 +32,10 @@ export default function JibhiCanopyCottagesPage() {
   const waLink = `https://wa.me/${ownerWhatsApp}?text=${encodeURIComponent(message)}`
 
   return (
-    <main className="min-h-screen bg-[#0C0F0D]">
-      <Navbar visible={true} />
+    <main className="min-h-screen bg-background">
+      <header className="absolute top-0 left-0 w-full z-50 px-6 py-8 md:px-16 lg:px-24 flex justify-between items-center pointer-events-none">
+        <div className="font-serif text-2xl text-foreground font-bold tracking-tight">OffTheTrail</div>
+      </header>
 
       <ScrollHero 
         headline="Jibhi Canopy Cottages"
@@ -58,7 +58,7 @@ export default function JibhiCanopyCottagesPage() {
         ]}
       />
 
-      <section className="py-24 md:py-32 px-6 md:px-16 lg:px-24 bg-[#0C0F0D] relative border-t border-[#2A332C]">
+      <section className="py-24 md:py-32 px-6 md:px-16 lg:px-24 bg-background relative border-t border-border">
         {/* Background Film Grain */}
         <div 
           className="absolute inset-0 z-0 pointer-events-none opacity-20 mix-blend-overlay"
@@ -66,29 +66,29 @@ export default function JibhiCanopyCottagesPage() {
         />
         
         <div className="max-w-4xl mx-auto mb-16 text-center relative z-10">
-          <div className="font-serif text-[#C9A227] text-lg lg:text-xl italic mb-4">III — Early Preview</div>
-          <h2 className="font-serif text-4xl md:text-5xl text-[#EDEAE2]">The Spaces</h2>
-          <p className="mt-6 font-sans text-lg text-[#8B9A8C] font-light max-w-xl mx-auto">
+          <div className="font-serif text-primary text-lg lg:text-xl italic mb-4">III — Early Preview</div>
+          <h2 className="font-serif text-4xl md:text-5xl text-foreground">The Spaces</h2>
+          <p className="mt-6 font-sans text-lg text-muted-foreground font-light max-w-xl mx-auto">
             A sneak peek at the rooms. Bookings are not yet open, but you can join the waitlist to be notified first.
           </p>
         </div>
 
-        <div className="w-full max-w-3xl mx-auto bg-[#151A17] border border-[#2A332C] rounded-2xl p-6 md:p-10 shadow-2xl relative z-20">
+        <div className="w-full max-w-3xl mx-auto bg-card border border-border rounded-2xl p-6 md:p-10 shadow-2xl relative z-20">
           <RoomLedger 
             rooms={jibhiRooms} 
             interactive={false} 
           />
 
-          <div className="pt-10 mt-6 border-t border-[#2A332C] flex flex-col items-center text-center">
-            <h3 className="font-serif text-2xl text-[#EDEAE2] mb-4">Be the first to know.</h3>
-            <p className="text-[#8B9A8C] text-sm mb-8">
+          <div className="pt-10 mt-6 border-t border-border flex flex-col items-center text-center">
+            <h3 className="font-serif text-2xl text-foreground mb-4">Be the first to know.</h3>
+            <p className="text-muted-foreground text-sm mb-8">
               We&apos;ll message you on WhatsApp the moment dates become available.
             </p>
             <a 
               href={waLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-[#C9A227] hover:bg-[#D4B344] text-[#0C0F0D] px-8 py-4 rounded-none font-mono uppercase tracking-widest text-sm transition-colors flex items-center justify-center gap-2 w-full sm:w-auto"
+              className="bg-primary hover:brightness-110 text-primary-foreground px-8 py-4 rounded-none font-mono font-bold uppercase tracking-widest text-sm transition-colors flex items-center justify-center gap-2 w-full sm:w-auto"
             >
               Join the Waitlist <ArrowRight size={16} />
             </a>
@@ -96,7 +96,10 @@ export default function JibhiCanopyCottagesPage() {
         </div>
       </section>
 
-      <Footer />
+      <footer className="py-12 px-6 md:px-16 lg:px-24 bg-background border-t border-border flex flex-col items-center justify-center text-center">
+        <div className="font-serif text-2xl text-foreground font-bold tracking-tight mb-4">OffTheTrail</div>
+        <p className="text-muted-foreground text-xs font-mono font-bold uppercase tracking-widest">© {new Date().getFullYear()} OffTheTrail. All rights reserved.</p>
+      </footer>
     </main>
   )
 }

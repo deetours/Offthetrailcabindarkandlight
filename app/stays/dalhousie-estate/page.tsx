@@ -1,10 +1,8 @@
 import { Metadata } from "next"
-import { Navbar } from "@/components/ui/navbar"
 import { ScrollHero } from "@/components/landing-system/scroll-hero"
 import { StoryScene } from "@/components/landing-system/story-scene"
 import { BookingFlow } from "@/components/landing-system/booking-flow"
 import { RoomDef } from "@/components/landing-system/room-ledger"
-import { Footer } from "@/components/ui/footer"
 
 export const metadata: Metadata = {
   title: "Dalhousie Estate | Offthetrail",
@@ -43,8 +41,10 @@ const dalhousieRooms: RoomDef[] = [
 
 export default function DalhousieEstatePage() {
   return (
-    <main className="min-h-screen bg-[#0C0F0D]">
-      <Navbar visible={true} />
+    <main className="min-h-screen bg-background">
+      <header className="absolute top-0 left-0 w-full z-50 px-6 py-8 md:px-16 lg:px-24 flex justify-between items-center pointer-events-none">
+        <div className="font-serif text-2xl text-foreground font-bold tracking-tight">OffTheTrail</div>
+      </header>
 
       <ScrollHero 
         headline="Dalhousie Estate"
@@ -74,7 +74,7 @@ export default function DalhousieEstatePage() {
         ]}
       />
 
-      <section id="booking-section" className="py-24 md:py-32 px-6 md:px-16 lg:px-24 bg-[#0C0F0D] relative">
+      <section id="booking-section" className="py-24 md:py-32 px-6 md:px-16 lg:px-24 bg-background relative">
         {/* Background Film Grain */}
         <div 
           className="absolute inset-0 z-0 pointer-events-none opacity-20 mix-blend-overlay"
@@ -82,8 +82,8 @@ export default function DalhousieEstatePage() {
         />
         
         <div className="max-w-4xl mx-auto mb-16 text-center relative z-10">
-          <div className="font-serif text-[#C9A227] text-lg lg:text-xl italic mb-4">III — The Rooms</div>
-          <h2 className="font-serif text-4xl md:text-5xl text-[#EDEAE2]">Stay with us.</h2>
+          <div className="font-serif text-primary text-lg lg:text-xl italic mb-4">III — The Rooms</div>
+          <h2 className="font-serif text-4xl md:text-5xl text-foreground">Stay with us.</h2>
         </div>
 
         <BookingFlow 
@@ -95,49 +95,49 @@ export default function DalhousieEstatePage() {
       </section>
 
       {/* Amenities / Bento Grid */}
-      <section className="py-24 px-6 md:px-16 lg:px-24 bg-[#151A17] border-t border-[#2A332C]">
+      <section className="py-24 px-6 md:px-16 lg:px-24 bg-card border-t border-border">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="font-serif text-4xl text-[#EDEAE2] mb-6">The details.</h2>
-            <p className="text-[#8B9A8C] font-light max-w-lg mx-auto">
+            <h2 className="font-serif text-4xl text-foreground mb-6">The details.</h2>
+            <p className="text-muted-foreground font-light max-w-lg mx-auto">
               Everything you need for a quiet retreat. Nothing you don't.
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[200px]">
-            <div className="md:col-span-2 bg-[#0C0F0D] p-8 border border-[#2A332C] flex flex-col justify-end">
-              <h3 className="font-serif text-2xl text-[#EDEAE2] mb-2">Heritage Property</h3>
-              <p className="text-[#8B9A8C] text-sm">Built with stone and wood, preserving century-old architecture.</p>
+            <div className="md:col-span-2 bg-background p-8 border border-border flex flex-col justify-end hover:border-primary/50 transition-colors">
+              <h3 className="font-serif text-2xl text-foreground mb-2">Heritage Property</h3>
+              <p className="text-muted-foreground text-sm">Built with stone and wood, preserving century-old architecture.</p>
             </div>
-            <div className="bg-[#0C0F0D] p-8 border border-[#2A332C] flex flex-col justify-end">
-              <h3 className="font-serif text-2xl text-[#EDEAE2] mb-2">Forest Trails</h3>
-              <p className="text-[#8B9A8C] text-sm">Direct access to private pine forest paths.</p>
+            <div className="bg-background p-8 border border-border flex flex-col justify-end hover:border-primary/50 transition-colors">
+              <h3 className="font-serif text-2xl text-foreground mb-2">Forest Trails</h3>
+              <p className="text-muted-foreground text-sm">Direct access to private pine forest paths.</p>
             </div>
-            <div className="bg-[#0C0F0D] p-8 border border-[#2A332C] flex flex-col justify-end">
-              <h3 className="font-serif text-2xl text-[#EDEAE2] mb-2">Farm to Table</h3>
-              <p className="text-[#8B9A8C] text-sm">Meals prepared with local, organic ingredients.</p>
+            <div className="bg-background p-8 border border-border flex flex-col justify-end hover:border-primary/50 transition-colors">
+              <h3 className="font-serif text-2xl text-foreground mb-2">Farm to Table</h3>
+              <p className="text-muted-foreground text-sm">Meals prepared with local, organic ingredients.</p>
             </div>
-            <div className="md:col-span-2 bg-[#0C0F0D] p-8 border border-[#2A332C] flex flex-col justify-end">
-              <h3 className="font-serif text-2xl text-[#EDEAE2] mb-2">Wood-Fired Heating</h3>
-              <p className="text-[#8B9A8C] text-sm">Traditional bukharis and fireplaces to keep the cold out.</p>
+            <div className="md:col-span-2 bg-background p-8 border border-border flex flex-col justify-end hover:border-primary/50 transition-colors">
+              <h3 className="font-serif text-2xl text-foreground mb-2">Wood-Fired Heating</h3>
+              <p className="text-muted-foreground text-sm">Traditional bukharis and fireplaces to keep the cold out.</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Map & Location */}
-      <section className="py-24 px-6 md:px-16 lg:px-24 bg-[#0C0F0D]">
+      <section className="py-24 px-6 md:px-16 lg:px-24 bg-background">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-12 items-center">
           <div className="w-full md:w-1/3">
-            <h2 className="font-serif text-3xl text-[#EDEAE2] mb-6">Getting here.</h2>
-            <p className="text-[#8B9A8C] font-light mb-8">
+            <h2 className="font-serif text-3xl text-foreground mb-6">Getting here.</h2>
+            <p className="text-muted-foreground font-light mb-8">
               Dalhousie Estate is tucked away on a quiet ridge. We'll send you exact driving directions and a pin once your booking is confirmed.
             </p>
-            <div className="text-sm font-mono text-[#C9A227] uppercase tracking-widest">
+            <div className="text-sm font-mono text-primary font-bold uppercase tracking-widest">
               Dalhousie, Himachal Pradesh
             </div>
           </div>
-          <div className="w-full md:w-2/3 aspect-video bg-[#151A17] border border-[#2A332C] relative overflow-hidden">
+          <div className="w-full md:w-2/3 aspect-video bg-card border border-border relative overflow-hidden">
             {/* Minimal static map aesthetic */}
             <div className="absolute inset-0 opacity-40 mix-blend-overlay" style={{ backgroundImage: "url('/noise.png')" }} />
             <iframe 
@@ -154,31 +154,34 @@ export default function DalhousieEstatePage() {
       </section>
 
       {/* FAQ */}
-      <section className="py-24 px-6 md:px-16 lg:px-24 bg-[#151A17] border-t border-[#2A332C]">
+      <section className="py-24 px-6 md:px-16 lg:px-24 bg-card border-t border-border">
         <div className="max-w-3xl mx-auto">
-          <h2 className="font-serif text-3xl text-[#EDEAE2] mb-12 text-center">Frequently Asked Questions</h2>
+          <h2 className="font-serif text-3xl text-foreground mb-12 text-center">Frequently Asked Questions</h2>
           <div className="space-y-8">
-            <div className="border-b border-[#2A332C] pb-6">
-              <h4 className="font-serif text-xl text-[#EDEAE2] mb-3">What are the check-in and check-out times?</h4>
-              <p className="text-[#8B9A8C] font-light">Check-in is at 1:00 PM, and check-out is at 11:00 AM. Early check-in depends on availability.</p>
+            <div className="border-b border-border pb-6">
+              <h4 className="font-serif text-xl text-foreground mb-3">What are the check-in and check-out times?</h4>
+              <p className="text-muted-foreground font-light">Check-in is at 1:00 PM, and check-out is at 11:00 AM. Early check-in depends on availability.</p>
             </div>
-            <div className="border-b border-[#2A332C] pb-6">
-              <h4 className="font-serif text-xl text-[#EDEAE2] mb-3">What is the cancellation policy?</h4>
-              <p className="text-[#8B9A8C] font-light">Cancellations made 7 days prior to arrival are fully refundable. Later cancellations will incur a 1-night charge.</p>
+            <div className="border-b border-border pb-6">
+              <h4 className="font-serif text-xl text-foreground mb-3">What is the cancellation policy?</h4>
+              <p className="text-muted-foreground font-light">Cancellations made 7 days prior to arrival are fully refundable. Later cancellations will incur a 1-night charge.</p>
             </div>
-            <div className="border-b border-[#2A332C] pb-6">
-              <h4 className="font-serif text-xl text-[#EDEAE2] mb-3">Are pets allowed?</h4>
-              <p className="text-[#8B9A8C] font-light">We love pets, but due to the surrounding wildlife, we cannot accommodate them at the estate.</p>
+            <div className="border-b border-border pb-6">
+              <h4 className="font-serif text-xl text-foreground mb-3">Are pets allowed?</h4>
+              <p className="text-muted-foreground font-light">We love pets, but due to the surrounding wildlife, we cannot accommodate them at the estate.</p>
             </div>
             <div className="pb-6">
-              <h4 className="font-serif text-xl text-[#EDEAE2] mb-3">Are there extra-guest charges?</h4>
-              <p className="text-[#8B9A8C] font-light">Rooms are priced for double occupancy. A third guest can be accommodated with an extra bed for ₹1,200/night.</p>
+              <h4 className="font-serif text-xl text-foreground mb-3">Are there extra-guest charges?</h4>
+              <p className="text-muted-foreground font-light">Rooms are priced for double occupancy. A third guest can be accommodated with an extra bed for ₹1,200/night.</p>
             </div>
           </div>
         </div>
       </section>
 
-      <Footer />
+      <footer className="py-12 px-6 md:px-16 lg:px-24 bg-background border-t border-border flex flex-col items-center justify-center text-center">
+        <div className="font-serif text-2xl text-foreground font-bold tracking-tight mb-4">OffTheTrail</div>
+        <p className="text-muted-foreground text-xs font-mono font-bold uppercase tracking-widest">© {new Date().getFullYear()} OffTheTrail. All rights reserved.</p>
+      </footer>
     </main>
   )
 }
