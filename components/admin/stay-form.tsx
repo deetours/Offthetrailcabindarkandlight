@@ -68,7 +68,7 @@ export function StayForm({ stay, onSuccess }: StayFormProps) {
         .getPublicUrl(filePath)
 
       callback(publicUrl)
-    } catch (error: unknown) {
+    } catch (error: any) {
       console.error('Upload error:', error)
       alert(`Upload failed: ${error.message}`)
     } finally {
@@ -106,7 +106,7 @@ export function StayForm({ stay, onSuccess }: StayFormProps) {
         if (!response.ok) throw new Error(result.error || 'Failed to create stay')
       }
       onSuccess()
-    } catch (error: unknown) {
+    } catch (error: any) {
       console.error('Save error:', error)
       alert(`Error saving stay: ${error.message}`)
     } finally {

@@ -42,7 +42,7 @@ async function safeInsertAuditLog(
       action: args.action,
       payload: args.payload,
     })
-  } catch (error: unknown) {
+  } catch (error: any) {
     if (!isMissingRelationError(error)) {
       throw error
     }

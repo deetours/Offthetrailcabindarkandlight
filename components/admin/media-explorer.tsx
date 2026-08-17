@@ -89,7 +89,7 @@ export function MediaExplorer() {
             // Refresh library if on library view
             if (view === 'library') fetchLibraryFiles(supabase)
             alert('Upload successful!')
-        } catch (error: unknown) {
+        } catch (error: any) {
             console.error('Upload error:', error)
             alert(`Upload failed: ${error.message}`)
         } finally {
