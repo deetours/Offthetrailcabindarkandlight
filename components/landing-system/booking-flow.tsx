@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react"
 import { RoomDef, RoomLedger } from "./room-ledger"
 import Image from "next/image"
-import { ArrowRight, Calendar, Users, QrCode, CheckCircle2 } from "lucide-react"
+import { ArrowRight, Calendar, CheckCircle2 } from "lucide-react"
 
 interface BookingFlowProps {
   propertyName: string
