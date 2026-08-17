@@ -102,7 +102,7 @@ export async function POST(request: Request) {
       },
       { status: 201 },
     )
-  } catch (error: unknown) {
+  } catch (error: any) {
     if (isMissingRelationError(error)) {
       return migrationRequired('Booking holds')
     }

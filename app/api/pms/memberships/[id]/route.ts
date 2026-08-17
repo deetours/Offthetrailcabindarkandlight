@@ -34,7 +34,7 @@ export async function PATCH(
 
     if (error) throw error
     return NextResponse.json({ data })
-  } catch (error: unknown) {
+  } catch (error: any) {
     if (isMissingRelationError(error)) {
       return migrationRequired('Property memberships')
     }

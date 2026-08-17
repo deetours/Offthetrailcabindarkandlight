@@ -35,7 +35,7 @@ export async function POST(request: Request) {
         bookingContext: availability.bookingContext,
       },
     })
-  } catch (error: unknown) {
+  } catch (error: any) {
     if (isMissingRelationError(error)) {
       const { productType, stayId, from, to } = body
 

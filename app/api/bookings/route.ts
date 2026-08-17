@@ -58,7 +58,7 @@ export async function POST(req: Request) {
         }
 
         return NextResponse.json({ message: 'Booking request received', booking }, { status: 201 })
-    } catch (error: unknown) {
+    } catch (error: any) {
         console.error('POST /api/bookings error:', error)
         return NextResponse.json({ error: error?.message || 'Failed to process booking' }, { status: 500 })
     }
@@ -85,7 +85,7 @@ export async function GET() {
         }
 
         return NextResponse.json({ bookings })
-    } catch (error: unknown) {
+    } catch (error: any) {
         console.error('GET /api/bookings exception:', error)
         return NextResponse.json({ error: error?.message || 'Failed to process request' }, { status: 500 })
     }

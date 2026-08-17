@@ -147,7 +147,7 @@ export async function POST(request: Request) {
         keyId: process.env.RAZORPAY_KEY_ID,
       },
     })
-  } catch (error: unknown) {
+  } catch (error: any) {
     if (isMissingRelationError(error)) {
       return migrationRequired('Payments / booking holds')
     }

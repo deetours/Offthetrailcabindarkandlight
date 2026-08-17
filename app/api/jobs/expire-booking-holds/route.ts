@@ -58,7 +58,7 @@ export async function POST(request: Request) {
       skipped: results.filter((result) => !result.expired).length,
       results,
     })
-  } catch (error: unknown) {
+  } catch (error: any) {
     if (isMissingRelationError(error)) {
       return migrationRequired('Booking holds')
     }
