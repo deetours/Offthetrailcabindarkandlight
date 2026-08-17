@@ -15,7 +15,7 @@ interface ScrollHeroProps {
   onCtaClick?: () => void
 }
 
-export function ScrollHero({ headline, subhead, eyebrow, imageSrc, ctaText, onCtaClick }: ScrollHeroProps) {
+export function ScrollHero({ headline, subhead, eyebrow, imageSrc, ctaText, ctaHref, onCtaClick }: ScrollHeroProps) {
   const sectionRef = useRef<HTMLElement>(null)
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [isHoveringCta, setIsHoveringCta] = useState(false)
