@@ -50,7 +50,7 @@ export default function DalhousieEstatePage() {
         headline="Dalhousie Estate"
         subhead="Trade the noise for silence. A heritage retreat hidden in the pine forests."
         eyebrow="10 Rooms · Dalhousie, HP · Est. Retreat"
-        imageSrc="/hero1.png"
+        imageSrc="/images/offthetrail7.jpeg"
         ctaText="Book a Room"
         ctaHref="#booking-section"
       />
@@ -59,7 +59,7 @@ export default function DalhousieEstatePage() {
         numeral="II — The Estate"
         headline="Time slows down here."
         mainImageSrc="/hero-campfire-spiti1.jpg"
-        insetImageSrc="/hero2.png"
+        insetImageSrc="/images/offthetrail5.jpeg"
         paragraphs={[
           {
             text: "Built in an era when things were made to last, the estate sits on a ridge overlooking the valley. There are no televisions. No crowded lobbies. Just the sound of the wind through the deodars."
