@@ -68,7 +68,7 @@ export async function GET(
         recentBookings: bookings,
       },
     })
-  } catch (error: any) {
+  } catch (error: unknown) {
     if (isMissingRelationError(error)) {
       const [stayResult, bookingsResult] = await Promise.all([
         serviceClient

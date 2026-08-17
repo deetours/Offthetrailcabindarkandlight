@@ -40,7 +40,7 @@ export async function POST(request: Request) {
 
     if (error) throw error
     return NextResponse.json({ data }, { status: 201 })
-  } catch (error: any) {
+  } catch (error: unknown) {
     if (isMissingRelationError(error)) {
       return migrationRequired('Housekeeping tasks')
     }

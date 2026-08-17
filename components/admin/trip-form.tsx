@@ -94,7 +94,7 @@ export function TripForm({ trip, onSuccess }: TripFormProps) {
         .getPublicUrl(filePath)
 
       callback(publicUrl)
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Upload error:', error)
       alert(`Upload failed: ${error.message}`)
     } finally {
@@ -147,7 +147,7 @@ export function TripForm({ trip, onSuccess }: TripFormProps) {
         if (!response.ok) throw new Error(result.error || 'Failed to create trip')
       }
       onSuccess()
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Save error:', error)
       alert(`Error saving trip: ${error.message}`)
     } finally {

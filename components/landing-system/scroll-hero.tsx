@@ -1,209 +1,202 @@
 "use client"
 
-import { useRef, useState, useEffect } from "react"
-import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion"
+import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
-import { ArrowRight } from "lucide-react"
+import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion"
+import { ArrowRight, ChevronDown } from "lucide-react"
 
 interface ScrollHeroProps {
-  title: string
-  tagline: string
-  imagePath: string
-  eyebrow?: string
-  hideCta?: boolean
-  chipText?: string
+  headline: string
+  subhead?: string
+  eyebrow: string
+  imageSrc: string
+  ctaText?: string
+  onCtaClick?: () => void
 }
 
-export function ScrollHero({ title, tagline, imagePath, eyebrow, hideCta = false, chipText }: ScrollHeroProps) {
-  const containerRef = useRef<HTMLDivElement>(null)
+export function ScrollHero({ headline, subhead, eyebrow, imageSrc, ctaText, onCtaClick }: ScrollHeroProps) {
+  const sectionRef = useRef<HTMLElement>(null)
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const [isHoveringCta, setIsHoveringCta] = useState(false)
   const prefersReducedMotion = useReducedMotion()
 
   const { scrollYProgress } = useScroll({
-    target: containerRef,
+    target: sectionRef,
     offset: ["start start", "end start"],
   })
 
-  // Apple-style Ken Burns: Image scales from 1 to 1.12 over the scroll distance
+  // Scroll-linked Ken Burns effect
   const scale = useTransform(scrollYProgress, [0, 1], [1, 1.12])
-  // Subtle parallax for the text content
-  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "40%"])
-  const textOpacity = useTransform(scrollYProgress, [0, 0.4], [1, 0])
+  const opacityText = useTransform(scrollYProgress, [0, 0.5], [1, 0])
+  const yText = useTransform(scrollYProgress, [0, 1], ["0%", "-40%"])
 
-  // Cursor Parallax Logic
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-  const [isHoveringCTA, setIsHoveringCTA] = useState(false)
-
+  // Cursor-driven parallax
   useEffect(() => {
-    if (prefersReducedMotion || typeof window === "undefined") return
+    if (prefersReducedMotion) return
 
     const handleMouseMove = (e: MouseEvent) => {
-      // Calculate normalized mouse position (-1 to 1)
-      const x = (e.clientX / window.innerWidth - 0.5) * 2
-      const y = (e.clientY / window.innerHeight - 0.5) * 2
+      // Normalize mouse position from -1 to 1
+      const x = (e.clientX / window.innerWidth) * 2 - 1
+      const y = (e.clientY / window.innerHeight) * 2 - 1
       setMousePosition({ x, y })
     }
 
-    // Only add listener on non-touch devices
-    if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    // Only add listener on pointer-fine devices
+    if (window.matchMedia("(pointer: fine)").matches) {
       window.addEventListener("mousemove", handleMouseMove)
-    }
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove)
+      return () => window.removeEventListener("mousemove", handleMouseMove)
     }
   }, [prefersReducedMotion])
 
-  // Parallax shifts opposite to mouse (3-6px max)
-  const parallaxX = mousePosition.x * -5
-  const parallaxY = mousePosition.y * -5
+  const parallaxX = prefersReducedMotion ? 0 : mousePosition.x * -6
+  const parallaxY = prefersReducedMotion ? 0 : mousePosition.y * -6
+  
+  // Chip tilt
+  const chipRotate = prefersReducedMotion ? 0 : mousePosition.x * 2 // 1-2 degrees
 
   return (
-    <section ref={containerRef} className="relative h-[100vh] w-full bg-ink flex items-center justify-center overflow-hidden">
-      
-      {/* Background Image with Scroll-Linked Scale and Cursor Parallax */}
-      <motion.div
+    <section 
+      ref={sectionRef} 
+      className="relative flex min-h-screen items-end justify-start px-6 md:px-16 lg:px-24 pb-24 md:pb-32 overflow-hidden bg-[#0C0F0D]"
+    >
+      {/* 1. Single Continuous Full-Bleed Photograph */}
+      <motion.div 
+        style={prefersReducedMotion ? {} : { scale, x: parallaxX, y: parallaxY }}
         className="absolute inset-0 z-0 origin-center"
-        style={{ 
-          scale: prefersReducedMotion ? 1 : scale,
-        }}
-        animate={{
-          x: prefersReducedMotion ? 0 : parallaxX,
-          y: prefersReducedMotion ? 0 : parallaxY
-        }}
-        transition={{ type: "spring", stiffness: 50, damping: 20 }}
       >
         <Image
-          src={imagePath}
-          alt={title}
+          src={imageSrc}
+          alt={headline}
           fill
           priority
           className="object-cover"
+          quality={100}
         />
         
-        {/* Layer 1: Mist/Fog Texture Overlay (Idle Motion) */}
+        {/* Blended ambient mist texture */}
         {!prefersReducedMotion && (
-          <div 
-            className="absolute inset-0 z-10 opacity-30 mix-blend-screen pointer-events-none"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-              animation: "drift 40s linear infinite",
+          <motion.div 
+            animate={{ 
+              x: ["-5%", "5%", "-5%"], 
+              opacity: [0.3, 0.5, 0.3] 
+            }}
+            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            className="absolute inset-0 pointer-events-none mix-blend-screen bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white/10 via-transparent to-transparent opacity-40 scale-150 origin-bottom"
+            style={{ 
+               backgroundImage: "url('/noise.png')", // fallback or actual noise if available
+               filter: "blur(20px)"
             }}
           />
         )}
-
-        {/* Layer 2: Gradient Scrim for general contrast */}
-        <div className="absolute inset-0 z-20 bg-gradient-to-t from-ink/90 via-ink/40 to-transparent" />
-        
-        {/* Layer 3: Radial Vignette specifically behind text block */}
-        <div className="absolute inset-0 z-20 flex items-center justify-center">
-          <div className="w-[120%] h-[60vh] mt-[40vh] bg-[radial-gradient(ellipse_at_center,_rgba(12,15,13,0.7)_0%,_rgba(12,15,13,0)_70%)]" />
-        </div>
       </motion.div>
 
-      {/* Content with sequenced fade-in & Clip-Path wipe */}
-      <motion.div 
-        style={{ y: prefersReducedMotion ? "0%" : textY, opacity: textOpacity }}
-        className="relative z-30 flex flex-col items-start text-left px-6 md:px-12 lg:px-24 w-full max-w-7xl mx-auto mt-[25vh] pointer-events-none"
-      >
-        
-        {/* Floating Anti-Grid Chip (Desktop) / Inline Tag (Mobile) */}
-        {chipText && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
-            animate={{ opacity: 1, scale: 1, rotate: prefersReducedMotion ? 0 : -3 }}
-            transition={{ duration: 1.2, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-8 md:absolute md:-left-8 md:top-12 lg:-left-16 z-40 bg-mist/90 backdrop-blur-md border border-white/10 px-4 py-2 rounded-lg shadow-2xl pointer-events-none md:rotate-[-3deg] inline-block"
-          >
-            <span className="font-sans text-[10px] md:text-xs text-moss uppercase tracking-[0.1em]">{chipText}</span>
-          </motion.div>
-        )}
+      {/* 2. Legibility Scrims */}
+      {/* Gradient shaped scrim */}
+      <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-b from-transparent via-[#0C0F0D]/40 to-[#0C0F0D]/90 z-10 pointer-events-none" />
+      {/* Radial vignette behind text */}
+      <div className="absolute left-0 bottom-0 w-full md:w-2/3 h-full md:h-2/3 bg-[radial-gradient(circle_at_20%_80%,_rgba(12,15,13,0.6)_0%,_transparent_70%)] z-10 pointer-events-none" />
 
-        {/* Clip-Path Reveal for Headline */}
-        <motion.div
-          initial={{ clipPath: prefersReducedMotion ? "inset(0 0 0 0)" : "inset(100% 0 0 0)" }}
-          animate={{ clipPath: "inset(0 0 0 0)" }}
-          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          className="pb-2 flex flex-col items-start w-full md:w-2/3 lg:w-[60%]" // rule-of-thirds width on desktop
+      {/* 3. Text Block Content */}
+      <motion.div 
+        style={{ opacity: opacityText, y: prefersReducedMotion ? 0 : yText }}
+        className="relative z-20 w-full max-w-4xl"
+      >
+        {/* Eyebrow Chip - sits above headline, small gap, anti-grid rotation */}
+        <motion.div 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: [0.23, 1, 0.32, 1] }}
+          style={prefersReducedMotion ? {} : { rotate: chipRotate }}
+          className="inline-flex items-center gap-2 px-3 py-1 mb-6 md:mb-8 rounded-full bg-[#151A17]/80 backdrop-blur-md border border-[#8B9A8C]/20 shadow-sm md:-rotate-1 origin-bottom-left"
         >
-          {eyebrow && (
-            <motion.span 
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className="mb-4 font-sans text-xs uppercase tracking-[0.2em] text-moss bg-ink/50 px-3 py-1 rounded-full border border-moss/20"
-            >
-              {eyebrow}
-            </motion.span>
-          )}
-          <motion.h1 
-            initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-            className="font-serif text-5xl md:text-7xl lg:text-8xl text-parchment tracking-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)]"
-          >
-            {title}
-          </motion.h1>
+          <span className="text-xs uppercase tracking-widest text-[#EDEAE2] font-mono">
+            {eyebrow}
+          </span>
         </motion.div>
 
-        <motion.p 
-          initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-6 font-sans text-lg md:text-xl text-parchment/95 tracking-wide max-w-2xl font-light drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]"
-        >
-          {tagline}
-        </motion.p>
-
-        {/* Magnetic CTA */}
-        {!hideCta && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            transition={{ duration: 1, delay: 0.6 }}
-            className="mt-16 relative pointer-events-auto"
-            onMouseEnter={() => setIsHoveringCTA(true)}
-            onMouseLeave={() => setIsHoveringCTA(false)}
-            animate={{
-              opacity: 1,
-              ...(prefersReducedMotion ? {} : {
-                x: isHoveringCTA ? mousePosition.x * 15 : 0,
-                y: isHoveringCTA ? mousePosition.y * 15 : 0,
-              })
-            }}
+        {/* Headline - wipe reveal or simple fade */}
+        <div className="overflow-hidden">
+          <motion.h1 
+            initial={prefersReducedMotion ? { opacity: 0 } : { clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)", y: 40 }}
+            animate={prefersReducedMotion ? { opacity: 1 } : { clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", y: 0 }}
+            transition={{ duration: 1.2, delay: 0.3, ease: [0.23, 1, 0.32, 1] }}
+            className="font-serif text-[clamp(3rem,8vw,6.5rem)] leading-[1.05] text-[#EDEAE2] drop-shadow-md"
           >
-            <button
-              onClick={() => {
-                document.getElementById("booking-ledger")?.scrollIntoView({ behavior: "smooth" })
+            {headline}
+          </motion.h1>
+        </div>
+
+        {/* Subhead */}
+        {subhead && (
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.6, ease: [0.23, 1, 0.32, 1] }}
+            className="mt-6 md:mt-8 font-sans text-lg md:text-2xl text-[#8B9A8C] max-w-2xl drop-shadow-sm font-light leading-relaxed"
+          >
+            {subhead}
+          </motion.p>
+        )}
+
+        {/* CTA */}
+        {ctaText && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.8, ease: [0.23, 1, 0.32, 1] }}
+            className="mt-10 md:mt-12 inline-block"
+          >
+            <motion.button
+              onClick={onCtaClick}
+              onMouseEnter={() => setIsHoveringCta(true)}
+              onMouseLeave={() => setIsHoveringCta(false)}
+              animate={prefersReducedMotion ? {} : {
+                x: isHoveringCta ? (mousePosition.x * 10) : 0,
+                y: isHoveringCta ? (mousePosition.y * 10) : 0,
               }}
-              className="group px-8 py-4 bg-transparent border border-parchment/30 text-parchment font-sans text-sm font-medium uppercase tracking-widest rounded-full hover:border-brass hover:bg-brass hover:text-ink transition-all duration-500 ease-out flex items-center gap-3 overflow-hidden"
+              transition={{ type: "spring", stiffness: 400, damping: 25 }}
+              className="group relative flex items-center gap-4 px-6 py-4 transition-colors duration-500 ease-out z-50 overflow-hidden"
             >
-              See rooms & rates
-              <ArrowRight className="w-4 h-4 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all duration-500 ease-out" />
-            </button>
+              {/* Magnetic background fill in hover state */}
+              <div 
+                className="absolute inset-0 bg-[#C9A227] transform scale-x-0 origin-left transition-transform duration-500 ease-[0.23,1,0.32,1] -z-10 group-hover:scale-x-100" 
+              />
+              
+              <span className="font-mono text-sm tracking-widest uppercase text-[#C9A227] group-hover:text-[#0C0F0D] transition-colors duration-500 z-10 relative">
+                {ctaText}
+              </span>
+              
+              <motion.div
+                animate={{ x: isHoveringCta ? 4 : 0 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="text-[#C9A227] group-hover:text-[#0C0F0D] transition-colors duration-500 z-10"
+              >
+                <ArrowRight size={18} strokeWidth={1.5} />
+              </motion.div>
+
+              {/* Draw-in underline */}
+              <div className="absolute bottom-0 left-0 w-full h-[1px] bg-[#C9A227] transform scale-x-0 origin-left transition-transform duration-500 ease-[0.23,1,0.32,1] group-hover:scale-x-100 opacity-50 group-hover:opacity-0" />
+            </motion.button>
           </motion.div>
         )}
       </motion.div>
 
-      {/* Scroll Cue Affordance */}
+      {/* Pinned scroll cue */}
       <motion.div 
-        style={{ opacity: textOpacity }}
-        className="absolute bottom-12 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-4"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 1.5 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20"
       >
-        <span className="font-sans text-[10px] text-parchment/50 uppercase tracking-[0.3em]">Scroll</span>
-        <div className="w-px h-16 bg-parchment/10 relative overflow-hidden">
-          <motion.div 
-            className="w-full h-1/2 bg-parchment/50"
-            animate={prefersReducedMotion ? {} : { y: ["-100%", "200%"] }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-          />
-        </div>
+        <motion.div
+          animate={prefersReducedMotion ? {} : { y: [0, 8, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          className="flex flex-col items-center gap-2 text-[#8B9A8C]"
+        >
+          <span className="text-[10px] uppercase tracking-[0.2em] font-mono">Scroll</span>
+          <ChevronDown size={14} strokeWidth={1.5} />
+        </motion.div>
       </motion.div>
-
-      <style jsx global>{`
-        @keyframes drift {
-          0% { background-position: 0% 0%; }
-          100% { background-position: 100% 0%; }
-        }
-      `}</style>
     </section>
   )
 }

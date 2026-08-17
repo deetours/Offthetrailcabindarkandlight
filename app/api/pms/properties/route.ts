@@ -31,7 +31,7 @@ export async function GET() {
     }
 
     return NextResponse.json({ data: data || [] })
-  } catch (error: any) {
+  } catch (error: unknown) {
     if (isMissingRelationError(error)) {
       const fallback = await serviceClient
         .from('stays')

@@ -20,7 +20,7 @@ export async function POST(request: Request) {
       inventory: availability.inventory,
       bookingContext: availability.bookingContext,
     })
-  } catch (error: any) {
+  } catch (error: unknown) {
     if (isMissingRelationError(error)) {
       const productType = body?.productType
 

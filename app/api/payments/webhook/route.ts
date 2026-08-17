@@ -143,7 +143,7 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json({ received: true })
-  } catch (error: any) {
+  } catch (error: unknown) {
     if (webhookLogId) {
       try {
         await markWebhookEventProcessed(serviceClient, {

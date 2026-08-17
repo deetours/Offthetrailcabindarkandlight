@@ -38,7 +38,7 @@ export async function GET() {
     }
 
     return NextResponse.json({ data })
-  } catch (error: any) {
+  } catch (error: unknown) {
     const status = error?.status ?? 500
     console.error('[API/admin/profiles] GET exception:', error?.message || error)
 
@@ -84,7 +84,7 @@ export async function PATCH(request: Request) {
     }
 
     return NextResponse.json({ success: true })
-  } catch (error: any) {
+  } catch (error: unknown) {
     const status = error?.status ?? 500
     return NextResponse.json(
       { error: error?.message || 'Failed to process request' },

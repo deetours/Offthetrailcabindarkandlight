@@ -22,7 +22,7 @@ export async function GET() {
         }
 
         return NextResponse.json({ user })
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error('GET /api/user/profile exception:', error)
         return NextResponse.json({ error: error?.message || 'Failed to process request' }, { status: 500 })
     }
@@ -57,7 +57,7 @@ export async function PATCH(req: Request) {
         }
 
         return NextResponse.json({ user: data }, { status: 200 })
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error('PATCH /api/user/profile exception:', error)
         return NextResponse.json({ error: error?.message || 'Failed to process request' }, { status: 500 })
     }

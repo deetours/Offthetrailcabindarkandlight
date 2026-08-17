@@ -91,7 +91,7 @@ export async function POST(request: Request) {
       verified: true,
       alreadyConfirmed: result.alreadyConfirmed,
     })
-  } catch (error: any) {
+  } catch (error: unknown) {
     if (isMissingRelationError(error)) {
       return migrationRequired('Payments / booking holds')
     }

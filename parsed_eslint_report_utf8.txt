@@ -1,0 +1,480 @@
+
+--- E:\Sunny React Projects\offthetrailDark\app\admin\page.tsx ---
+Line 3: @typescript-eslint/no-unused-vars - 'useState' is defined but never used.
+Line 3: @typescript-eslint/no-unused-vars - 'useEffect' is defined but never used.
+
+--- E:\Sunny React Projects\offthetrailDark\app\api\admin\bookings\route.ts ---
+Line 22: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\app\api\admin\leads\route.ts ---
+Line 31: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 54: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 74: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\app\api\admin\profiles\route.ts ---
+Line 41: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 87: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\app\api\admin\stays\route.ts ---
+Line 22: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 47: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 77: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 104: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\app\api\admin\trips\route.ts ---
+Line 22: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 47: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 77: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 104: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\app\api\availability\check\route.ts ---
+Line 23: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\app\api\bookings\hold\route.ts ---
+Line 105: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\app\api\bookings\quote\route.ts ---
+Line 38: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\app\api\bookings\route.ts ---
+Line 52: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 61: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 88: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\app\api\check-db\route.ts ---
+Line 37: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\app\api\health\route.ts ---
+Line 4: @typescript-eslint/no-unused-vars - 'request' is defined but never used.
+Line 16: @typescript-eslint/no-unused-vars - '_' is defined but never used.
+Line 70: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\app\api\jobs\expire-booking-holds\route.ts ---
+Line 61: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\app\api\leads\route.ts ---
+Line 40: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 60: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\app\api\payments\create-order\route.ts ---
+Line 150: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\app\api\payments\verify\route.ts ---
+Line 94: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\app\api\payments\webhook\route.ts ---
+Line 146: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\app\api\pms\checkins\route.ts ---
+Line 50: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\app\api\pms\checkouts\route.ts ---
+Line 50: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\app\api\pms\housekeeping\tasks\route.ts ---
+Line 43: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\app\api\pms\inventory\block\route.ts ---
+Line 44: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\app\api\pms\memberships\[id]\route.ts ---
+Line 37: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\app\api\pms\properties\[id]\dashboard\route.ts ---
+Line 71: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\app\api\pms\properties\route.ts ---
+Line 34: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\app\api\pms\rates\route.ts ---
+Line 54: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\app\api\pms\rooms\route.ts ---
+Line 41: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\app\api\user\profile\route.ts ---
+Line 25: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 60: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\app\auth\actions.ts ---
+Line 37: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 48: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 59: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 128: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 144: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 160: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 172: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\app\booking\trip\[id]\page.tsx ---
+Line 2: @typescript-eslint/no-unused-vars - 'notFound' is defined but never used.
+
+--- E:\Sunny React Projects\offthetrailDark\app\memories\page.tsx ---
+Line 11: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 34: react-hooks/exhaustive-deps - React Hook useEffect has a missing dependency: 'router'. Either include it or remove the dependency array.
+Line 57: react/no-unescaped-entities - `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.
+
+--- E:\Sunny React Projects\offthetrailDark\app\not-found.tsx ---
+Line 9: react/no-unescaped-entities - `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.
+Line 10: react/no-unescaped-entities - `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.
+
+--- E:\Sunny React Projects\offthetrailDark\app\return\memories\[id]\page.tsx ---
+Line 13: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 14: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 24: react-hooks/exhaustive-deps - React Hook useEffect has a missing dependency: 'validateAccessAndFetch'. Either include it or remove the dependency array.
+Line 37: @typescript-eslint/no-unused-vars - 'bookingCheck' is assigned a value but never used.
+Line 37: @typescript-eslint/no-unused-vars - 'bookingError' is assigned a value but never used.
+Line 78: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 82: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\app\return\page.tsx ---
+Line 11: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 34: react-hooks/exhaustive-deps - React Hook useEffect has a missing dependency: 'router'. Either include it or remove the dependency array.
+
+--- E:\Sunny React Projects\offthetrailDark\components\about\about-page.tsx ---
+Line 14: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 61: react/no-unescaped-entities - `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.
+Line 62: react/no-unescaped-entities - `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.
+
+--- E:\Sunny React Projects\offthetrailDark\components\admin\admin-dashboard.tsx ---
+Line 50: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\components\admin\analytics-dashboard.tsx ---
+Line 15: @typescript-eslint/no-unused-vars - 'supabase' is assigned a value but only used as a type.
+Line 21: react-hooks/exhaustive-deps - React Hook useEffect has a missing dependency: 'fetchStats'. Either include it or remove the dependency array.
+Line 28: @typescript-eslint/no-unused-vars - 'usersError' is assigned a value but never used.
+Line 32: @typescript-eslint/no-unused-vars - 'bookingsError' is assigned a value but never used.
+Line 36: @typescript-eslint/no-unused-vars - 'tripsError' is assigned a value but never used.
+Line 40: @typescript-eslint/no-unused-vars - 'staysError' is assigned a value but never used.
+
+--- E:\Sunny React Projects\offthetrailDark\components\admin\bookings-viewer.tsx ---
+Line 7: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 27: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\components\admin\leads-manager.tsx ---
+Line 5: @typescript-eslint/no-unused-vars - 'UserCheck' is defined but never used.
+Line 5: @typescript-eslint/no-unused-vars - 'CheckCircle2' is defined but never used.
+Line 5: @typescript-eslint/no-unused-vars - 'XCircle' is defined but never used.
+Line 8: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 10: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 18: react-hooks/exhaustive-deps - React Hook useEffect has a missing dependency: 'fetchLeads'. Either include it or remove the dependency array.
+Line 20: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\components\admin\media-explorer.tsx ---
+Line 6: @typescript-eslint/no-unused-vars - 'Grid' is defined but never used.
+Line 6: @typescript-eslint/no-unused-vars - 'List' is defined but never used.
+Line 7: @typescript-eslint/no-unused-vars - 'Filter' is defined but never used.
+Line 7: @typescript-eslint/no-unused-vars - 'ChevronRight' is defined but never used.
+Line 8: @typescript-eslint/no-unused-vars - 'MapPin' is defined but never used.
+Line 16: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 17: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 20: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 32: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 35: @typescript-eslint/no-unused-vars - 'error' is assigned a value but never used.
+Line 44: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 57: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 60: @typescript-eslint/no-unused-vars - 'error' is assigned a value but never used.
+Line 92: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 201: @next/next/no-img-element - Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element
+Line 222: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 255: @next/next/no-img-element - Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element
+
+--- E:\Sunny React Projects\offthetrailDark\components\admin\pms-control-center.tsx ---
+Line 37: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\components\admin\stay-form.tsx ---
+Line 8: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 15: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 50: react-hooks/exhaustive-deps - React Hook useEffect has missing dependencies: 'stay?.amenities', 'stay?.capacity', 'stay?.description', 'stay?.gallery', 'stay?.image_url', 'stay?.location', 'stay?.name', 'stay?.price', 'stay?.room_type', 'stay?.status', and 'stay?.tagline'. Either include them or remove the dependency array. If 'setFormData' needs the current value of 'stay.name', you can also switch to useReducer instead of useState and read 'stay.name' in the reducer.
+Line 71: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 109: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 183: @next/next/no-img-element - Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element
+Line 202: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 216: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\components\admin\stays-manager.tsx ---
+Line 4: @typescript-eslint/no-unused-vars - 'IndianRupee' is defined but never used.
+Line 9: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 13: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 32: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 41: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 62: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 68: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 84: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 188: @next/next/no-img-element - Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element
+
+--- E:\Sunny React Projects\offthetrailDark\components\admin\trip-form.tsx ---
+Line 5: @typescript-eslint/no-unused-vars - 'ChevronDown' is defined but never used.
+Line 5: @typescript-eslint/no-unused-vars - 'ChevronUp' is defined but never used.
+Line 8: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 15: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 75: react-hooks/exhaustive-deps - React Hook useEffect has missing dependencies: 'trip?.dates', 'trip?.description', 'trip?.duration', 'trip?.exclusions', 'trip?.group_size', 'trip?.image_url', 'trip?.inclusions', 'trip?.is_featured', 'trip?.itinerary', 'trip?.name', 'trip?.price', 'trip?.region', 'trip?.show_on_all_trips', 'trip?.show_on_journeys', 'trip?.status', 'trip?.tagline', 'trip?.terms', 'trip?.terrain', and 'trip?.things_to_carry'. Either include them or remove the dependency array. If 'setFormData' needs the current value of 'trip.name', you can also switch to useReducer instead of useState and read 'trip.name' in the reducer.
+Line 97: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 150: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 262: @next/next/no-img-element - Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element
+
+--- E:\Sunny React Projects\offthetrailDark\components\admin\trips-manager.tsx ---
+Line 8: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 12: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 31: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 51: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 142: @next/next/no-img-element - Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element
+
+--- E:\Sunny React Projects\offthetrailDark\components\admin\users-manager.tsx ---
+Line 4: @typescript-eslint/no-unused-vars - 'Users' is defined but never used.
+Line 41: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 79: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\components\all-trips\all-trips-dynamic.tsx ---
+Line 5: @typescript-eslint/no-unused-vars - 'createClientComponentClient' is defined but never used.
+Line 6: @typescript-eslint/no-unused-vars - 'Link' is defined but never used.
+Line 8: @typescript-eslint/no-unused-vars - 'ArrowRight' is defined but never used.
+Line 17: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 20: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 21: @typescript-eslint/no-unused-vars - 'setTrips' is assigned a value but never used.
+Line 21: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 29: @typescript-eslint/no-unused-vars - 'mounted' is assigned a value but never used.
+
+--- E:\Sunny React Projects\offthetrailDark\components\all-trips\all-trips-page.tsx ---
+Line 345: react/no-unescaped-entities - `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.
+Line 371: react/no-unescaped-entities - `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.
+
+--- E:\Sunny React Projects\offthetrailDark\components\all-trips\trip-grid-card.tsx ---
+Line 26: @typescript-eslint/no-unused-vars - 'index' is defined but never used.
+
+--- E:\Sunny React Projects\offthetrailDark\components\auth\return-form.tsx ---
+Line 7: @typescript-eslint/no-unused-vars - 'Link' is defined but never used.
+Line 8: @typescript-eslint/no-unused-vars - 'Zap' is defined but never used.
+Line 8: @typescript-eslint/no-unused-vars - 'Info' is defined but never used.
+Line 14: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 26: @typescript-eslint/no-unused-vars - 'router' is assigned a value but never used.
+Line 39: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 67: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\components\booking\frontend-enquiry-modal.tsx ---
+Line 5: @typescript-eslint/no-unused-vars - 'X' is defined but never used.
+Line 39: @typescript-eslint/no-unused-vars - 'setEmail' is assigned a value but never used.
+Line 40: @typescript-eslint/no-unused-vars - 'setNotes' is assigned a value but never used.
+Line 201: react/no-unescaped-entities - `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.
+
+--- E:\Sunny React Projects\offthetrailDark\components\booking\stay-booking-flow.tsx ---
+Line 6: @typescript-eslint/no-unused-vars - 'Calendar' is defined but never used.
+Line 6: @typescript-eslint/no-unused-vars - 'Users' is defined but never used.
+Line 26: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\components\booking\trip-booking-flow.tsx ---
+Line 6: @typescript-eslint/no-unused-vars - 'Users' is defined but never used.
+Line 27: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 31: @typescript-eslint/no-unused-vars - 'router' is assigned a value but never used.
+
+--- E:\Sunny React Projects\offthetrailDark\components\cafe\cafe-menu.tsx ---
+Line 4: @typescript-eslint/no-unused-vars - 'motion' is defined but never used.
+
+--- E:\Sunny React Projects\offthetrailDark\components\community\traveller-stories.tsx ---
+Line 62: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 73: @typescript-eslint/no-unused-vars - 'err' is defined but never used.
+Line 80: react-hooks/exhaustive-deps - React Hook useEffect has a missing dependency: 'fetchInteractions'. Either include it or remove the dependency array.
+Line 107: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 107: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 107: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 109: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 109: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 130: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 134: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 134: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 175: react/no-unescaped-entities - `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.
+Line 175: react/no-unescaped-entities - `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.
+Line 214: react/no-unescaped-entities - `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.
+Line 214: react/no-unescaped-entities - `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.
+
+--- E:\Sunny React Projects\offthetrailDark\components\journeys\journeys-page.tsx ---
+Line 12: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 34: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 35: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 64: react/no-unescaped-entities - `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.
+
+--- E:\Sunny React Projects\offthetrailDark\components\landing\discovery-console.tsx ---
+Line 191: react/no-unescaped-entities - `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.
+Line 191: react/no-unescaped-entities - `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.
+
+--- E:\Sunny React Projects\offthetrailDark\components\landing\scene-arrival.tsx ---
+Line 9: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 20: @typescript-eslint/no-unused-vars - 'yBg' is assigned a value but never used.
+
+--- E:\Sunny React Projects\offthetrailDark\components\landing\scene-choice.tsx ---
+Line 9: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 30: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 66: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\components\landing\scene-exit.tsx ---
+Line 10: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\components\landing\scene-faq.tsx ---
+Line 9: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\components\landing\scene-go-stay.tsx ---
+Line 9: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\components\landing\scene-human-face.tsx ---
+Line 57: react/no-unescaped-entities - `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.
+Line 65: react/no-unescaped-entities - `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.
+
+--- E:\Sunny React Projects\offthetrailDark\components\landing\scene-three-lines.tsx ---
+Line 30: @typescript-eslint/no-unused-vars - 'index' is defined but never used.
+
+--- E:\Sunny React Projects\offthetrailDark\components\landing\surreal-search-bar.tsx ---
+Line 3: @typescript-eslint/no-unused-vars - 'useRef' is defined but never used.
+Line 4: @typescript-eslint/no-unused-vars - 'useScroll' is defined but never used.
+Line 4: @typescript-eslint/no-unused-vars - 'useTransform' is defined but never used.
+Line 4: @typescript-eslint/no-unused-vars - 'useSpring' is defined but never used.
+Line 5: @typescript-eslint/no-unused-vars - 'Compass' is defined but never used.
+Line 5: @typescript-eslint/no-unused-vars - 'Users' is defined but never used.
+Line 5: @typescript-eslint/no-unused-vars - 'Calendar' is defined but never used.
+Line 6: @typescript-eslint/no-unused-vars - 'createClientComponentClient' is defined but never used.
+
+--- E:\Sunny React Projects\offthetrailDark\components\payment\payment-page.tsx ---
+Line 13: @typescript-eslint/no-unused-vars - 'router' is assigned a value but never used.
+Line 20: @typescript-eslint/no-unused-vars - 'type' is assigned a value but never used.
+Line 21: @typescript-eslint/no-unused-vars - 'id' is assigned a value but never used.
+
+--- E:\Sunny React Projects\offthetrailDark\components\profiles\host-profile.tsx ---
+Line 5: @typescript-eslint/no-unused-vars - 'Users' is defined but never used.
+Line 21: @typescript-eslint/no-unused-vars - 'isExpanded' is assigned a value but never used.
+Line 21: @typescript-eslint/no-unused-vars - 'setIsExpanded' is assigned a value but never used.
+Line 62: react/no-unescaped-entities - `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.
+Line 62: react/no-unescaped-entities - `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.
+
+--- E:\Sunny React Projects\offthetrailDark\components\social\comment-drawer.tsx ---
+Line 31: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 42: react-hooks/exhaustive-deps - React Hook useEffect has a missing dependency: 'fetchComments'. Either include it or remove the dependency array.
+
+--- E:\Sunny React Projects\offthetrailDark\components\social\like-button.tsx ---
+Line 18: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\components\stays\explore-stays-dynamic.tsx ---
+Line 17: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 30: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 31: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 60: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 162: react/no-unescaped-entities - `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.
+Line 352: react/no-unescaped-entities - `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.
+Line 352: react/no-unescaped-entities - `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.
+Line 352: react/no-unescaped-entities - `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.
+
+--- E:\Sunny React Projects\offthetrailDark\components\stays\explore-stays.tsx ---
+Line 123: react/no-unescaped-entities - `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.
+Line 160: react/no-unescaped-entities - `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.
+
+--- E:\Sunny React Projects\offthetrailDark\components\stays\stay-card.tsx ---
+Line 29: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 32: @typescript-eslint/no-unused-vars - 'featured' is assigned a value but never used.
+Line 48: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 86: react/no-unescaped-entities - `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.
+Line 86: react/no-unescaped-entities - `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.
+
+--- E:\Sunny React Projects\offthetrailDark\components\stays\stay-details.tsx ---
+Line 4: @typescript-eslint/no-unused-vars - 'AnimatePresence' is defined but never used.
+Line 33: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 236: react/no-unescaped-entities - `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.
+Line 239: react/no-unescaped-entities - `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.
+Line 239: react/no-unescaped-entities - `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.
+
+--- E:\Sunny React Projects\offthetrailDark\components\trips\explore-trips.tsx ---
+Line 10: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 36: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 37: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 72: react/no-unescaped-entities - `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.
+
+--- E:\Sunny React Projects\offthetrailDark\components\trips\trip-details-dynamic.tsx ---
+Line 4: @typescript-eslint/no-unused-vars - 'useTransform' is defined but never used.
+Line 9: @typescript-eslint/no-unused-vars - 'Calendar' is defined but never used.
+Line 9: @typescript-eslint/no-unused-vars - 'Mountain' is defined but never used.
+Line 9: @typescript-eslint/no-unused-vars - 'CreditCard' is defined but never used.
+Line 10: @typescript-eslint/no-unused-vars - 'AlertTriangle' is defined but never used.
+Line 10: @typescript-eslint/no-unused-vars - 'FileText' is defined but never used.
+Line 11: @typescript-eslint/no-unused-vars - 'MapPin' is defined but never used.
+Line 11: @typescript-eslint/no-unused-vars - 'ChevronRight' is defined but never used.
+Line 18: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 23: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 38: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 40: @typescript-eslint/no-unused-vars - 'mounted' is assigned a value but never used.
+Line 41: @typescript-eslint/no-unused-vars - 'setSelectedDate' is assigned a value but never used.
+
+--- E:\Sunny React Projects\offthetrailDark\components\trips\trip-details.tsx ---
+Line 3: @typescript-eslint/no-unused-vars - 'useEffect' is defined but never used.
+Line 4: @typescript-eslint/no-unused-vars - 'useTransform' is defined but never used.
+Line 6: @typescript-eslint/no-unused-vars - 'Calendar' is defined but never used.
+Line 6: @typescript-eslint/no-unused-vars - 'Mountain' is defined but never used.
+Line 31: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 144: react/no-unescaped-entities - `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.
+
+--- E:\Sunny React Projects\offthetrailDark\components\ui\button.tsx ---
+Line 50: @typescript-eslint/no-unused-vars - 'whileTap' is assigned a value but never used.
+Line 50: @typescript-eslint/no-unused-vars - 'whileHover' is assigned a value but never used.
+Line 51: @typescript-eslint/no-unused-vars - 'initial' is assigned a value but never used.
+Line 51: @typescript-eslint/no-unused-vars - 'animate' is assigned a value but never used.
+Line 51: @typescript-eslint/no-unused-vars - 'exit' is assigned a value but never used.
+Line 52: @typescript-eslint/no-unused-vars - 'transition' is assigned a value but never used.
+Line 52: @typescript-eslint/no-unused-vars - 'motionVariants' is assigned a value but never used.
+Line 54: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\components\ui\use-toast.ts ---
+Line 18: @typescript-eslint/no-unused-vars - 'actionTypes' is assigned a value but only used as a type.
+
+--- E:\Sunny React Projects\offthetrailDark\components\ui\whatsapp-popup.tsx ---
+Line 85: react/no-unescaped-entities - `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.
+
+--- E:\Sunny React Projects\offthetrailDark\components\user\experience-archive.tsx ---
+Line 7: @typescript-eslint/no-unused-vars - 'Bookmark' is defined but never used.
+Line 7: @typescript-eslint/no-unused-vars - 'Share2' is defined but never used.
+Line 7: @typescript-eslint/no-unused-vars - 'MessageCircle' is defined but never used.
+Line 11: @typescript-eslint/no-unused-vars - 'isBefore' is defined but never used.
+Line 35: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 43: react-hooks/exhaustive-deps - React Hook useEffect has a missing dependency: 'fetchUserJourneys'. Either include it or remove the dependency array.
+Line 77: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\components\user\user-onboarding.tsx ---
+Line 4: @typescript-eslint/no-unused-vars - 'X' is defined but never used.
+Line 13: react-hooks/exhaustive-deps - React Hook useEffect has a missing dependency: 'checkOnboarding'. Either include it or remove the dependency array.
+Line 25: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 33: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\components\user\whatsapp-requirement.tsx ---
+Line 15: react-hooks/exhaustive-deps - React Hook useEffect has a missing dependency: 'checkWhatsapp'. Either include it or remove the dependency array.
+Line 27: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 41: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 42: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 43: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\hooks\use-toast.ts ---
+Line 18: @typescript-eslint/no-unused-vars - 'actionTypes' is assigned a value but only used as a type.
+
+--- E:\Sunny React Projects\offthetrailDark\lib\env-validation.ts ---
+Line 18: @typescript-eslint/no-unused-vars - 'description' is defined but never used.
+
+--- E:\Sunny React Projects\offthetrailDark\lib\notifications.ts ---
+Line 6: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 6: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\lib\pms\booking-flow.ts ---
+Line 151: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 233: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 284: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 290: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 299: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 434: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 436: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\lib\pms\booking-settlement.ts ---
+Line 4: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+Line 45: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
+
+--- E:\Sunny React Projects\offthetrailDark\lib\supabase\client.ts ---
+Line 6: @typescript-eslint/no-unused-vars - 'supabaseUrl' is assigned a value but never used.
+Line 7: @typescript-eslint/no-unused-vars - 'supabaseAnonKey' is assigned a value but never used.
+
+--- E:\Sunny React Projects\offthetrailDark\lib\supabase\server.ts ---
+Line 18: @typescript-eslint/no-unused-vars - 'error' is defined but never used.
+Line 27: @typescript-eslint/no-unused-vars - 'error' is defined but never used.
+
+--- E:\Sunny React Projects\offthetrailDark\lib\trips.ts ---
+Line 16: @typescript-eslint/no-explicit-any - Unexpected any. Specify a different type.
