@@ -1,6 +1,6 @@
 "use client"
 
-// @ts-ignore: No type definitions available
+// @ts-expect-error: No type definitions available
 import { ReactLenis } from '@studio-freight/react-lenis'
 import { ReactNode } from 'react'
 
