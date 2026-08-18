@@ -41,7 +41,7 @@ const dalhousieRooms: RoomDef[] = [
 
 export default function DalhousieEstatePage() {
   return (
-    <main className="min-h-screen bg-background">
+    <main className="grain min-h-screen bg-background relative overflow-x-hidden">
       <header className="absolute top-0 left-0 w-full z-50 px-6 py-8 md:px-16 lg:px-24 flex justify-between items-center pointer-events-none">
         <div className="font-serif text-2xl text-foreground font-bold tracking-tight">OffTheTrail</div>
       </header>
@@ -75,12 +75,6 @@ export default function DalhousieEstatePage() {
       />
 
       <section id="booking-section" className="py-24 md:py-32 px-6 md:px-16 lg:px-24 bg-background relative">
-        {/* Background Film Grain */}
-        <div 
-          className="absolute inset-0 z-0 pointer-events-none opacity-20 mix-blend-overlay"
-          style={{ backgroundImage: "url('/noise.png')" }}
-        />
-        
         <div className="max-w-4xl mx-auto mb-16 text-center relative z-10">
           <div className="font-serif text-primary text-lg lg:text-xl italic mb-4">III — The Rooms</div>
           <h2 className="font-serif text-4xl md:text-5xl text-foreground">Stay with us.</h2>
