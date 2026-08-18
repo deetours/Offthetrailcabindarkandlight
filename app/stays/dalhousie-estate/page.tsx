@@ -3,11 +3,42 @@ import { ScrollHero } from "@/components/landing-system/scroll-hero"
 import { StoryScene } from "@/components/landing-system/story-scene"
 import { BookingFlow } from "@/components/landing-system/booking-flow"
 import { RoomDef } from "@/components/landing-system/room-ledger"
+import { AmenitiesBento, AmenityDef } from "@/components/landing-system/amenities-bento"
+import { LocationMap } from "@/components/landing-system/location-map"
 
 export const metadata: Metadata = {
   title: "Dalhousie Estate | Offthetrail",
   description: "A heritage retreat hidden in the pine forests of Dalhousie.",
 }
+
+const dalhousieAmenities: AmenityDef[] = [
+  {
+    id: "heritage",
+    title: "Heritage Property",
+    description: "Built with stone and wood, preserving century-old architecture.",
+    featured: true,
+    imageSrc: "/images/offthetrail7.jpeg",
+    iconName: "Castle" as const
+  },
+  {
+    id: "trails",
+    title: "Forest Trails",
+    description: "Direct access to private pine forest paths.",
+    iconName: "Trees" as const
+  },
+  {
+    id: "dining",
+    title: "Farm to Table",
+    description: "Meals prepared with local, organic ingredients.",
+    iconName: "UtensilsCrossed" as const
+  },
+  {
+    id: "heating",
+    title: "Wood-Fired Heating",
+    description: "Traditional bukharis and fireplaces to keep the cold out.",
+    iconName: "Flame" as const
+  }
+]
 
 const dalhousieRooms: RoomDef[] = [
   {
@@ -89,63 +120,20 @@ export default function DalhousieEstatePage() {
       </section>
 
       {/* Amenities / Bento Grid */}
-      <section className="py-24 px-6 md:px-16 lg:px-24 bg-card border-t border-border">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="font-serif text-4xl text-foreground mb-6">The details.</h2>
-            <p className="text-muted-foreground font-light max-w-lg mx-auto">
-              Everything you need for a quiet retreat. Nothing you don't.
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[200px]">
-            <div className="md:col-span-2 bg-background p-8 border border-border flex flex-col justify-end hover:border-primary/50 transition-colors">
-              <h3 className="font-serif text-2xl text-foreground mb-2">Heritage Property</h3>
-              <p className="text-muted-foreground text-sm">Built with stone and wood, preserving century-old architecture.</p>
-            </div>
-            <div className="bg-background p-8 border border-border flex flex-col justify-end hover:border-primary/50 transition-colors">
-              <h3 className="font-serif text-2xl text-foreground mb-2">Forest Trails</h3>
-              <p className="text-muted-foreground text-sm">Direct access to private pine forest paths.</p>
-            </div>
-            <div className="bg-background p-8 border border-border flex flex-col justify-end hover:border-primary/50 transition-colors">
-              <h3 className="font-serif text-2xl text-foreground mb-2">Farm to Table</h3>
-              <p className="text-muted-foreground text-sm">Meals prepared with local, organic ingredients.</p>
-            </div>
-            <div className="md:col-span-2 bg-background p-8 border border-border flex flex-col justify-end hover:border-primary/50 transition-colors">
-              <h3 className="font-serif text-2xl text-foreground mb-2">Wood-Fired Heating</h3>
-              <p className="text-muted-foreground text-sm">Traditional bukharis and fireplaces to keep the cold out.</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <AmenitiesBento 
+        numeral="IV — The Details"
+        headline="The details."
+        subhead="Everything you need for a quiet retreat. Nothing you don't."
+        amenities={dalhousieAmenities}
+      />
 
       {/* Map & Location */}
-      <section className="py-24 px-6 md:px-16 lg:px-24 bg-background">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-12 items-center">
-          <div className="w-full md:w-1/3">
-            <h2 className="font-serif text-3xl text-foreground mb-6">Getting here.</h2>
-            <p className="text-muted-foreground font-light mb-8">
-              Dalhousie Estate is tucked away on a quiet ridge. We'll send you exact driving directions and a pin once your booking is confirmed.
-            </p>
-            <div className="text-sm font-mono text-primary font-bold uppercase tracking-widest">
-              Dalhousie, Himachal Pradesh
-            </div>
-          </div>
-          <div className="w-full md:w-2/3 aspect-video bg-card border border-border relative overflow-hidden">
-            {/* Minimal static map aesthetic */}
-            <div className="absolute inset-0 opacity-40 mix-blend-overlay" style={{ backgroundImage: "url('/noise.png')" }} />
-            <iframe 
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d108422.56947214643!2d75.90802778330756!3d32.53924619940733!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391c7128522eeb37%3A0xe19f96b65825228!2sDalhousie%2C%20Himachal%20Pradesh!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" 
-              width="100%" 
-              height="100%" 
-              style={{ border: 0, filter: 'grayscale(100%) invert(90%) contrast(80%)' }} 
-              allowFullScreen={false} 
-              loading="lazy" 
-              referrerPolicy="no-referrer-when-downgrade"
-            />
-          </div>
-        </div>
-      </section>
+      <LocationMap
+        numeral="V — Getting Here"
+        headline="Getting here."
+        description="Dalhousie Estate is tucked away on a quiet ridge. We'll send you exact driving directions and a pin once your booking is confirmed."
+        locationTag="Dalhousie, Himachal Pradesh"
+      />
 
       {/* FAQ */}
       <section className="py-24 px-6 md:px-16 lg:px-24 bg-card border-t border-border">
