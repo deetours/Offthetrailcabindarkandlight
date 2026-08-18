@@ -1,6 +1,7 @@
 "use client"
 
 import { Minus, Plus } from "lucide-react"
+import { motion, AnimatePresence } from "framer-motion"
 
 export interface RoomDef {
   id: string
@@ -72,25 +73,36 @@ export function RoomLedger({ rooms, interactive = false, selectedQuantities = {}
 
               {interactive && (
                 <div className="flex items-center gap-3 bg-card p-1 rounded-md border border-border">
-                  <button
+                  <motion.button
+                    whileTap={{ scale: 0.9 }}
                     type="button"
                     disabled={qty <= 0}
                     onClick={() => onQuantityChange?.(room.id, qty - 1)}
                     className="p-2 text-muted-foreground hover:text-foreground disabled:opacity-30 transition-colors"
                   >
                     <Minus size={14} />
-                  </button>
-                  <span className="font-mono text-foreground w-4 text-center text-sm font-bold">
-                    {qty}
-                  </span>
-                  <button
+                  </motion.button>
+                  <AnimatePresence mode="popLayout">
+                    <motion.span
+                      key={qty}
+                      initial={{ scale: 1.5, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      exit={{ scale: 0.5, opacity: 0 }}
+                      transition={{ type: "spring", stiffness: 500, damping: 25 }}
+                      className="font-mono text-foreground w-4 text-center text-sm font-bold inline-block"
+                    >
+                      {qty}
+                    </motion.span>
+                  </AnimatePresence>
+                  <motion.button
+                    whileTap={{ scale: 0.9 }}
                     type="button"
                     disabled={qty >= available}
                     onClick={() => onQuantityChange?.(room.id, qty + 1)}
                     className="p-2 text-muted-foreground hover:text-foreground disabled:opacity-30 transition-colors"
                   >
                     <Plus size={14} />
-                  </button>
+                  </motion.button>
                 </div>
               )}
             </div>

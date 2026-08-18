@@ -1,9 +1,10 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import { RoomDef, RoomLedger } from "./room-ledger"
 import Image from "next/image"
 import { ArrowRight, Calendar, CheckCircle2 } from "lucide-react"
+import { motion, useMotionValue, useTransform, animate } from "framer-motion"
 
 interface BookingFlowProps {
   propertyName: string
@@ -39,6 +40,15 @@ export function BookingFlow({ propertyName, rooms, qrImagePath, ownerWhatsApp }:
     return acc + (room.price * (quantities[room.id] || 0))
   }, 0) * nights
   const guestCap = totalRooms * 2
+
+  // Odometer animation
+  const count = useMotionValue(0)
+  const rounded = useTransform(count, (latest) => Math.round(latest).toLocaleString())
+
+  useEffect(() => {
+    const controls = animate(count, subtotal, { duration: 0.5, ease: "easeOut" })
+    return controls.stop
+  }, [subtotal, count])
 
   const handleQuantityChange = (roomId: string, qty: number) => {
     setQuantities(prev => ({ ...prev, [roomId]: qty }))
@@ -127,7 +137,10 @@ Attached is my payment screenshot.`
           <div className="pt-6 flex flex-col sm:flex-row justify-between items-center gap-6 border-t border-border">
             <div className="text-left w-full sm:w-auto">
               <div className="text-muted-foreground text-sm font-mono font-bold mb-1">Total (incl. breakfast)</div>
-              <div className="text-foreground font-serif text-3xl">₹{subtotal.toLocaleString()}</div>
+              <div className="text-foreground font-serif text-3xl flex items-center">
+                <span>₹</span>
+                <motion.span>{rounded}</motion.span>
+              </div>
             </div>
             <button 
               onClick={() => setStep(2)}

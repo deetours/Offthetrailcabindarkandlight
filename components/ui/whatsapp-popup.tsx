@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { X, MessageCircle } from "lucide-react"
+import { motion } from "framer-motion"
 
 export function WhatsAppPopup() {
   const [isOpen, setIsOpen] = useState(false)
@@ -110,13 +111,15 @@ export function WhatsAppPopup() {
 
       {/* Floating button (when closed) */}
       {!isOpen && (
-        <button
+        <motion.button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-[calc(env(safe-area-inset-bottom)+1rem)] right-4 md:bottom-8 md:right-8 z-30 bg-primary text-primary-foreground rounded-full p-3 shadow-lg hover:scale-110 transition-transform"
+          animate={{ scale: [1, 1.05, 1] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          className="fixed bottom-[calc(env(safe-area-inset-bottom)+1rem)] right-4 md:bottom-8 md:right-8 z-30 bg-primary text-primary-foreground rounded-full p-3 shadow-lg hover:brightness-110 transition-colors"
           aria-label="Open WhatsApp chat"
         >
           <MessageCircle className="h-6 w-6" />
-        </button>
+        </motion.button>
       )}
     </>
   )

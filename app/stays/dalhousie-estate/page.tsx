@@ -5,11 +5,35 @@ import { BookingFlow } from "@/components/landing-system/booking-flow"
 import { RoomDef } from "@/components/landing-system/room-ledger"
 import { AmenitiesBento, AmenityDef } from "@/components/landing-system/amenities-bento"
 import { LocationMap } from "@/components/landing-system/location-map"
+import { SocialProofToast, ReviewDef } from "@/components/landing-system/social-proof-toast"
+import { TrustBar, TrustCueDef } from "@/components/landing-system/trust-bar"
+import { HostProfile, HostProfileDef } from "@/components/landing-system/host-profile"
+import { PhotoGallery, GalleryPhotoDef } from "@/components/landing-system/photo-gallery"
+import { MobileStickyCta } from "@/components/landing-system/mobile-sticky-cta"
 
 export const metadata: Metadata = {
   title: "Dalhousie Estate | Offthetrail",
   description: "A heritage retreat hidden in the pine forests of Dalhousie.",
 }
+
+const dalhousieReviews: ReviewDef[] = [] // TODO: Provide 3-5 real guest reviews
+
+const dalhousieTrustCues: TrustCueDef[] = [
+  { id: "rooms", label: "10 Rooms, Independently Run", iconName: "Home" },
+  { id: "response", label: "Instant Owner Response on WhatsApp", iconName: "MessageCircle" },
+  { id: "secure", label: "Secure UPI Payment", iconName: "ShieldCheck" },
+]
+
+// TODO: Provide real host photo and bio to enable the HostProfile section
+const dalhousieHost: HostProfileDef | null = null
+
+// TODO: Replace with actual gallery photography from the owner
+const dalhousieGallery: GalleryPhotoDef[] = [
+  { id: "1", src: "/images/offthetrail7.jpeg", alt: "Dalhousie Estate Exterior", featured: true },
+  { id: "2", src: "/images/offthetrail5.jpeg", alt: "Balcony View" },
+  { id: "3", src: "/hero-campfire-spiti1.jpg", alt: "Campfire" },
+  { id: "4", src: "/images/offthetrail7.jpeg", alt: "Property details" },
+]
 
 const dalhousieAmenities: AmenityDef[] = [
   {
@@ -111,6 +135,10 @@ export default function DalhousieEstatePage() {
           <h2 className="font-serif text-4xl md:text-5xl text-foreground">Stay with us.</h2>
         </div>
 
+        <TrustBar cues={dalhousieTrustCues} />
+        
+        <HostProfile host={dalhousieHost} />
+
         <BookingFlow 
           propertyName="Dalhousie Estate"
           rooms={dalhousieRooms}
@@ -119,9 +147,17 @@ export default function DalhousieEstatePage() {
         />
       </section>
 
+      {/* Photo Gallery */}
+      <PhotoGallery 
+        numeral="IV — The Estate in Pictures"
+        headline="Quiet moments."
+        subhead="A glimpse into life on the ridge."
+        photos={dalhousieGallery}
+      />
+
       {/* Amenities / Bento Grid */}
       <AmenitiesBento 
-        numeral="IV — The Details"
+        numeral="V — The Details"
         headline="The details."
         subhead="Everything you need for a quiet retreat. Nothing you don't."
         amenities={dalhousieAmenities}
@@ -129,7 +165,7 @@ export default function DalhousieEstatePage() {
 
       {/* Map & Location */}
       <LocationMap
-        numeral="V — Getting Here"
+        numeral="VI — Getting Here"
         headline="Getting here."
         description="Dalhousie Estate is tucked away on a quiet ridge. We'll send you exact driving directions and a pin once your booking is confirmed."
         locationTag="Dalhousie, Himachal Pradesh"
@@ -164,6 +200,14 @@ export default function DalhousieEstatePage() {
         <div className="font-serif text-2xl text-foreground font-bold tracking-tight mb-4">OffTheTrail</div>
         <p className="text-muted-foreground text-xs font-mono font-bold uppercase tracking-widest">© {new Date().getFullYear()} OffTheTrail. All rights reserved.</p>
       </footer>
+
+      {/* Floating Global Components */}
+      <SocialProofToast reviews={dalhousieReviews} />
+      <MobileStickyCta 
+        startingPrice="₹3,200/night"
+        targetElementId="booking-section"
+        ctaText="Check Availability"
+      />
     </main>
   )
 }
