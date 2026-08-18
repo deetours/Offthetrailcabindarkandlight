@@ -45,7 +45,7 @@ export function PhotoGallery({ numeral, headline, subhead, photos }: PhotoGaller
         </div>
         
         {/* Bento grid layout */}
-        <div className="grid grid-cols-2 md:grid-cols-4 md:grid-rows-2 gap-4 auto-rows-[200px] md:auto-rows-[280px]">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[200px] md:auto-rows-[280px]">
           {sortedPhotos.map((photo, idx) => {
             let gridClass = "col-span-1 row-span-1"
             if (photo.featured) {
