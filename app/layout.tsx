@@ -13,6 +13,9 @@ export const metadata: Metadata = {
     icon: '/images/favicon.png',
     shortcut: '/images/favicon.png',
   },
+  other: {
+    "facebook-domain-verification": "ojaft9vfdvjcblk3qlhzco27bjt45z",
+  },
 }
 
 export const viewport: Viewport = {
