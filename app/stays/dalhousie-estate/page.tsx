@@ -1,6 +1,4 @@
 import { Metadata } from "next"
-import Link from "next/link"
-import { MessageCircle } from "lucide-react"
 import { ScrollHero } from "@/components/landing-system/scroll-hero"
 import { StoryScene } from "@/components/landing-system/story-scene"
 import { BookingFlow } from "@/components/landing-system/booking-flow"
