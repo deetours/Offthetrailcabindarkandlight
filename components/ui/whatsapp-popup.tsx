@@ -13,11 +13,20 @@ export function WhatsAppPopup() {
 
   useEffect(() => {
     setMounted(true)
-    // Never auto-pop unprovoked on focused landing or stay booking pages to prevent obscuring booking flows
+
+    const hostname = typeof window !== "undefined" ? window.location.hostname : ""
+    const isDalhousie = 
+      hostname.includes("dalhousie") || 
+      pathname?.includes("dalhousie") || 
+      pathname?.includes("/stays/dalhousie-estate")
+
+    // Dalhousie Estate provides dedicated, contextual concierge actions throughout the page
+    if (isDalhousie) return
+
+    // Never auto-pop unprovoked on focused booking or stay pages
     const isBookingOrStayRoute = 
       pathname?.includes('/stays') || 
       pathname?.includes('/booking') || 
-      pathname?.includes('dalhousie') || 
       pathname?.includes('jibhi')
     
     if (isBookingOrStayRoute) return
@@ -35,6 +44,16 @@ export function WhatsAppPopup() {
     window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
   }, [isOpen, pathname])
+
+  if (!mounted) return null
+
+  const hostname = typeof window !== "undefined" ? window.location.hostname : ""
+  const isDalhousie = 
+    hostname.includes("dalhousie") || 
+    pathname?.includes("dalhousie") || 
+    pathname?.includes("/stays/dalhousie-estate")
+
+  if (isDalhousie) return null
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()

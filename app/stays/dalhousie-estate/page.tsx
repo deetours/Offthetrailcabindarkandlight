@@ -1,20 +1,45 @@
 import { Metadata } from "next"
 import { ScrollHero } from "@/components/landing-system/scroll-hero"
 import { StoryScene } from "@/components/landing-system/story-scene"
-import { BookingFlow } from "@/components/landing-system/booking-flow"
+import { RoomBookingBridge } from "@/components/landing-system/room-booking-bridge"
 import { RoomDef } from "@/components/landing-system/room-ledger"
 import { AmenitiesBento, AmenityDef } from "@/components/landing-system/amenities-bento"
 import { LocationMap, TransitPoint } from "@/components/landing-system/location-map"
 import { SocialProofToast, ReviewDef } from "@/components/landing-system/social-proof-toast"
-import { TrustBar, TrustCueDef } from "@/components/landing-system/trust-bar"
-import { HostProfile, HostProfileDef } from "@/components/landing-system/host-profile"
+import { TrustCueDef } from "@/components/landing-system/trust-bar"
+import { HostProfileDef } from "@/components/landing-system/host-profile"
 import { PhotoGallery, GalleryPhotoDef } from "@/components/landing-system/photo-gallery"
 import { MobileStickyCta } from "@/components/landing-system/mobile-sticky-cta"
 import { EstateFaq, FaqItemDef } from "@/components/landing-system/estate-faq"
 
 export const metadata: Metadata = {
   title: "Off The Trail Dalhousie Estate | Boutique Stay in Dalhousie",
-  description: "A 10-room heritage retreat on Bakrota Ridge, Dalhousie. Pine forest views, private balconies, and slow mountain mornings. From ₹3,200/night incl. breakfast.",
+  description: "A 10-room heritage retreat on Bakrota Ridge, Dalhousie. Pine forest views, private balconies, and slow mountain mornings. From ₹3,200/night.",
+  alternates: {
+    canonical: "https://dalhousie.offthetrail.in",
+  },
+  openGraph: {
+    title: "Off The Trail Dalhousie Estate",
+    description: "A 10-room heritage retreat on Bakrota Ridge, Dalhousie. Pine forest views, private balconies, and slow mountain mornings. From ₹3,200/night.",
+    url: "https://dalhousie.offthetrail.in",
+    siteName: "Off The Trail",
+    images: [
+      {
+        url: "/images/offthetrail7.jpeg",
+        width: 1200,
+        height: 630,
+        alt: "Dalhousie Estate Colonial Stone Facade",
+      },
+    ],
+    locale: "en_IN",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Off The Trail Dalhousie Estate",
+    description: "A 10-room heritage retreat on Bakrota Ridge, Dalhousie. From ₹3,200/night.",
+    images: ["/images/offthetrail7.jpeg"],
+  },
 }
 
 const dalhousieReviews: ReviewDef[] = [] // TODO: Provide 3-5 real guest reviews
@@ -148,43 +173,44 @@ const dalhousieRooms: RoomDef[] = [
 
 export default function DalhousieEstatePage() {
   return (
-    <main className="grain min-h-screen bg-background relative overflow-x-hidden">
+    <main className="grain min-h-screen bg-background relative overflow-x-hidden pb-28 md:pb-0">
       {/* 01 · HERO: The 12-Column Editorial Grid System (Header integrated) */}
       <ScrollHero 
         propertyName="Dalhousie Estate"
-        locationEyebrow="01 / DALHOUSIE, HIMACHAL PRADESH"
+        locationEyebrow="DALHOUSIE · HIMACHAL PRADESH"
         headline="Dalhousie Estate"
         tagline="Trade the noise for silence."
         subhead="Ten rooms. A slower pace. A quieter side of the mountains."
+        startingPrice="From ₹3,200/night"
         imageSrc="/images/offthetrail7.jpeg"
         ctaText="Check availability"
-        ctaHref="#booking-section"
+        ctaHref="#booking-flow"
         secondaryCtaText="Explore the rooms"
-        secondaryCtaHref="#booking-section"
+        secondaryCtaHref="#rooms"
         conciergeWhatsApp="919816315898"
         conciergePhone="+91 98163 15898"
       />
 
       {/* 02 · DECISION SNAPSHOT: The facts, immediately */}
       <section className="bg-card/40 border-y border-border py-8 px-6 md:px-12 lg:px-16 relative z-20">
-        <div className="max-w-7xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           <div>
-            <div className="text-[11px] font-sans uppercase tracking-[0.2em] text-primary font-semibold mb-1">Scale & Privacy</div>
+            <div className="text-[11px] font-sans uppercase tracking-[0.16em] text-primary font-semibold mb-1">Scale & Privacy</div>
             <div className="font-serif text-lg md:text-xl text-foreground">10 Secluded Rooms</div>
             <p className="text-xs text-muted-foreground font-light mt-1">Three categories across the ridgeline.</p>
           </div>
           <div>
-            <div className="text-[11px] font-sans uppercase tracking-[0.2em] text-primary font-semibold mb-1">Meal Inclusions</div>
+            <div className="text-[11px] font-sans uppercase tracking-[0.16em] text-primary font-semibold mb-1">Meal Inclusions</div>
             <div className="font-serif text-lg md:text-xl text-foreground">Breakfast Included</div>
             <p className="text-xs text-muted-foreground font-light mt-1">Fresh daily breakfast; hot local meals on order.</p>
           </div>
           <div>
-            <div className="text-[11px] font-sans uppercase tracking-[0.2em] text-primary font-semibold mb-1">Road & Access</div>
+            <div className="text-[11px] font-sans uppercase tracking-[0.16em] text-primary font-semibold mb-1">Road & Access</div>
             <div className="font-serif text-lg md:text-xl text-foreground">Drive-in & Parking</div>
             <p className="text-xs text-muted-foreground font-light mt-1">Paved access all the way with private parking.</p>
           </div>
           <div>
-            <div className="text-[11px] font-sans uppercase tracking-[0.2em] text-primary font-semibold mb-1">Pricing Guarantee</div>
+            <div className="text-[11px] font-sans uppercase tracking-[0.16em] text-primary font-semibold mb-1">Pricing Guarantee</div>
             <div className="font-serif text-lg md:text-xl text-foreground">From ₹3,200/night</div>
             <p className="text-xs text-muted-foreground font-light mt-1">Transparent rates with breakfast included.</p>
           </div>
@@ -210,43 +236,35 @@ export default function DalhousieEstatePage() {
         ]}
       />
 
-      <section id="booking-section" className="py-24 md:py-32 px-6 md:px-16 lg:px-24 bg-background relative">
-        <div className="max-w-4xl mx-auto mb-16 text-center relative z-10">
-          <div className="font-serif text-primary text-lg lg:text-xl italic mb-4">III — The Rooms</div>
-          <h2 className="font-serif text-4xl md:text-5xl text-foreground">Stay with us.</h2>
-        </div>
+      {/* Chapters III & IV: Dedicated Room Catalogue & Booking Engine */}
+      <RoomBookingBridge 
+        propertyName="Dalhousie Estate"
+        rooms={dalhousieRooms}
+        trustCues={dalhousieTrustCues}
+        host={dalhousieHost}
+        qrImagePath="/images/qr-code.jpeg"
+        ownerWhatsApp="+919816315898"
+      />
 
-        <TrustBar cues={dalhousieTrustCues} />
-        
-        <HostProfile host={dalhousieHost} />
-
-        <BookingFlow 
-          propertyName="Dalhousie Estate"
-          rooms={dalhousieRooms}
-          qrImagePath="/images/qr-code.jpeg"
-          ownerWhatsApp="+919816315898"
-        />
-      </section>
-
-      {/* Photo Gallery */}
+      {/* Chapter V: Photo Gallery */}
       <PhotoGallery 
-        numeral="IV — The Estate in Pictures"
+        numeral="V — The Estate in Pictures"
         headline="Quiet moments."
         subhead="A glimpse into life on the ridge."
         photos={dalhousieGallery}
       />
 
-      {/* Amenities / Bento Grid */}
+      {/* Chapter VI: Amenities / Bento Grid */}
       <AmenitiesBento 
-        numeral="V — The Details"
+        numeral="VI — The Practical Details"
         headline="The details."
         subhead="Everything you need for a quiet retreat. Nothing you don't."
         amenities={dalhousieAmenities}
       />
 
-      {/* Map & Location */}
+      {/* Chapter VII: Map & Location */}
       <LocationMap
-        numeral="VI — Getting Here"
+        numeral="VII — Getting Here"
         headline="Getting here."
         description="Dalhousie Estate is situated on the quiet Bakrota ridge, 3.5 km above the crowded town center. A paved motorable road leads directly to our gate with private guest parking. We provide verified cab pickup coordination directly from Pathankot or Gaggal."
         locationTag="Bakrota Ridge, Dalhousie, HP (6,800 ft)"
@@ -254,16 +272,16 @@ export default function DalhousieEstatePage() {
         drivingNote="Direct vehicle access all the way. No steep uphill treks or luggage portering needed."
       />
 
-      {/* VII — FAQ Accordion */}
+      {/* Chapter VIII: FAQ Accordion */}
       <EstateFaq 
-        numeral="VII — Clarifications & Policies"
+        numeral="VIII — Clarifications & Policies"
         headline="Frequently asked questions."
         subhead="Clear, honest answers regarding arrival, dining, heating, and reservations."
         items={dalhousieFaqs}
         conciergeWhatsApp="919816315898"
       />
 
-      <footer className="py-12 px-6 md:px-16 lg:px-24 bg-background border-t border-border flex flex-col items-center justify-center text-center">
+      <footer className="py-12 px-6 md:px-12 lg:px-16 bg-background border-t border-border flex flex-col items-center justify-center text-center">
         <div className="font-serif text-2xl text-foreground font-bold tracking-tight mb-4">OffTheTrail</div>
         <p className="text-muted-foreground text-xs font-mono font-bold uppercase tracking-widest">© {new Date().getFullYear()} OffTheTrail. All rights reserved.</p>
       </footer>
@@ -272,7 +290,7 @@ export default function DalhousieEstatePage() {
       <SocialProofToast reviews={dalhousieReviews} />
       <MobileStickyCta 
         startingPrice="₹3,200/night"
-        targetElementId="booking-section"
+        targetElementId="booking-flow"
         ctaText="Check Availability"
       />
     </main>

@@ -72,7 +72,7 @@ export function RoomLedger({
           >
             {/* Room Image Thumbnail */}
             {room.imageSrc && (
-              <div className="relative w-full sm:w-44 md:w-48 h-44 sm:h-32 shrink-0 rounded-lg overflow-hidden border border-border/80 bg-card group">
+              <div className="relative w-full sm:w-44 md:w-48 h-44 sm:h-32 shrink-0 rounded-[2px] overflow-hidden border border-border/80 bg-card group">
                 <Image
                   src={room.imageSrc}
                   alt={room.name}
@@ -113,7 +113,7 @@ export function RoomLedger({
             {/* Price & Action 1 (Selection Stepper) */}
             <div className="flex flex-row sm:flex-col items-center sm:items-end justify-between pt-4 sm:pt-0 border-t sm:border-t-0 border-border/60 gap-4 shrink-0">
               <div className="text-left sm:text-right">
-                <div className="font-mono text-primary text-xl md:text-2xl font-bold">
+                <div className="font-mono text-primary text-xl md:text-2xl font-bold tabular-nums">
                   ₹{room.price.toLocaleString()}
                 </div>
                 <div className="font-mono text-muted-foreground text-xs font-medium">
@@ -122,37 +122,37 @@ export function RoomLedger({
               </div>
 
               {interactive && (
-                <div className="flex items-center gap-3 bg-card p-1.5 rounded-lg border border-border shadow-sm">
+                <div className="flex items-center bg-card rounded-[3px] border border-border shadow-sm p-0.5">
                   <motion.button
-                    whileTap={{ scale: 0.9 }}
+                    whileTap={{ scale: 0.92 }}
                     type="button"
                     disabled={qty <= 0}
                     onClick={() => onQuantityChange?.(room.id, qty - 1)}
-                    className="p-1.5 rounded text-muted-foreground hover:text-foreground hover:bg-background/80 disabled:opacity-30 transition-colors"
+                    className="w-11 h-11 flex items-center justify-center rounded-[2px] text-muted-foreground hover:text-foreground hover:bg-background/80 disabled:opacity-25 disabled:cursor-not-allowed transition-all"
                     aria-label={`Decrease ${room.name} quantity`}
                   >
-                    <Minus size={14} />
+                    <Minus size={15} />
                   </motion.button>
                   <AnimatePresence mode="popLayout">
                     <motion.span
                       key={qty}
-                      initial={{ scale: 1.3, opacity: 0 }}
+                      initial={{ scale: 1.2, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
-                      exit={{ scale: 0.7, opacity: 0 }}
+                      exit={{ scale: 0.8, opacity: 0 }}
                       transition={{ type: "spring", stiffness: 500, damping: 25 }}
-                      className="font-mono text-foreground w-6 text-center text-sm font-bold inline-block"
+                      className="font-mono text-foreground w-8 text-center text-sm font-bold inline-block tabular-nums"
                     >
                       {qty}
                     </motion.span>
                   </AnimatePresence>
                   <motion.button
-                    whileTap={{ scale: 0.9 }}
+                    whileTap={{ scale: 0.92 }}
                     type="button"
                     onClick={() => onQuantityChange?.(room.id, qty + 1)}
-                    className="p-1.5 rounded text-muted-foreground hover:text-foreground hover:bg-background/80 transition-colors"
+                    className="w-11 h-11 flex items-center justify-center rounded-[2px] text-muted-foreground hover:text-foreground hover:bg-background/80 transition-all"
                     aria-label={`Increase ${room.name} quantity`}
                   >
-                    <Plus size={14} />
+                    <Plus size={15} />
                   </motion.button>
                 </div>
               )}

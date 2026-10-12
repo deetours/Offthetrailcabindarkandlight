@@ -13,6 +13,7 @@ interface ScrollHeroProps {
   headline?: string
   tagline?: string
   subhead?: string
+  startingPrice?: string
   imageSrc: string
   ctaText?: string
   ctaHref?: string
@@ -29,11 +30,12 @@ export function ScrollHero({
   headline = "Dalhousie Estate",
   tagline = "Trade the noise for silence.",
   subhead = "Ten rooms. A slower pace. A quieter side of the mountains.",
+  startingPrice,
   imageSrc, 
   ctaText = "Check availability", 
-  ctaHref = "#booking-section", 
-  secondaryCtaText = "Explore the rooms",
-  secondaryCtaHref = "#booking-section",
+  ctaHref = "#booking-flow", 
+  secondaryCtaText = "Explore the rooms", 
+  secondaryCtaHref = "#rooms", 
   conciergeWhatsApp = "919816315898",
   conciergePhone = "+91 98163 15898"
 }: ScrollHeroProps) {
@@ -80,13 +82,16 @@ export function ScrollHero({
         />
       </motion.div>
 
-      {/* 2. Directional Left-Weighted Architectural Scrim (Cols 1-7 Dark Canvas; Cols 8-12 Pure Landscape) */}
+      {/* 2. Directional Architectural Scrim: Clean vertical gradient on mobile, 7:5 left-weighted scrim on desktop */}
       <div 
-        className="absolute inset-0 bg-gradient-to-r from-background via-background/90 md:via-background/85 to-transparent w-full md:w-[65%] lg:w-[58%] z-10 pointer-events-none" 
+        className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent md:hidden z-10 pointer-events-none" 
       />
-      {/* Radial depth cushion behind text block */}
       <div 
-        className="absolute inset-y-0 left-0 w-full md:w-[50%] bg-[radial-gradient(ellipse_at_left,_rgba(11,14,17,0.95)_0%,_rgba(11,14,17,0.75)_55%,_transparent_100%)] z-10 pointer-events-none"
+        className="hidden md:block absolute inset-0 bg-gradient-to-r from-background via-background/85 to-transparent w-[65%] lg:w-[58%] z-10 pointer-events-none" 
+      />
+      {/* Radial depth cushion behind text block on desktop */}
+      <div 
+        className="hidden md:block absolute inset-y-0 left-0 w-[50%] bg-[radial-gradient(ellipse_at_left,_rgba(11,14,17,0.95)_0%,_rgba(11,14,17,0.75)_55%,_transparent_100%)] z-10 pointer-events-none"
       />
       {/* Subtle bottom edge blend */}
       <div 
@@ -163,10 +168,23 @@ export function ScrollHero({
                 initial={prefersReducedMotion ? {} : { opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                className="font-sans text-base sm:text-lg text-neutral-200 max-w-lg font-normal leading-relaxed mb-8"
+                className={`font-sans text-base sm:text-lg text-neutral-200 max-w-lg font-normal leading-relaxed ${startingPrice ? 'mb-4' : 'mb-8'}`}
               >
                 {subhead}
               </motion.p>
+            )}
+
+            {/* Understated Practical Rate Cue (User Decision 2) */}
+            {startingPrice && (
+              <motion.div
+                initial={prefersReducedMotion ? {} : { opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                className="font-mono text-xs uppercase tracking-[0.16em] text-primary/90 font-medium mb-8 flex items-center gap-2"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                <span>{startingPrice}</span>
+              </motion.div>
             )}
 
             {/* Action Row: 1 Dominant Solid Gold CTA + 1 Quiet High-Contrast Subordinate Link */}
@@ -176,11 +194,11 @@ export function ScrollHero({
               transition={{ duration: 0.7, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
               className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6 w-full sm:w-auto"
             >
-              {/* Primary CTA: Solid Warm Gold Button with High Authority */}
+              {/* Primary CTA: Solid Warm Gold Button with High Authority (2-4px precision radius) */}
               <a
                 href={ctaHref}
                 onClick={(e) => handleSmoothScroll(e, ctaHref)}
-                className="inline-flex items-center justify-center gap-2.5 bg-primary hover:bg-[#edd09e] active:scale-[0.98] text-primary-foreground font-sans font-semibold uppercase tracking-widest text-xs px-8 py-4 shadow-xl transition-all group"
+                className="inline-flex items-center justify-center gap-2.5 bg-primary hover:bg-[#D4A35B] active:scale-[0.98] text-primary-foreground font-sans font-semibold uppercase tracking-widest text-xs px-8 py-4 rounded-[3px] shadow-xl transition-all group"
               >
                 <span>{ctaText}</span>
                 <ArrowUpRight size={15} strokeWidth={2.5} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

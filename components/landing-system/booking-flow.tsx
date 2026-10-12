@@ -22,9 +22,10 @@ interface BookingFlowProps {
   rooms: RoomDef[]
   qrImagePath: string
   ownerWhatsApp: string
+  selectedRoomId?: string | null
 }
 
-export function BookingFlow({ propertyName, rooms, qrImagePath, ownerWhatsApp }: BookingFlowProps) {
+export function BookingFlow({ propertyName, rooms, qrImagePath, ownerWhatsApp, selectedRoomId }: BookingFlowProps) {
   const [step, setStep] = useState<1 | 2 | 3 | 4>(1)
   
   // State
@@ -35,6 +36,16 @@ export function BookingFlow({ propertyName, rooms, qrImagePath, ownerWhatsApp }:
   const [phone, setPhone] = useState("")
   const [transactionId, setTransactionId] = useState("")
   const [copiedUpi, setCopiedUpi] = useState(false)
+
+  // Pre-select room if user chose one from Room Catalogue
+  useEffect(() => {
+    if (selectedRoomId) {
+      setQuantities(prev => ({
+        ...prev,
+        [selectedRoomId]: Math.max(prev[selectedRoomId] || 0, 1)
+      }))
+    }
+  }, [selectedRoomId])
 
   // Today's date string for min check-in (prevents past dates)
   const todayStr = useMemo(() => {
@@ -132,24 +143,24 @@ export function BookingFlow({ propertyName, rooms, qrImagePath, ownerWhatsApp }:
   }
 
   return (
-    <div className="w-full max-w-4xl mx-auto bg-card border border-border rounded-2xl p-6 md:p-10 shadow-2xl relative z-20">
+    <div className="w-full max-w-4xl mx-auto bg-card border border-border rounded-[4px] p-6 md:p-10 shadow-2xl relative z-20">
       
       {/* Stage Progress Header */}
       <div className="flex flex-wrap items-center justify-between gap-4 mb-8 pb-6 border-b border-border/80 text-xs font-mono tracking-widest text-muted-foreground font-bold">
         <div className="flex items-center gap-2">
-          <span className={`px-2 py-0.5 rounded ${step === 1 ? "bg-primary/20 text-primary border border-primary/30" : step > 1 ? "text-primary" : ""}`}>
+          <span className={`px-2 py-0.5 rounded-[2px] ${step === 1 ? "bg-primary/20 text-primary border border-primary/30" : step > 1 ? "text-primary" : ""}`}>
             01. STAY & ROOMS
           </span>
           <span className="opacity-30">/</span>
-          <span className={`px-2 py-0.5 rounded ${step === 2 ? "bg-primary/20 text-primary border border-primary/30" : step > 2 ? "text-primary" : ""}`}>
+          <span className={`px-2 py-0.5 rounded-[2px] ${step === 2 ? "bg-primary/20 text-primary border border-primary/30" : step > 2 ? "text-primary" : ""}`}>
             02. GUEST DETAILS
           </span>
           <span className="opacity-30">/</span>
-          <span className={`px-2 py-0.5 rounded ${step === 3 ? "bg-primary/20 text-primary border border-primary/30" : step > 3 ? "text-primary" : ""}`}>
+          <span className={`px-2 py-0.5 rounded-[2px] ${step === 3 ? "bg-primary/20 text-primary border border-primary/30" : step > 3 ? "text-primary" : ""}`}>
             03. UPI PAYMENT
           </span>
           <span className="opacity-30">/</span>
-          <span className={`px-2 py-0.5 rounded ${step === 4 ? "bg-primary/20 text-primary border border-primary/30" : ""}`}>
+          <span className={`px-2 py-0.5 rounded-[2px] ${step === 4 ? "bg-primary/20 text-primary border border-primary/30" : ""}`}>
             04. REQUEST & VERIFICATION
           </span>
         </div>
@@ -169,32 +180,34 @@ export function BookingFlow({ propertyName, rooms, qrImagePath, ownerWhatsApp }:
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-mono text-muted-foreground font-bold mb-2 uppercase tracking-widest">
+                <label htmlFor="booking-checkin" className="block text-xs font-mono text-muted-foreground font-bold mb-2 uppercase tracking-widest">
                   Check-In Date *
                 </label>
                 <div className="relative">
                   <Calendar className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground" size={16} />
                   <input 
+                    id="booking-checkin"
                     type="date" 
                     value={checkIn}
                     min={todayStr}
                     onChange={(e) => handleCheckInChange(e.target.value)}
-                    className="w-full bg-background border border-border rounded-lg pl-10 pr-4 py-3 text-foreground font-mono focus:border-primary focus:outline-none transition-colors"
+                    className="w-full bg-background border border-border rounded-[3px] pl-10 pr-4 py-3 text-foreground font-mono focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-colors"
                   />
                 </div>
               </div>
               <div>
-                <label className="block text-xs font-mono text-muted-foreground font-bold mb-2 uppercase tracking-widest">
+                <label htmlFor="booking-checkout" className="block text-xs font-mono text-muted-foreground font-bold mb-2 uppercase tracking-widest">
                   Check-Out Date *
                 </label>
                 <div className="relative">
                   <Calendar className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground" size={16} />
                   <input 
+                    id="booking-checkout"
                     type="date" 
                     value={checkOut}
                     onChange={(e) => setCheckOut(e.target.value)}
                     min={minCheckOutStr}
-                    className="w-full bg-background border border-border rounded-lg pl-10 pr-4 py-3 text-foreground font-mono focus:border-primary focus:outline-none transition-colors"
+                    className="w-full bg-background border border-border rounded-[3px] pl-10 pr-4 py-3 text-foreground font-mono focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-colors"
                   />
                 </div>
               </div>
@@ -288,7 +301,7 @@ export function BookingFlow({ propertyName, rooms, qrImagePath, ownerWhatsApp }:
                 href={generateInquiryWhatsAppLink()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-background border border-primary/40 hover:border-primary text-foreground hover:text-primary font-mono text-xs font-bold uppercase tracking-wider transition-colors order-2 sm:order-1"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-background border border-primary/40 hover:border-primary text-foreground hover:text-primary font-sans text-xs font-semibold uppercase tracking-wider rounded-[3px] transition-colors order-2 sm:order-1"
               >
                 <MessageSquare size={14} className="text-primary" />
                 <span>Questions? Ask on WhatsApp</span>
@@ -298,7 +311,7 @@ export function BookingFlow({ propertyName, rooms, qrImagePath, ownerWhatsApp }:
               <button 
                 onClick={() => setStep(2)}
                 disabled={nights === 0 || totalRooms === 0}
-                className="inline-flex items-center justify-center gap-2 bg-primary hover:brightness-110 text-primary-foreground px-8 py-3.5 rounded-none font-mono font-bold uppercase tracking-widest text-xs disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-lg order-1 sm:order-2"
+                className="inline-flex items-center justify-center gap-2 bg-primary hover:bg-[#D4A35B] active:scale-[0.98] text-primary-foreground px-8 py-3.5 rounded-[3px] font-sans font-semibold uppercase tracking-widest text-xs disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-lg order-1 sm:order-2"
               >
                 {!checkIn || !checkOut 
                   ? "Select Dates to Continue" 
@@ -316,7 +329,7 @@ export function BookingFlow({ propertyName, rooms, qrImagePath, ownerWhatsApp }:
       {step === 2 && (
         <div className="space-y-8 animate-fade-in">
           {/* Reservation recap strip */}
-          <div className="bg-background/80 rounded-xl p-4 border border-border flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+          <div className="bg-background/80 rounded-[3px] p-4 border border-border flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
             <div>
               <div className="text-xs font-mono text-muted-foreground uppercase tracking-widest font-bold">Selected Stay</div>
               <div className="text-foreground font-serif text-lg">
@@ -343,27 +356,29 @@ export function BookingFlow({ propertyName, rooms, qrImagePath, ownerWhatsApp }:
 
           <div className="space-y-6">
             <div>
-              <label className="block text-xs font-mono text-muted-foreground font-bold mb-2 uppercase tracking-widest">
+              <label htmlFor="booking-fullname" className="block text-xs font-mono text-muted-foreground font-bold mb-2 uppercase tracking-widest">
                 Full Name *
               </label>
               <input 
+                id="booking-fullname"
                 type="text" 
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="e.g. Rahul Sharma"
-                className="w-full bg-background border border-border rounded-lg px-4 py-3 text-foreground focus:border-primary focus:outline-none transition-colors font-sans"
+                className="w-full bg-background border border-border rounded-[3px] px-4 py-3 text-foreground focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-colors font-sans"
               />
             </div>
             <div>
-              <label className="block text-xs font-mono text-muted-foreground font-bold mb-2 uppercase tracking-widest">
+              <label htmlFor="booking-phone" className="block text-xs font-mono text-muted-foreground font-bold mb-2 uppercase tracking-widest">
                 WhatsApp Phone Number *
               </label>
               <input 
+                id="booking-phone"
                 type="tel" 
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="+91 98765 43210"
-                className="w-full bg-background border border-border rounded-lg px-4 py-3 text-foreground font-mono focus:border-primary focus:outline-none transition-colors"
+                className="w-full bg-background border border-border rounded-[3px] px-4 py-3 text-foreground font-mono focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-colors"
               />
               <p className="text-xs text-muted-foreground mt-1.5 font-mono">
                 Booking confirmation & driving directions will be sent to this number.
@@ -381,7 +396,7 @@ export function BookingFlow({ propertyName, rooms, qrImagePath, ownerWhatsApp }:
             <button 
               onClick={() => setStep(3)}
               disabled={name.trim().length < 2 || phone.trim().length < 8}
-              className="w-full sm:w-auto bg-primary hover:brightness-110 text-primary-foreground px-8 py-3.5 rounded-none font-mono font-bold uppercase tracking-widest text-xs disabled:opacity-40 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
+              className="w-full sm:w-auto bg-primary hover:bg-[#D4A35B] active:scale-[0.98] text-primary-foreground px-8 py-3.5 rounded-[3px] font-sans font-semibold uppercase tracking-widest text-xs disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 shadow-lg"
             >
               Continue to Payment · ₹{subtotal.toLocaleString()} <ArrowRight size={16} />
             </button>
@@ -462,7 +477,7 @@ export function BookingFlow({ propertyName, rooms, qrImagePath, ownerWhatsApp }:
              </button>
              <button 
               onClick={() => setStep(4)}
-              className="w-full sm:w-auto bg-primary hover:brightness-110 text-primary-foreground px-8 py-3.5 rounded-none font-mono font-bold uppercase tracking-widest text-xs transition-colors flex items-center justify-center gap-2 shadow-lg"
+              className="w-full sm:w-auto bg-primary hover:bg-[#D4A35B] active:scale-[0.98] text-primary-foreground px-8 py-3.5 rounded-[3px] font-sans font-semibold uppercase tracking-widest text-xs transition-all flex items-center justify-center gap-2 shadow-lg"
             >
               I Have Completed Payment <ArrowRight size={16} />
             </button>
@@ -484,23 +499,24 @@ export function BookingFlow({ propertyName, rooms, qrImagePath, ownerWhatsApp }:
             </p>
           </div>
 
-          <div className="text-left bg-background p-6 rounded-xl border border-border">
-            <label className="block text-xs font-mono text-muted-foreground font-bold mb-2 uppercase tracking-widest">
+          <div className="text-left bg-background p-6 rounded-[3px] border border-border">
+            <label htmlFor="booking-utr" className="block text-xs font-mono text-muted-foreground font-bold mb-2 uppercase tracking-widest">
               12-Digit UPI UTR / Transaction ID *
             </label>
             <input 
+              id="booking-utr"
               type="text" 
               value={transactionId}
               onChange={(e) => setTransactionId(e.target.value)}
               placeholder="e.g. 4289XXXXXXXX (from payment receipt)"
-              className="w-full bg-card border border-border rounded-lg px-4 py-3 text-foreground font-mono focus:border-primary focus:outline-none transition-colors"
+              className="w-full bg-card border border-border rounded-[3px] px-4 py-3 text-foreground font-mono focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-colors"
             />
             <p className="text-[11px] text-muted-foreground mt-2 font-mono">
               Found on your Google Pay / PhonePe / Paytm payment success screen.
             </p>
           </div>
 
-          <div className="bg-card border border-border rounded-xl p-5 text-left">
+          <div className="bg-card border border-border rounded-[3px] p-5 text-left">
             <div className="flex gap-4">
               <div className="shrink-0 mt-0.5">
                 <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center border border-primary/50">
@@ -521,7 +537,7 @@ export function BookingFlow({ propertyName, rooms, qrImagePath, ownerWhatsApp }:
               href={generateWhatsAppLink()}
               target="_blank"
               rel="noopener noreferrer"
-              className={`w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-[#25D366] hover:bg-[#20bd5a] text-white px-8 py-4 rounded-none font-mono font-bold uppercase tracking-widest text-xs transition-colors shadow-xl ${transactionId.trim().length < 4 ? 'opacity-40 pointer-events-none' : ''}`}
+              className={`w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-[#25D366] hover:bg-[#20bd5a] active:scale-[0.98] text-white px-8 py-4 rounded-[3px] font-sans font-semibold uppercase tracking-widest text-xs transition-all shadow-xl ${transactionId.trim().length < 4 ? 'opacity-40 pointer-events-none' : ''}`}
             >
               <span>Submit Request via WhatsApp</span>
               <ArrowRight size={16} />

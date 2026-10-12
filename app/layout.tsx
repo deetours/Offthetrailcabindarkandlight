@@ -1,8 +1,23 @@
 import type React from "react"
 import type { Metadata, Viewport } from "next"
+import { Inter, Playfair_Display } from "next/font/google"
 import { WhatsAppPopup } from "@/components/ui/whatsapp-popup"
 import { ThemeProvider } from "@/components/theme-provider"
 import "./globals.css"
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+  fallback: ["Segoe UI", "Helvetica Neue", "Arial", "sans-serif"],
+})
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-playfair",
+  display: "swap",
+  fallback: ["Georgia", "Times New Roman", "serif"],
+})
 
 export const metadata: Metadata = {
   title: "OffTheTrail | Travel Slower. Stay Longer.",
@@ -36,6 +51,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
+      className={`${inter.variable} ${playfair.variable}`}
       style={
         {
           "--font-inter": '"Segoe UI", "Helvetica Neue", Arial, sans-serif',

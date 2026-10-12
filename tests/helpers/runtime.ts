@@ -43,8 +43,7 @@ export async function expectNoHorizontalOverflow(page: Page) {
 }
 
 export function futureDate(daysFromToday: number) {
-  const date = new Date()
-  date.setUTCHours(12, 0, 0, 0)
-  date.setUTCDate(date.getUTCDate() + daysFromToday)
-  return date.toISOString().slice(0, 10)
+  const date = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" }))
+  date.setDate(date.getDate() + daysFromToday)
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`
 }

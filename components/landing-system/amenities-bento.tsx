@@ -27,15 +27,15 @@ export function AmenitiesBento({ numeral, headline, subhead, amenities }: Amenit
   const prefersReducedMotion = useReducedMotion()
 
   return (
-    <section className="py-24 md:py-32 px-6 md:px-16 lg:px-24 bg-card border-t border-border relative z-10">
+    <section className="py-24 md:py-32 px-6 md:px-12 lg:px-16 bg-card border-t border-border relative z-10">
       <div className="max-w-7xl mx-auto">
         <div className="mb-16 text-center md:text-left flex flex-col md:flex-row md:items-end justify-between gap-8">
           <div>
-            {numeral && <div className="font-serif text-primary text-lg lg:text-xl italic mb-4">{numeral}</div>}
-            <h2 className="font-serif text-4xl md:text-5xl text-foreground mb-4 md:mb-0">{headline}</h2>
+            {numeral && <div className="text-xs font-sans tracking-[0.22em] text-primary font-semibold uppercase mb-3">{numeral}</div>}
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-foreground tracking-tight mb-4 md:mb-0">{headline}</h2>
           </div>
           {subhead && (
-            <p className="text-muted-foreground font-light max-w-md md:text-right text-lg">
+            <p className="text-muted-foreground font-light max-w-md md:text-right text-base sm:text-lg leading-relaxed">
               {subhead}
             </p>
           )}
@@ -71,14 +71,11 @@ export function AmenitiesBento({ numeral, headline, subhead, amenities }: Amenit
                 className={`group relative bg-background border border-border flex flex-col justify-between overflow-hidden transition-colors hover:border-primary/80 ${gridClass}`}
               >
                 {/* Background image for featured tile */}
-                {amenity.featured && amenity.imageSrc ? (
+                {amenity.featured && amenity.imageSrc && (
                   <div className="absolute inset-0 z-0">
                     <Image src={amenity.imageSrc} alt={amenity.title} fill className="object-cover" />
                     <div className="absolute inset-0 bg-gradient-to-t from-background/95 via-background/60 to-background/20 mix-blend-multiply" />
-                    <div className="absolute inset-0 opacity-30 mix-blend-overlay" style={{ backgroundImage: "url('/noise.png')" }} />
                   </div>
-                ) : (
-                  <div className="absolute inset-0 opacity-10 mix-blend-overlay pointer-events-none" style={{ backgroundImage: "url('/noise.png')" }} />
                 )}
                 
                 <div className={`relative z-10 flex flex-col h-full justify-between p-8 md:p-10 ${amenity.featured ? 'text-white' : 'text-foreground'}`}>

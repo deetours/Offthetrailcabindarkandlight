@@ -26,7 +26,7 @@ export function LocationMap({
   drivingNote
 }: LocationMapProps) {
   return (
-    <section className="py-24 md:py-32 px-6 md:px-16 lg:px-24 bg-background relative border-t border-border overflow-hidden">
+    <section className="py-24 md:py-32 px-6 md:px-12 lg:px-16 bg-background relative border-t border-border overflow-hidden">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12 lg:gap-0 relative z-10">
         
         {/* Floating Text Panel */}
@@ -67,8 +67,6 @@ export function LocationMap({
 
         {/* Map / Route Illustration (55% width) */}
         <div className="w-full md:w-[58%] lg:w-[60%] aspect-[4/3] md:aspect-auto md:h-[650px] bg-card border border-border relative overflow-hidden rounded-none order-1 md:order-2">
-          {/* Abstract Map Texture */}
-          <div className="absolute inset-0 opacity-40 mix-blend-overlay" style={{ backgroundImage: "url('/noise.png')" }} />
           
           <svg className="absolute inset-0 w-full h-full text-muted-foreground" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" fill="none" xmlns="http://www.w3.org/2000/svg">
             {/* Topographical / Mountain contours */}
@@ -95,7 +93,7 @@ export function LocationMap({
             <text x="360" y="264" fill="currentColor" fillOpacity="0.6" fontSize="10" fontFamily="sans-serif" letterSpacing="0.08em">MALL ROAD (3.5 KM)</text>
 
             {/* Landmark 4: Bakrota Ridge Altitude Tag */}
-            <text x="590" y="175" fill="#e6b873" fontSize="11" fontWeight="600" fontFamily="sans-serif" letterSpacing="0.12em">BAKROTA RIDGE (6,800 FT)</text>
+            <text x="590" y="175" className="fill-primary" fontSize="11" fontWeight="600" fontFamily="sans-serif" letterSpacing="0.12em">BAKROTA RIDGE (6,800 FT)</text>
           </svg>
 
           {/* Destination Pin: Dalhousie Estate */}

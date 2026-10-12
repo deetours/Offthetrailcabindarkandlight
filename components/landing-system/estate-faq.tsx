@@ -33,7 +33,7 @@ export function EstateFaq({
   if (faqList.length === 0) return null
 
   return (
-    <section className="py-24 md:py-32 px-6 md:px-16 lg:px-24 bg-card border-t border-border">
+    <section className="py-24 md:py-32 px-6 md:px-12 lg:px-16 bg-card border-t border-border">
       <div className="max-w-3xl mx-auto space-y-12">
         <div className="text-center">
           {numeral && (

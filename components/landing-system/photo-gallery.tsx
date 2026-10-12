@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 import { X } from "lucide-react"
@@ -24,21 +24,39 @@ export function PhotoGallery({ numeral, headline, subhead, photos }: PhotoGaller
   const [selectedPhoto, setSelectedPhoto] = useState<GalleryPhotoDef | null>(null)
   const prefersReducedMotion = useReducedMotion()
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setSelectedPhoto(null)
+      }
+    }
+    if (selectedPhoto) {
+      window.addEventListener("keydown", handleKeyDown)
+      document.body.style.overflow = "hidden"
+    } else {
+      document.body.style.overflow = ""
+    }
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown)
+      document.body.style.overflow = ""
+    }
+  }, [selectedPhoto])
+
   if (!photos || photos.length === 0) return null
 
   // Sort: featured first
   const sortedPhotos = [...photos].sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0))
 
   return (
-    <section className="py-24 md:py-32 px-6 md:px-16 lg:px-24 bg-background border-t border-border relative z-10">
+    <section className="py-24 md:py-32 px-6 md:px-12 lg:px-16 bg-background border-t border-border relative z-10">
       <div className="max-w-7xl mx-auto">
         <div className="mb-16 text-center md:text-left flex flex-col md:flex-row md:items-end justify-between gap-8">
           <div>
-            {numeral && <div className="font-serif text-primary text-lg lg:text-xl italic mb-4">{numeral}</div>}
-            <h2 className="font-serif text-4xl md:text-5xl text-foreground mb-4 md:mb-0">{headline}</h2>
+            {numeral && <div className="text-xs font-sans tracking-[0.22em] text-primary font-semibold uppercase mb-3">{numeral}</div>}
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-foreground tracking-tight mb-4 md:mb-0">{headline}</h2>
           </div>
           {subhead && (
-            <p className="text-muted-foreground font-light max-w-md md:text-right text-lg">
+            <p className="text-muted-foreground font-light max-w-md md:text-right text-base sm:text-lg leading-relaxed">
               {subhead}
             </p>
           )}

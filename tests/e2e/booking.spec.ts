@@ -15,7 +15,7 @@ test("@critical stay booking validates dates, preserves details, and reaches pen
   await page.getByLabel("First Name").fill("E2E")
   await page.getByLabel("Last Name").fill("Traveller")
   await page.getByLabel("Email").fill("e2e-traveller@example.test")
-  await page.getByLabel("Phone").fill("9816315898")
+  await page.getByLabel(/phone|whatsapp/i).fill("9816315898")
   await page.getByRole("button", { name: /continue journey/i }).click()
 
   await expect(page.getByText("e2e-traveller@example.test")).toBeVisible()
@@ -37,5 +37,5 @@ test("@critical payment submission never claims a verified booking", async ({ pa
 test("@critical direct confirmation URL cannot manufacture a confirmed state", async ({ page }) => {
   await page.goto("/confirmed?type=stay&id=dalhousie")
   await expect(page.getByText(/^You're in\.$/i)).toHaveCount(0)
-  await expect(page.getByText(/unable to verify|booking reference|required|pending verification/i)).toBeVisible()
+  await expect(page.getByText(/unable to verify|booking reference|required|pending verification/i).first()).toBeVisible()
 })
