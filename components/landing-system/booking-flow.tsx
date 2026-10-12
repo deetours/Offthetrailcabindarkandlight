@@ -12,7 +12,8 @@ import {
   Check, 
   ExternalLink, 
   Lock,
-  ChevronLeft
+  ChevronLeft,
+  MessageSquare
 } from "lucide-react"
 import { motion, useMotionValue, useTransform, animate } from "framer-motion"
 
@@ -101,16 +102,31 @@ export function BookingFlow({ propertyName, rooms, qrImagePath, ownerWhatsApp }:
       .join(", ")
   }, [rooms, quantities])
 
+  // WhatsApp link for preliminary inquiry (carries selected dates & room without forcing payment)
+  const generateInquiryWhatsAppLink = () => {
+    const cleanNumber = ownerWhatsApp.replace(/[^0-9]/g, "")
+    let message = ""
+    if (checkIn && checkOut && totalRooms > 0) {
+      message = `Hi, I'm interested in the ${selectedRoomsSummary} for ${checkIn} to ${checkOut} (${nights} night${nights > 1 ? "s" : ""}) at ${propertyName}. Can you check live availability and clarify booking details?`
+    } else if (checkIn && checkOut) {
+      message = `Hi, I'm planning to stay at ${propertyName} from ${checkIn} to ${checkOut} (${nights} night${nights > 1 ? "s" : ""}). Can you check room availability and rates?`
+    } else {
+      message = `Hi, I have a few questions about booking a stay at ${propertyName}.`
+    }
+    return `https://wa.me/${cleanNumber}?text=${encodeURIComponent(message)}`
+  }
+
+  // WhatsApp link for final booking request submission
   const generateWhatsAppLink = () => {
     const cleanNumber = ownerWhatsApp.replace(/[^0-9]/g, "")
-    const message = `Hello, I'd like to confirm my booking at ${propertyName}.\n\n` +
+    const message = `Hello, I'd like to submit my booking request for ${propertyName}.\n\n` +
       `*Guest Name:* ${name}\n` +
       `*WhatsApp:* ${phone}\n` +
       `*Dates:* ${checkIn} to ${checkOut} (${nights} night${nights > 1 ? "s" : ""})\n` +
       `*Rooms:* ${selectedRoomsSummary}\n` +
       `*Total Amount Paid:* ₹${subtotal.toLocaleString()}\n` +
-      `*UPI Transaction ID:* ${transactionId}\n\n` +
-      `I have attached my payment screenshot for instant verification.`
+      `*UPI UTR / Transaction ID:* ${transactionId}\n\n` +
+      `I have attached my payment receipt screenshot for verification and room confirmation.`
 
     return `https://wa.me/${cleanNumber}?text=${encodeURIComponent(message)}`
   }
@@ -134,13 +150,13 @@ export function BookingFlow({ propertyName, rooms, qrImagePath, ownerWhatsApp }:
           </span>
           <span className="opacity-30">/</span>
           <span className={`px-2 py-0.5 rounded ${step === 4 ? "bg-primary/20 text-primary border border-primary/30" : ""}`}>
-            04. CONFIRMATION
+            04. REQUEST & VERIFICATION
           </span>
         </div>
 
         <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground/80">
           <Lock size={12} className="text-primary/70" />
-          <span>Direct Estate Reservation</span>
+          <span>Direct Estate Booking</span>
         </div>
       </div>
 
@@ -212,23 +228,27 @@ export function BookingFlow({ propertyName, rooms, qrImagePath, ownerWhatsApp }:
               interactive 
               selectedQuantities={quantities} 
               onQuantityChange={handleQuantityChange} 
+              ownerWhatsApp={ownerWhatsApp}
+              checkIn={checkIn}
+              checkOut={checkOut}
+              guests={guestCap}
             />
           </div>
 
-          {/* Transparent Cost Ledger & Assistive CTA */}
+          {/* Transparent Cost Ledger & Dual-Path Action Row */}
           <div className="pt-6 border-t border-border space-y-4">
             <div className="bg-background/80 rounded-xl p-5 border border-border flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
               <div>
                 <div className="text-muted-foreground text-xs font-mono font-bold uppercase tracking-wider mb-1">
                   {nights > 0 && totalRooms > 0
-                    ? `Payable for ${nights} Night${nights > 1 ? 's' : ''} · ${totalRooms} Room${totalRooms > 1 ? 's' : ''}`
-                    : "Transparent Total"}
+                    ? `Estimated Total for ${nights} Night${nights > 1 ? 's' : ''} · ${totalRooms} Room${totalRooms > 1 ? 's' : ''}`
+                    : "Estimated Total"}
                 </div>
                 <div className="text-foreground font-serif text-3xl flex items-center">
                   <span>₹</span>
                   <motion.span>{rounded}</motion.span>
                   <span className="text-xs font-sans text-muted-foreground font-normal ml-3">
-                    {nights > 0 && totalRooms > 0 ? "(Taxes & Breakfast Included)" : "per night starting rate"}
+                    {nights > 0 && totalRooms > 0 ? "(Breakfast Included)" : "per night starting rate"}
                   </span>
                 </div>
               </div>
@@ -241,7 +261,7 @@ export function BookingFlow({ propertyName, rooms, qrImagePath, ownerWhatsApp }:
                 </div>
                 <div className="flex items-center gap-2">
                   <Check size={14} />
-                  <span>All Taxes Included (No hidden fees at checkout)</span>
+                  <span>Direct Estate Booking (No platform fees)</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Check size={14} />
@@ -250,22 +270,35 @@ export function BookingFlow({ propertyName, rooms, qrImagePath, ownerWhatsApp }:
               </div>
             </div>
 
-            {/* Stage-Aware Dynamic Button */}
-            <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-2">
-              <div className="text-xs text-muted-foreground font-mono">
-                {!checkIn || !checkOut ? (
-                  <span className="text-primary font-bold">👉 Please select Check-in and Check-out dates above</span>
-                ) : totalRooms === 0 ? (
-                  <span className="text-primary font-bold">👉 Please select at least 1 room category above</span>
-                ) : (
-                  <span className="text-foreground/80">Ready to proceed to guest details</span>
-                )}
-              </div>
+            {/* Selection Guidance Message */}
+            <div className="text-xs text-muted-foreground font-mono">
+              {!checkIn || !checkOut ? (
+                <span className="text-primary font-bold">👉 Please select Check-in and Check-out dates above</span>
+              ) : totalRooms === 0 ? (
+                <span className="text-primary font-bold">👉 Please select at least 1 room category above</span>
+              ) : (
+                <span className="text-foreground/80">Ready to proceed with booking details or ask questions</span>
+              )}
+            </div>
 
+            {/* The Two Paths: Direct Web Booking or WhatsApp Concierge Assistance */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 pt-1">
+              {/* Secondary Assistive Path: Ask WhatsApp Concierge */}
+              <a
+                href={generateInquiryWhatsAppLink()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-background border border-primary/40 hover:border-primary text-foreground hover:text-primary font-mono text-xs font-bold uppercase tracking-wider transition-colors order-2 sm:order-1"
+              >
+                <MessageSquare size={14} className="text-primary" />
+                <span>Questions? Ask on WhatsApp</span>
+              </a>
+
+              {/* Primary Path: Continue through Web Booking */}
               <button 
                 onClick={() => setStep(2)}
                 disabled={nights === 0 || totalRooms === 0}
-                className="w-full sm:w-auto bg-primary hover:brightness-110 text-primary-foreground px-8 py-3.5 rounded-none font-mono font-bold uppercase tracking-widest text-xs disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 shadow-lg"
+                className="inline-flex items-center justify-center gap-2 bg-primary hover:brightness-110 text-primary-foreground px-8 py-3.5 rounded-none font-mono font-bold uppercase tracking-widest text-xs disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-lg order-1 sm:order-2"
               >
                 {!checkIn || !checkOut 
                   ? "Select Dates to Continue" 
@@ -350,7 +383,7 @@ export function BookingFlow({ propertyName, rooms, qrImagePath, ownerWhatsApp }:
               disabled={name.trim().length < 2 || phone.trim().length < 8}
               className="w-full sm:w-auto bg-primary hover:brightness-110 text-primary-foreground px-8 py-3.5 rounded-none font-mono font-bold uppercase tracking-widest text-xs disabled:opacity-40 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
             >
-              Proceed to UPI Payment · ₹{subtotal.toLocaleString()} <ArrowRight size={16} />
+              Continue to Payment · ₹{subtotal.toLocaleString()} <ArrowRight size={16} />
             </button>
           </div>
         </div>
@@ -365,7 +398,7 @@ export function BookingFlow({ propertyName, rooms, qrImagePath, ownerWhatsApp }:
             </div>
             <h3 className="font-serif text-3xl text-foreground mb-2">Scan & Pay via UPI</h3>
             <p className="text-muted-foreground text-sm max-w-md mx-auto">
-              Pay ₹{subtotal.toLocaleString()} directly to lock your reservation without middleman commissions.
+              Pay ₹{subtotal.toLocaleString()} directly to the estate. After initiating payment, submit your UTR number to request booking verification.
             </p>
           </div>
 
@@ -411,7 +444,7 @@ export function BookingFlow({ propertyName, rooms, qrImagePath, ownerWhatsApp }:
               </div>
               <div className="flex items-start gap-2">
                 <span className="font-mono font-bold text-primary">2.</span>
-                <span className="opacity-90">Enter exactly <strong className="font-mono text-primary font-bold">₹{subtotal.toLocaleString()}</strong> and take a screenshot of the successful transfer.</span>
+                <span className="opacity-90">Enter exactly <strong className="font-mono text-primary font-bold">₹{subtotal.toLocaleString()}</strong> and take a screenshot of the payment receipt.</span>
               </div>
               <div className="flex items-start gap-2">
                 <span className="font-mono font-bold text-primary">3.</span>
@@ -445,9 +478,9 @@ export function BookingFlow({ propertyName, rooms, qrImagePath, ownerWhatsApp }:
           </div>
           
           <div>
-            <h3 className="font-serif text-3xl text-foreground mb-2">Final Step: Lock Reservation</h3>
+            <h3 className="font-serif text-3xl text-foreground mb-2">Submit Booking Request</h3>
             <p className="text-muted-foreground text-sm">
-              Enter your UPI Transaction ID below, then submit to the estate owner on WhatsApp to receive your official stay voucher.
+              Enter your 12-digit UPI UTR number and share your payment receipt on WhatsApp. The estate manager verifies the transaction, checks final room allocation, and issues your confirmed booking voucher.
             </p>
           </div>
 
@@ -475,9 +508,9 @@ export function BookingFlow({ propertyName, rooms, qrImagePath, ownerWhatsApp }:
                 </div>
               </div>
               <div className="text-sm">
-                <p className="text-foreground font-semibold mb-1">WhatsApp Payment Verification</p>
+                <p className="text-foreground font-semibold mb-1">Payment Verification & Confirmation Process</p>
                 <p className="text-muted-foreground font-light leading-relaxed">
-                  When WhatsApp opens, your booking message will be pre-filled. Please <strong>attach your payment screenshot</strong> before sending so the owner can verify and block your rooms immediately.
+                  Submitting your payment details sends a direct booking request to the estate manager. Your reservation is officially confirmed once payment and room allocation are verified by the estate, and your booking voucher will be sent to your WhatsApp number.
                 </p>
               </div>
             </div>
@@ -490,7 +523,7 @@ export function BookingFlow({ propertyName, rooms, qrImagePath, ownerWhatsApp }:
               rel="noopener noreferrer"
               className={`w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-[#25D366] hover:bg-[#20bd5a] text-white px-8 py-4 rounded-none font-mono font-bold uppercase tracking-widest text-xs transition-colors shadow-xl ${transactionId.trim().length < 4 ? 'opacity-40 pointer-events-none' : ''}`}
             >
-              <span>Send Verification via WhatsApp</span>
+              <span>Submit Request via WhatsApp</span>
               <ArrowRight size={16} />
             </a>
 

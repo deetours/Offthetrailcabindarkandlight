@@ -107,7 +107,7 @@ const dalhousieFaqs: FaqItemDef[] = [
   },
   {
     question: "How does payment and booking confirmation work?",
-    answer: "We believe in direct, transparent reservations without commission markups. Once you choose your dates and room category, you can pay via any UPI app (Google Pay, PhonePe, Paytm, BHIM) using our verified QR code or UPI ID (offthetrail@upi). Share your payment screenshot on WhatsApp (+91 98163 15898), and our owner immediately issues your official reservation confirmation voucher."
+    answer: "We offer direct, commission-free reservations. Once you choose your dates and room category, you can submit your guest details and pay via UPI using our verified QR code or UPI ID (offthetrail@upi). Submit your UTR number and payment receipt on WhatsApp (+91 98163 15898). The estate manager verifies the transaction, checks final room allocation, and issues your confirmed booking voucher."
   },
   {
     question: "What is your cancellation and refund policy?",
@@ -122,45 +122,27 @@ const dalhousieFaqs: FaqItemDef[] = [
 const dalhousieRooms: RoomDef[] = [
   {
     id: "super-deluxe",
-    name: "Super Deluxe Balcony Suite",
-    description: "Top-floor corner suite with a private wooden balcony offering panoramic 180° views of the pine ridge and snow peaks. Includes dedicated indoor seating area.",
-    sqft: "320 sq.ft",
-    bed: "King Bed",
-    view: "Snow Peak & Panoramic Ridge View",
+    name: "Super Deluxe Balcony Room",
+    description: "Top-floor room with a private wooden balcony and indoor seating area.",
     price: 4800,
     priceLabel: "/night (incl. breakfast)",
-    available: 4,
-    roomNumbers: "Rooms 01–04",
-    imageSrc: "/images/offthetrail5.jpeg",
-    features: ["Private Balcony", "Snow Peak View", "King Bed", "En-suite Bath", "Room Heater", "Breakfast Included"]
+    imageSrc: "/images/offthetrail5.jpeg"
   },
   {
     id: "deluxe",
     name: "Deluxe Balcony Room",
-    description: "Middle-floor heritage room with an attached balcony opening directly into the deodar and pine canopy. Peaceful valley air with natural wood finishes.",
-    sqft: "260 sq.ft",
-    bed: "Queen Bed",
-    view: "Pine Canopy & Valley View",
+    description: "Middle-floor room with an attached balcony and natural wood finishes.",
     price: 4000,
     priceLabel: "/night (incl. breakfast)",
-    available: 2,
-    roomNumbers: "Rooms 05–06",
-    imageSrc: "/images/offthetrail3.jpeg",
-    features: ["Attached Balcony", "Forest Canopy View", "Queen Bed", "En-suite Bath", "Room Heater", "Breakfast Included"]
+    imageSrc: "/images/offthetrail3.jpeg"
   },
   {
     id: "standard",
     name: "Standard Heritage Room",
-    description: "Cozy colonial-style ground floor room with rich pine wall paneling, large valley-facing bay windows, and quiet forest views.",
-    sqft: "210 sq.ft",
-    bed: "Queen Bed",
-    view: "Pine Forest Window View",
+    description: "Ground-floor room with wood-panelled interiors and windows.",
     price: 3200,
     priceLabel: "/night (incl. breakfast)",
-    available: 4,
-    roomNumbers: "Rooms 07–10",
-    imageSrc: "/images/offthetrail1.jpeg",
-    features: ["Bay Window View", "Colonial Wood Interior", "Queen Bed", "En-suite Bath", "Room Heater", "Breakfast Included"]
+    imageSrc: "/images/offthetrail1.jpeg"
   }
 ]
 
@@ -204,7 +186,7 @@ export default function DalhousieEstatePage() {
           <div>
             <div className="text-[11px] font-sans uppercase tracking-[0.2em] text-primary font-semibold mb-1">Pricing Guarantee</div>
             <div className="font-serif text-lg md:text-xl text-foreground">From ₹3,200/night</div>
-            <p className="text-xs text-muted-foreground font-light mt-1">Transparent rates with taxes included.</p>
+            <p className="text-xs text-muted-foreground font-light mt-1">Transparent rates with breakfast included.</p>
           </div>
         </div>
       </section>
