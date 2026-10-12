@@ -1,24 +1,38 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useRef } from "react"
 import Image from "next/image"
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion"
 import { ArrowRight, ChevronDown } from "lucide-react"
 
 interface ScrollHeroProps {
   headline: string
+  tagline?: string
   subhead?: string
   eyebrow: string
+  metaFacts?: string
   imageSrc: string
   ctaText?: string
   ctaHref?: string
+  secondaryCtaText?: string
+  secondaryCtaHref?: string
   onCtaClick?: () => void
 }
 
-export function ScrollHero({ headline, subhead, eyebrow, imageSrc, ctaText, ctaHref, onCtaClick }: ScrollHeroProps) {
+export function ScrollHero({ 
+  headline, 
+  tagline,
+  subhead, 
+  eyebrow, 
+  metaFacts,
+  imageSrc, 
+  ctaText = "Check availability", 
+  ctaHref = "#booking-section", 
+  secondaryCtaText = "Explore the rooms",
+  secondaryCtaHref = "#booking-section",
+  onCtaClick 
+}: ScrollHeroProps) {
   const sectionRef = useRef<HTMLElement>(null)
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-  const [isHoveringCta, setIsHoveringCta] = useState(false)
   const prefersReducedMotion = useReducedMotion()
 
   const { scrollYProgress } = useScroll({
@@ -26,43 +40,28 @@ export function ScrollHero({ headline, subhead, eyebrow, imageSrc, ctaText, ctaH
     offset: ["start start", "end start"],
   })
 
-  // Scroll-linked Ken Burns effect
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.12])
-  const opacityText = useTransform(scrollYProgress, [0, 0.5], [1, 0])
-  const yText = useTransform(scrollYProgress, [0, 1], ["0%", "-40%"])
+  // Subtle, controlled Ken Burns zoom (only 5% zoom to keep it calm and elegant)
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.05])
 
-  // Cursor-driven parallax
-  useEffect(() => {
-    if (prefersReducedMotion) return
-
-    const handleMouseMove = (e: MouseEvent) => {
-      // Normalize mouse position from -1 to 1
-      const x = (e.clientX / window.innerWidth) * 2 - 1
-      const y = (e.clientY / window.innerHeight) * 2 - 1
-      setMousePosition({ x, y })
+  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.startsWith('#')) {
+      e.preventDefault()
+      const targetId = href.substring(1)
+      const element = document.getElementById(targetId)
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' })
+      }
     }
-
-    // Only add listener on pointer-fine devices
-    if (window.matchMedia("(pointer: fine)").matches) {
-      window.addEventListener("mousemove", handleMouseMove)
-      return () => window.removeEventListener("mousemove", handleMouseMove)
-    }
-  }, [prefersReducedMotion])
-
-  const parallaxX = prefersReducedMotion ? 0 : mousePosition.x * -6
-  const parallaxY = prefersReducedMotion ? 0 : mousePosition.y * -6
-  
-  // Chip tilt
-  const chipRotate = prefersReducedMotion ? 0 : mousePosition.x * 2 // 1-2 degrees
+  }
 
   return (
     <section 
       ref={sectionRef} 
-      className="relative flex min-h-screen items-end justify-start px-6 md:px-16 lg:px-24 pb-24 md:pb-32 overflow-hidden bg-background"
+      className="relative flex min-h-screen items-end justify-start px-6 md:px-16 lg:px-24 pt-32 pb-20 md:pb-28 overflow-hidden bg-background"
     >
-      {/* 1. Single Continuous Full-Bleed Photograph */}
+      {/* 1. Full-Bleed Photograph with Selective Image Crop */}
       <motion.div 
-        style={prefersReducedMotion ? {} : { scale, x: parallaxX, y: parallaxY }}
+        style={prefersReducedMotion ? {} : { scale }}
         className="absolute inset-0 z-0 origin-center"
       >
         <Image
@@ -70,177 +69,133 @@ export function ScrollHero({ headline, subhead, eyebrow, imageSrc, ctaText, ctaH
           alt={headline}
           fill
           priority
-          className="object-cover"
-          quality={100}
+          className="object-cover object-[70%_center] md:object-center"
+          quality={95}
         />
-        
-        {/* Blended ambient mist texture */}
-        {!prefersReducedMotion && (
-          <motion.div 
-            animate={{ 
-              x: ["-2%", "2%", "-2%"], 
-              opacity: [0.3, 0.5, 0.3] 
-            }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            className="absolute inset-0 pointer-events-none mix-blend-screen bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white/10 via-transparent to-transparent opacity-40 origin-center w-full h-full"
-            style={{ 
-               backgroundImage: "url('/noise.png')",
-               filter: "blur(20px)"
-            }}
-          />
-        )}
       </motion.div>
 
-      {/* 2. Legibility Scrims */}
-      {/* Gradient shaped scrim */}
-      <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-b from-transparent via-background/40 to-background/90 z-10 pointer-events-none" />
-      {/* Radial vignette behind text */}
-      <div className="absolute left-0 bottom-0 w-full md:w-2/3 h-full md:h-2/3 bg-[radial-gradient(circle_at_20%_80%,_rgba(0,0,0,0.6)_0%,_transparent_70%)] z-10 pointer-events-none" />
+      {/* 2. Left-Weighted Legibility Scrims (Preserves bright sky & sunset on the right) */}
+      {/* Soft left-weighted black/background scrim behind text */}
+      <div 
+        className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/70 to-transparent w-full md:w-[70%] z-10 pointer-events-none" 
+      />
+      {/* Gentle vertical gradient for bottom grounding */}
+      <div 
+        className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-background via-background/50 to-transparent z-10 pointer-events-none" 
+      />
 
-      {/* 3. Text Block Content */}
-      <motion.div 
-        style={{ opacity: opacityText, y: prefersReducedMotion ? 0 : yText }}
-        className="relative z-20 w-full max-w-4xl flex flex-col items-start"
-      >
-        {/* Eyebrow Chip - sits above headline, small gap, anti-grid rotation */}
+      {/* 3. Text & Conversion Block Content */}
+      <div className="relative z-20 w-full max-w-3xl flex flex-col items-start">
+        
+        {/* Eyebrow: Clean, quiet horizontal factual label (No decorative capsule) */}
         <motion.div 
-          initial={{ opacity: 0, y: 10 }}
+          initial={prefersReducedMotion ? {} : { opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: [0.23, 1, 0.32, 1] }}
-          style={prefersReducedMotion ? {} : { rotate: chipRotate }}
-          className="inline-flex items-center gap-2 px-4 py-2 mb-8 md:mb-10 rounded-full bg-card/80 backdrop-blur-md border border-border shadow-sm md:-rotate-1 origin-bottom-left"
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="text-xs md:text-sm font-mono tracking-[0.22em] text-primary font-bold uppercase mb-4 md:mb-5"
         >
-          <span className="text-xs uppercase tracking-[0.2em] text-foreground font-mono font-bold">
-            {eyebrow}
-          </span>
+          {eyebrow}
         </motion.div>
 
-        {/* Headline - wipe reveal or simple fade */}
-        <div className="overflow-hidden w-full">
-          <motion.h1 
-            initial={prefersReducedMotion ? { opacity: 0 } : { clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)", y: 40 }}
-            animate={prefersReducedMotion ? { opacity: 1 } : { clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", y: 0 }}
-            transition={{ duration: 1.2, delay: 0.3, ease: [0.23, 1, 0.32, 1] }}
-            className="font-serif text-[clamp(3rem,8vw,6.5rem)] leading-[1.05] text-foreground text-shadow-sm tracking-tightest"
-          >
-            {headline}
-          </motion.h1>
-        </div>
+        {/* Headline H1: Scaled by -15% for balanced proportions, fits one line on desktop */}
+        <motion.h1 
+          initial={prefersReducedMotion ? {} : { opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          className="font-serif text-[clamp(2.5rem,5.5vw,5rem)] leading-[1.08] text-foreground tracking-tightest drop-shadow-md"
+        >
+          {headline}
+        </motion.h1>
 
-        {/* Subhead */}
+        {/* Tagline / Emotional Promise */}
+        {tagline && (
+          <motion.h2 
+            initial={prefersReducedMotion ? {} : { opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="font-serif text-2xl md:text-3xl text-foreground/95 font-light italic mt-3 mb-3"
+          >
+            {tagline}
+          </motion.h2>
+        )}
+
+        {/* Subhead: Concise accommodation description */}
         {subhead && (
           <motion.p 
-            initial={{ opacity: 0, y: 20 }}
+            initial={prefersReducedMotion ? {} : { opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.6, ease: [0.23, 1, 0.32, 1] }}
-            className="mt-6 md:mt-8 font-sans text-lg md:text-2xl text-muted-foreground max-w-2xl text-shadow-sm font-light leading-relaxed"
+            transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="font-sans text-base md:text-lg text-muted-foreground max-w-xl font-light leading-relaxed mb-3"
           >
             {subhead}
           </motion.p>
         )}
 
-        {/* CTA */}
-        {ctaText && (
+        {/* Meta Facts: Compact verified supporting line */}
+        {metaFacts && (
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.8, ease: [0.23, 1, 0.32, 1] }}
-            className="mt-10 md:mt-12 inline-block relative z-50"
+            initial={prefersReducedMotion ? {} : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="text-xs font-mono text-muted-foreground/80 tracking-wider mb-8"
           >
-            {ctaHref ? (
-              <motion.a
-                href={ctaHref}
-                target={ctaHref.startsWith('#') ? undefined : "_blank"}
-                rel={ctaHref.startsWith('#') ? undefined : "noopener noreferrer"}
-                onClick={(e) => {
-                  if (ctaHref.startsWith('#')) {
-                    e.preventDefault()
-                    const targetId = ctaHref.substring(1)
-                    document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth' })
-                  }
-                }}
-                onMouseEnter={() => setIsHoveringCta(true)}
-                onMouseLeave={() => setIsHoveringCta(false)}
-                animate={prefersReducedMotion ? {} : {
-                  x: isHoveringCta ? (mousePosition.x * 10) : 0,
-                  y: isHoveringCta ? (mousePosition.y * 10) : 0,
-                }}
-                transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                className="group relative flex items-center gap-4 px-8 py-5 transition-colors duration-500 ease-out overflow-hidden bg-card/20 backdrop-blur-sm border border-primary/20"
-              >
-                {/* Magnetic background fill in hover state */}
-                <div 
-                  className="absolute inset-0 bg-primary transform scale-x-0 origin-left transition-transform duration-500 ease-[0.23,1,0.32,1] -z-10 group-hover:scale-x-100" 
-                />
-                
-                <span className="font-mono text-xs tracking-[0.2em] font-bold uppercase text-primary group-hover:text-primary-foreground transition-colors duration-500 z-10 relative">
-                  {ctaText}
-                </span>
-                
-                <motion.div
-                  animate={{ x: isHoveringCta ? 4 : 0 }}
-                  transition={{ duration: 0.3, ease: "easeOut" }}
-                  className="text-primary group-hover:text-primary-foreground transition-colors duration-500 z-10"
-                >
-                  <ArrowRight size={18} strokeWidth={1.5} />
-                </motion.div>
-
-                {/* Draw-in underline */}
-                <div className="absolute bottom-0 left-0 w-full h-[2px] bg-primary transform scale-x-0 origin-left transition-transform duration-500 ease-[0.23,1,0.32,1] group-hover:scale-x-100 opacity-50 group-hover:opacity-0" />
-              </motion.a>
-            ) : (
-              <motion.button
-                onClick={onCtaClick}
-                onMouseEnter={() => setIsHoveringCta(true)}
-                onMouseLeave={() => setIsHoveringCta(false)}
-                animate={prefersReducedMotion ? {} : {
-                  x: isHoveringCta ? (mousePosition.x * 10) : 0,
-                  y: isHoveringCta ? (mousePosition.y * 10) : 0,
-                }}
-                transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                className="group relative flex items-center gap-4 px-8 py-5 transition-colors duration-500 ease-out overflow-hidden bg-card/20 backdrop-blur-sm border border-primary/20"
-              >
-                {/* Magnetic background fill in hover state */}
-                <div 
-                  className="absolute inset-0 bg-primary transform scale-x-0 origin-left transition-transform duration-500 ease-[0.23,1,0.32,1] -z-10 group-hover:scale-x-100" 
-                />
-                
-                <span className="font-mono text-xs tracking-[0.2em] font-bold uppercase text-primary group-hover:text-primary-foreground transition-colors duration-500 z-10 relative">
-                  {ctaText}
-                </span>
-                
-                <motion.div
-                  animate={{ x: isHoveringCta ? 4 : 0 }}
-                  transition={{ duration: 0.3, ease: "easeOut" }}
-                  className="text-primary group-hover:text-primary-foreground transition-colors duration-500 z-10"
-                >
-                  <ArrowRight size={18} strokeWidth={1.5} />
-                </motion.div>
-
-                {/* Draw-in underline */}
-                <div className="absolute bottom-0 left-0 w-full h-[2px] bg-primary transform scale-x-0 origin-left transition-transform duration-500 ease-[0.23,1,0.32,1] group-hover:scale-x-100 opacity-50 group-hover:opacity-0" />
-              </motion.button>
-            )}
+            {metaFacts}
           </motion.div>
         )}
-      </motion.div>
 
-      {/* Pinned scroll cue */}
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.5 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 pointer-events-none"
-      >
+        {/* 4. Action Layer: One dominant solid CTA + One quiet secondary text link */}
         <motion.div
-          animate={prefersReducedMotion ? {} : { y: [0, 8, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          className="flex flex-col items-center gap-2 text-muted-foreground"
+          initial={prefersReducedMotion ? {} : { opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6 w-full sm:w-auto"
         >
-          <span className="text-[10px] uppercase tracking-[0.2em] font-mono font-bold">Scroll</span>
+          {/* Primary CTA: Solid warm-gold button with high contrast & authority */}
+          {ctaHref ? (
+            <a
+              href={ctaHref}
+              onClick={(e) => handleSmoothScroll(e, ctaHref)}
+              className="bg-primary hover:brightness-110 active:scale-[0.98] text-primary-foreground font-mono font-bold uppercase tracking-widest text-xs px-8 py-4 shadow-xl transition-all flex items-center justify-center gap-3 group"
+            >
+              <span>{ctaText}</span>
+              <ArrowRight size={15} strokeWidth={2} className="transition-transform group-hover:translate-x-1" />
+            </a>
+          ) : (
+            <button
+              onClick={onCtaClick}
+              className="bg-primary hover:brightness-110 active:scale-[0.98] text-primary-foreground font-mono font-bold uppercase tracking-widest text-xs px-8 py-4 shadow-xl transition-all flex items-center justify-center gap-3 group"
+            >
+              <span>{ctaText}</span>
+              <ArrowRight size={15} strokeWidth={2} className="transition-transform group-hover:translate-x-1" />
+            </button>
+          )}
+
+          {/* Secondary Link: Restrained, quiet text link */}
+          {secondaryCtaText && (
+            <a
+              href={secondaryCtaHref}
+              onClick={(e) => handleSmoothScroll(e, secondaryCtaHref)}
+              className="text-xs font-mono uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors flex items-center justify-center sm:justify-start gap-1.5 py-3 px-1 group"
+            >
+              <span className="underline decoration-border group-hover:decoration-foreground underline-offset-4">
+                {secondaryCtaText}
+              </span>
+              <span className="transition-transform group-hover:translate-y-0.5">↓</span>
+            </a>
+          )}
+        </motion.div>
+      </div>
+
+      {/* 5. Minimalist Pinned Scroll Indicator */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 pointer-events-none hidden md:flex flex-col items-center gap-1.5 text-muted-foreground/60">
+        <span className="text-[10px] uppercase tracking-[0.25em] font-mono font-semibold">Scroll</span>
+        <motion.div
+          animate={prefersReducedMotion ? {} : { y: [0, 5, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        >
           <ChevronDown size={14} strokeWidth={1.5} />
         </motion.div>
-      </motion.div>
+      </div>
     </section>
   )
 }

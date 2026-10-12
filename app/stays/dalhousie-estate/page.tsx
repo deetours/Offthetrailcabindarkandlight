@@ -1,4 +1,6 @@
 import { Metadata } from "next"
+import Link from "next/link"
+import { MessageCircle } from "lucide-react"
 import { ScrollHero } from "@/components/landing-system/scroll-hero"
 import { StoryScene } from "@/components/landing-system/story-scene"
 import { BookingFlow } from "@/components/landing-system/booking-flow"
@@ -12,8 +14,8 @@ import { PhotoGallery, GalleryPhotoDef } from "@/components/landing-system/photo
 import { MobileStickyCta } from "@/components/landing-system/mobile-sticky-cta"
 
 export const metadata: Metadata = {
-  title: "Dalhousie Estate | Offthetrail",
-  description: "A heritage retreat hidden in the pine forests of Dalhousie.",
+  title: "Off The Trail Dalhousie Estate | Boutique Stay in Dalhousie",
+  description: "A 10-room heritage retreat on Bakrota Ridge, Dalhousie. Pine forest views, private balconies, and slow mountain mornings. From ₹3,200/night incl. breakfast.",
 }
 
 const dalhousieReviews: ReviewDef[] = [] // TODO: Provide 3-5 real guest reviews
@@ -112,18 +114,64 @@ const dalhousieRooms: RoomDef[] = [
 export default function DalhousieEstatePage() {
   return (
     <main className="grain min-h-screen bg-background relative overflow-x-hidden">
-      <header className="absolute top-0 left-0 w-full z-50 px-6 py-8 md:px-16 lg:px-24 flex justify-between items-center pointer-events-none">
-        <div className="font-serif text-2xl text-foreground font-bold tracking-tight">OffTheTrail</div>
+      {/* Functional, quiet top-bar brand identity & concierge inquiry */}
+      <header className="absolute top-0 left-0 w-full z-50 px-6 py-6 md:px-16 lg:px-24 flex justify-between items-center pointer-events-auto">
+        <Link href="/" className="group flex items-center gap-2">
+          <span className="font-serif text-xl md:text-2xl text-foreground font-bold tracking-tight">OffTheTrail</span>
+          <span className="text-muted-foreground/40 font-mono text-sm">/</span>
+          <span className="text-xs font-mono uppercase tracking-[0.2em] text-primary/90 font-bold group-hover:text-primary transition-colors">Dalhousie Estate</span>
+        </Link>
+        <a 
+          href="https://wa.me/919816315898?text=Hello%20OffTheTrail%2C%20I%20have%20an%20inquiry%20about%20Dalhousie%20Estate."
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-xs font-mono uppercase tracking-widest text-foreground/80 hover:text-primary transition-colors flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-card/60 backdrop-blur-md border border-border/80 shadow-sm"
+        >
+          <MessageCircle size={14} className="text-[#25D366]" />
+          <span className="hidden sm:inline text-muted-foreground">Concierge:</span>
+          <span className="font-bold">+91 98163 15898</span>
+        </a>
       </header>
 
+      {/* 01 · HERO: Emotional promise + location + price anchor + availability CTA */}
       <ScrollHero 
-        headline="Dalhousie Estate"
-        subhead="Trade the noise for silence. A heritage retreat hidden in the pine forests."
-        eyebrow="10 Rooms · Dalhousie, HP · Est. Retreat"
+        headline="Dalhousie Estate."
+        tagline="Trade the noise for silence."
+        subhead="Ten rooms in the pines. Slow mornings, fresh mountain air and a stay away from the crowds."
+        eyebrow="Dalhousie, Himachal Pradesh · 10 Rooms · From ₹3,200/night"
+        metaFacts="Bakrota Ridge · Double Occupancy · Breakfast Included"
         imageSrc="/images/offthetrail7.jpeg"
-        ctaText="Book a Room"
+        ctaText="Check availability"
         ctaHref="#booking-section"
+        secondaryCtaText="Explore the rooms"
+        secondaryCtaHref="#booking-section"
       />
+
+      {/* 02 · DECISION SNAPSHOT: The facts, immediately */}
+      <section className="bg-card/40 border-y border-border py-8 px-6 md:px-16 lg:px-24 relative z-20">
+        <div className="max-w-6xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+          <div>
+            <div className="text-[11px] font-mono uppercase tracking-widest text-primary font-bold mb-1">Scale & Privacy</div>
+            <div className="font-serif text-lg md:text-xl text-foreground">10 Secluded Rooms</div>
+            <p className="text-xs text-muted-foreground font-light mt-1">Independent heritage retreat, far from market congestion.</p>
+          </div>
+          <div>
+            <div className="text-[11px] font-mono uppercase tracking-widest text-primary font-bold mb-1">Meal Inclusions</div>
+            <div className="font-serif text-lg md:text-xl text-foreground">Breakfast Included</div>
+            <p className="text-xs text-muted-foreground font-light mt-1">Fresh daily breakfast included; local home meals on request.</p>
+          </div>
+          <div>
+            <div className="text-[11px] font-mono uppercase tracking-widest text-primary font-bold mb-1">Road & Access</div>
+            <div className="font-serif text-lg md:text-xl text-foreground">Drive-in & Parking</div>
+            <p className="text-xs text-muted-foreground font-light mt-1">Paved road right to the estate with private guest parking.</p>
+          </div>
+          <div>
+            <div className="text-[11px] font-mono uppercase tracking-widest text-primary font-bold mb-1">Pricing Guarantee</div>
+            <div className="font-serif text-lg md:text-xl text-foreground">From ₹3,200/night</div>
+            <p className="text-xs text-muted-foreground font-light mt-1">Taxes included. Zero hidden convenience fees at check-in.</p>
+          </div>
+        </div>
+      </section>
 
       <StoryScene 
         numeral="II — The Estate"
