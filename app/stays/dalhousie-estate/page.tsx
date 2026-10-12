@@ -31,7 +31,7 @@ const dalhousieHost: HostProfileDef | null = null
 // Authentic Dalhousie Estate photography
 const dalhousieGallery: GalleryPhotoDef[] = [
   { id: "1", src: "/images/offthetrail7.jpeg", alt: "Dalhousie Estate Colonial Stone Facade", featured: true },
-  { id: "2", src: "/images/offthetrail5.jpeg", alt: "Private Wooden Balcony Facing Pine Valley" },
+  { id: "2", src: "/images/offthetrail5.jpeg", alt: "Private Balcony Facing Pine Valley" },
   { id: "3", src: "/images/offthetrail8.jpeg", alt: "Estate Walking Trail & Deodar Forest Canopy" },
   { id: "4", src: "/images/offthetrail2.jpeg", alt: "Outdoor Ridge Terrace & Sun Deck" },
 ]
@@ -122,24 +122,24 @@ const dalhousieFaqs: FaqItemDef[] = [
 const dalhousieRooms: RoomDef[] = [
   {
     id: "super-deluxe",
-    name: "Super Deluxe Balcony Room",
-    description: "Top-floor room with a private wooden balcony and indoor seating area.",
+    name: "Super Deluxe Room",
+    description: "A private balcony and a dedicated indoor seating area.",
     price: 4800,
     priceLabel: "/night (incl. breakfast)",
     imageSrc: "/images/offthetrail5.jpeg"
   },
   {
     id: "deluxe",
-    name: "Deluxe Balcony Room",
-    description: "Middle-floor room with an attached balcony and natural wood finishes.",
+    name: "Deluxe Room",
+    description: "An attached balcony and natural wood finishes.",
     price: 4000,
     priceLabel: "/night (incl. breakfast)",
     imageSrc: "/images/offthetrail3.jpeg"
   },
   {
     id: "standard",
-    name: "Standard Heritage Room",
-    description: "Ground-floor room with wood-panelled interiors and windows.",
+    name: "Standard Room",
+    description: "Wood-panelled interiors and windows.",
     price: 3200,
     priceLabel: "/night (incl. breakfast)",
     imageSrc: "/images/offthetrail1.jpeg"
