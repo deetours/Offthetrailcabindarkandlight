@@ -6,12 +6,13 @@ import { StoryScene } from "@/components/landing-system/story-scene"
 import { BookingFlow } from "@/components/landing-system/booking-flow"
 import { RoomDef } from "@/components/landing-system/room-ledger"
 import { AmenitiesBento, AmenityDef } from "@/components/landing-system/amenities-bento"
-import { LocationMap } from "@/components/landing-system/location-map"
+import { LocationMap, TransitPoint } from "@/components/landing-system/location-map"
 import { SocialProofToast, ReviewDef } from "@/components/landing-system/social-proof-toast"
 import { TrustBar, TrustCueDef } from "@/components/landing-system/trust-bar"
 import { HostProfile, HostProfileDef } from "@/components/landing-system/host-profile"
 import { PhotoGallery, GalleryPhotoDef } from "@/components/landing-system/photo-gallery"
 import { MobileStickyCta } from "@/components/landing-system/mobile-sticky-cta"
+import { EstateFaq, FaqItemDef } from "@/components/landing-system/estate-faq"
 
 export const metadata: Metadata = {
   title: "Off The Trail Dalhousie Estate | Boutique Stay in Dalhousie",
@@ -29,40 +30,94 @@ const dalhousieTrustCues: TrustCueDef[] = [
 // TODO: Provide real host photo and bio to enable the HostProfile section
 const dalhousieHost: HostProfileDef | null = null
 
-// TODO: Replace with actual gallery photography from the owner
+// Authentic Dalhousie Estate photography
 const dalhousieGallery: GalleryPhotoDef[] = [
-  { id: "1", src: "/images/offthetrail7.jpeg", alt: "Dalhousie Estate Exterior", featured: true },
-  { id: "2", src: "/images/offthetrail5.jpeg", alt: "Balcony View" },
-  { id: "3", src: "/hero-campfire-spiti1.jpg", alt: "Campfire" },
-  { id: "4", src: "/images/offthetrail7.jpeg", alt: "Property details" },
+  { id: "1", src: "/images/offthetrail7.jpeg", alt: "Dalhousie Estate Colonial Stone Facade", featured: true },
+  { id: "2", src: "/images/offthetrail5.jpeg", alt: "Private Wooden Balcony Facing Pine Valley" },
+  { id: "3", src: "/images/offthetrail8.jpeg", alt: "Estate Walking Trail & Deodar Forest Canopy" },
+  { id: "4", src: "/images/offthetrail2.jpeg", alt: "Outdoor Ridge Terrace & Sun Deck" },
 ]
 
 const dalhousieAmenities: AmenityDef[] = [
   {
     id: "heritage",
-    title: "Heritage Property",
-    description: "Built with stone and wood, preserving century-old architecture.",
+    title: "Heritage Stone & Timber",
+    description: "Built with dressed mountain stone and aged deodar wood, preserving century-old colonial craftsmanship at 6,800 ft.",
     featured: true,
     imageSrc: "/images/offthetrail7.jpeg",
     iconName: "Castle" as const
   },
   {
-    id: "trails",
-    title: "Forest Trails",
-    description: "Direct access to private pine forest paths.",
-    iconName: "Trees" as const
+    id: "wifi",
+    title: "High-Speed Fiber Wi-Fi",
+    description: "Dedicated 50+ Mbps fiber connection throughout all rooms, balcony tables, and common areas for seamless remote work.",
+    iconName: "Wifi" as const
   },
   {
     id: "dining",
-    title: "Farm to Table",
-    description: "Meals prepared with local, organic ingredients.",
+    title: "In-House Mountain Kitchen",
+    description: "Fresh daily breakfast included with every stay. Hot home-style Himachali and North Indian meals cooked to order.",
     iconName: "UtensilsCrossed" as const
   },
   {
     id: "heating",
-    title: "Wood-Fired Heating",
-    description: "Traditional bukharis and fireplaces to keep the cold out.",
+    title: "Winter Heating & Warmth",
+    description: "Radiant room heaters, thick Himalayan quilts, and electric bed warmers provided in all rooms for chilly nights.",
     iconName: "Flame" as const
+  },
+  {
+    id: "hot-water",
+    title: "24/7 Running Hot Water",
+    description: "High-capacity independent geysers in all en-suite bathrooms ensure instant hot showers at any hour.",
+    iconName: "Droplets" as const
+  },
+  {
+    id: "parking",
+    title: "Drive-In Road & Free Parking",
+    description: "Direct paved road access right to the estate entrance with secure, complimentary on-site parking for all guest vehicles.",
+    iconName: "Car" as const
+  }
+]
+
+const dalhousieTransitPoints: TransitPoint[] = [
+  { label: "Rail Hub", distance: "Pathankot Junction (PTK)", duration: "82 km · ~2.5 hrs drive" },
+  { label: "Nearest Airport", distance: "Gaggal Airport (DHM)", duration: "105 km · ~3.5 hrs drive" },
+  { label: "Town Center", distance: "Dalhousie Mall Road", duration: "3.5 km · 10 min drive" },
+  { label: "Road Status", distance: "Direct Paved Road", duration: "All-weather motorable" },
+]
+
+const dalhousieFaqs: FaqItemDef[] = [
+  {
+    question: "How do I reach the estate from Pathankot or Gaggal Airport?",
+    answer: "The nearest broad-gauge railway junction is Pathankot (82 km, approx. 2.5–3 hours scenic mountain drive). The closest airport is Gaggal / Dharamshala (105 km, approx. 3.5 hours). Metalled, all-weather paved roads lead right to our private gate. If you would like a verified local mountain cab arranged for your pickup, simply let our WhatsApp concierge know upon booking."
+  },
+  {
+    question: "What are the meal arrangements? Is food available on-site?",
+    answer: "Yes. Freshly prepared home-style breakfast is included with all room bookings and served from 8:00 AM to 10:30 AM. For lunch and dinner, our in-house kitchen prepares delicious local Himachali specialties and classic North Indian home-cooked meals made to order. Simply share your preferences a few hours in advance so our cook can prepare everything fresh."
+  },
+  {
+    question: "Is there reliable high-speed Wi-Fi for workation / remote work?",
+    answer: "Yes. The estate is connected via dedicated high-speed optical fiber Wi-Fi (50+ Mbps) covering bedrooms, private balconies, and common indoor spaces. Guests regularly run Zoom video calls, streaming, and remote work without interruptions."
+  },
+  {
+    question: "How is room heating handled during winter and cold mountain nights?",
+    answer: "At 6,800 ft elevation, evenings are crisp in spring/autumn and genuinely cold during winter. Every bedroom is equipped with powerful electric room heaters, heavy insulating quilts, and electric bed warmers. We also host evening bonfires on the outdoor terrace."
+  },
+  {
+    question: "Can I drive my own car directly to the property? Is parking available?",
+    answer: "Yes. Unlike many hill-station stays that require leaving your car on the main road and taking steep staircases, Dalhousie Estate offers direct drive-in access via a paved road. We provide complimentary, secure on-site parking on property grounds for all guest cars and SUVs."
+  },
+  {
+    question: "How does payment and booking confirmation work?",
+    answer: "We believe in direct, transparent reservations without commission markups. Once you choose your dates and room category, you can pay via any UPI app (Google Pay, PhonePe, Paytm, BHIM) using our verified QR code or UPI ID (offthetrail@upi). Share your payment screenshot on WhatsApp (+91 98163 15898), and our owner immediately issues your official reservation confirmation voucher."
+  },
+  {
+    question: "What is your cancellation and refund policy?",
+    answer: "Cancellations made 7 or more days prior to your scheduled check-in date receive a 100% full refund with zero fees. Cancellations made within 7 days of arrival incur a 1-night retention fee, and the remainder of your deposit is promptly refunded to your original payment account."
+  },
+  {
+    question: "What are the check-in times and extra guest charges?",
+    answer: "Standard check-in is at 1:00 PM and check-out is at 11:00 AM. Early check-in or late check-out is gladly accommodated whenever room availability permits (notify us in advance). Published rates cover double occupancy (2 adults). A third adult or child (above 6 years) can be accommodated with an extra bed and full breakfast for ₹1,200/night."
   }
 ]
 
@@ -158,19 +213,19 @@ export default function DalhousieEstatePage() {
 
       <StoryScene 
         numeral="II — The Estate"
-        headline="Time slows down here."
-        mainImageSrc="/hero-campfire-spiti1.jpg"
+        headline="Time slows down on the ridge."
+        mainImageSrc="/images/offthetrail8.jpeg"
         insetImageSrc="/images/offthetrail5.jpeg"
         paragraphs={[
           {
-            text: "Built in an era when things were made to last, the estate sits on a ridge overlooking the valley. There are no televisions. No crowded lobbies. Just the sound of the wind through the deodars."
+            text: "Perched at 6,800 feet along Dalhousie’s historic Bakrota ridge, the estate was crafted from hand-cut mountain stone and seasoned deodar timber. Just ten rooms, situated quietly above the commercial bustle and traffic of the central town."
           },
           {
-            text: "“We wanted to create a place where you could hear yourself think. Where the hardest decision of the day is whether to have tea on the balcony or in the garden.”",
+            text: "“We wanted to create a place where you could hear yourself think. Where the hardest decision of the day is whether to have tea on the private balcony or walk through the deodar pine woods.”",
             isQuote: true
           },
           {
-            text: "Evenings are spent around the fire. Mornings begin with mist rolling through the pines. It's a place to read that book you've been carrying, to have real conversations, or to simply do nothing at all."
+            text: "Evenings are quiet, gathered around a pine fire with home-cooked mountain dinners prepared fresh in our kitchen. Mornings arrive with cold mist rising over the valley and unbroken views of the Himalayan ranges."
           }
         ]}
       />
@@ -213,34 +268,20 @@ export default function DalhousieEstatePage() {
       <LocationMap
         numeral="VI — Getting Here"
         headline="Getting here."
-        description="Dalhousie Estate is tucked away on a quiet ridge. We'll send you exact driving directions and a pin once your booking is confirmed."
-        locationTag="Dalhousie, Himachal Pradesh"
+        description="Dalhousie Estate is situated on the quiet Bakrota ridge, 3.5 km above the crowded town center. A paved motorable road leads directly to our gate with private guest parking. We provide verified cab pickup coordination directly from Pathankot or Gaggal."
+        locationTag="Bakrota Ridge, Dalhousie, HP (6,800 ft)"
+        transitPoints={dalhousieTransitPoints}
+        drivingNote="Direct vehicle access all the way. No steep uphill treks or luggage portering needed."
       />
 
-      {/* FAQ */}
-      <section className="py-24 px-6 md:px-16 lg:px-24 bg-card border-t border-border">
-        <div className="max-w-3xl mx-auto">
-          <h2 className="font-serif text-3xl text-foreground mb-12 text-center">Frequently Asked Questions</h2>
-          <div className="space-y-8">
-            <div className="border-b border-border pb-6">
-              <h4 className="font-serif text-xl text-foreground mb-3">What are the check-in and check-out times?</h4>
-              <p className="text-muted-foreground font-light">Check-in is at 1:00 PM, and check-out is at 11:00 AM. Early check-in depends on availability.</p>
-            </div>
-            <div className="border-b border-border pb-6">
-              <h4 className="font-serif text-xl text-foreground mb-3">What is the cancellation policy?</h4>
-              <p className="text-muted-foreground font-light">Cancellations made 7 days prior to arrival are fully refundable. Later cancellations will incur a 1-night charge.</p>
-            </div>
-            <div className="border-b border-border pb-6">
-              <h4 className="font-serif text-xl text-foreground mb-3">Are pets allowed?</h4>
-              <p className="text-muted-foreground font-light">We love pets, but due to the surrounding wildlife, we cannot accommodate them at the estate.</p>
-            </div>
-            <div className="pb-6">
-              <h4 className="font-serif text-xl text-foreground mb-3">Are there extra-guest charges?</h4>
-              <p className="text-muted-foreground font-light">Rooms are priced for double occupancy. A third guest can be accommodated with an extra bed for ₹1,200/night.</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* VII — FAQ Accordion */}
+      <EstateFaq 
+        numeral="VII — Clarifications & Policies"
+        headline="Frequently asked questions."
+        subhead="Clear, honest answers regarding arrival, dining, heating, and reservations."
+        items={dalhousieFaqs}
+        conciergeWhatsApp="919816315898"
+      />
 
       <footer className="py-12 px-6 md:px-16 lg:px-24 bg-background border-t border-border flex flex-col items-center justify-center text-center">
         <div className="font-serif text-2xl text-foreground font-bold tracking-tight mb-4">OffTheTrail</div>

@@ -42,7 +42,7 @@ export function AmenitiesBento({ numeral, headline, subhead, amenities }: Amenit
         </div>
         
         {/* Bento grid layout */}
-        <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4 auto-rows-[280px]">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 auto-rows-[250px] md:auto-rows-[270px]">
           {sortedAmenities.map((amenity, idx) => {
             const Icon = Icons[amenity.iconName] as any
             
@@ -57,6 +57,10 @@ export function AmenitiesBento({ numeral, headline, subhead, amenities }: Amenit
               gridClass = "md:col-span-1 md:row-span-1"
             } else if (idx === 3) {
               gridClass = "md:col-span-1 md:row-span-1"
+            } else if (idx === 4) {
+              gridClass = "md:col-span-2 md:row-span-1"
+            } else if (idx === 5) {
+              gridClass = "md:col-span-2 md:row-span-1"
             }
 
             return (
@@ -85,13 +89,13 @@ export function AmenitiesBento({ numeral, headline, subhead, amenities }: Amenit
                           whileHover={prefersReducedMotion ? {} : { y: -2, scale: 1.05 }}
                           transition={{ duration: 0.2 }}
                         >
-                          <Icon size={28} strokeWidth={1} />
+                          <Icon size={28} strokeWidth={1.5} />
                         </motion.div>
                      )}
                   </div>
                   <div>
-                    <h3 className="font-serif text-2xl mb-3">{amenity.title}</h3>
-                    <p className={`text-sm font-light leading-relaxed ${amenity.featured ? 'text-white/80' : 'text-muted-foreground'}`}>{amenity.description}</p>
+                    <h3 className="font-serif text-2xl mb-2.5 text-white">{amenity.title}</h3>
+                    <p className={`text-sm font-light leading-relaxed ${amenity.featured ? 'text-neutral-200' : 'text-muted-foreground'}`}>{amenity.description}</p>
                   </div>
                 </div>
               </motion.div>
