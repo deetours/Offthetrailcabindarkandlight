@@ -67,30 +67,45 @@ const dalhousieAmenities: AmenityDef[] = [
 const dalhousieRooms: RoomDef[] = [
   {
     id: "super-deluxe",
-    name: "Super Deluxe",
-    description: "Attached balcony",
+    name: "Super Deluxe Balcony Suite",
+    description: "Top-floor corner suite with a private wooden balcony offering panoramic 180° views of the pine ridge and snow peaks. Includes dedicated indoor seating area.",
+    sqft: "320 sq.ft",
+    bed: "King Bed",
+    view: "Snow Peak & Panoramic Ridge View",
     price: 4800,
-    priceLabel: "/night",
+    priceLabel: "/night (incl. breakfast)",
     available: 4,
-    roomNumbers: "Room 01–04"
+    roomNumbers: "Rooms 01–04",
+    imageSrc: "/images/offthetrail5.jpeg",
+    features: ["Private Balcony", "Snow Peak View", "King Bed", "En-suite Bath", "Room Heater", "Breakfast Included"]
   },
   {
     id: "deluxe",
-    name: "Deluxe",
-    description: "Attached balcony",
+    name: "Deluxe Balcony Room",
+    description: "Middle-floor heritage room with an attached balcony opening directly into the deodar and pine canopy. Peaceful valley air with natural wood finishes.",
+    sqft: "260 sq.ft",
+    bed: "Queen Bed",
+    view: "Pine Canopy & Valley View",
     price: 4000,
-    priceLabel: "/night",
+    priceLabel: "/night (incl. breakfast)",
     available: 2,
-    roomNumbers: "Room 05–06"
+    roomNumbers: "Rooms 05–06",
+    imageSrc: "/images/offthetrail3.jpeg",
+    features: ["Attached Balcony", "Forest Canopy View", "Queen Bed", "En-suite Bath", "Room Heater", "Breakfast Included"]
   },
   {
     id: "standard",
-    name: "Standard",
-    description: "Window, no balcony",
+    name: "Standard Heritage Room",
+    description: "Cozy colonial-style ground floor room with rich pine wall paneling, large valley-facing bay windows, and quiet forest views.",
+    sqft: "210 sq.ft",
+    bed: "Queen Bed",
+    view: "Pine Forest Window View",
     price: 3200,
-    priceLabel: "/night",
+    priceLabel: "/night (incl. breakfast)",
     available: 4,
-    roomNumbers: "Room 07–10"
+    roomNumbers: "Rooms 07–10",
+    imageSrc: "/images/offthetrail1.jpeg",
+    features: ["Bay Window View", "Colonial Wood Interior", "Queen Bed", "En-suite Bath", "Room Heater", "Breakfast Included"]
   }
 ]
 
@@ -143,7 +158,7 @@ export default function DalhousieEstatePage() {
           propertyName="Dalhousie Estate"
           rooms={dalhousieRooms}
           qrImagePath="/images/qr-code.jpeg"
-          ownerWhatsApp="+919999999999"
+          ownerWhatsApp="+919816315898"
         />
       </section>
 
