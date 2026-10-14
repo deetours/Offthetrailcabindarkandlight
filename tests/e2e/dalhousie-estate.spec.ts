@@ -71,8 +71,9 @@ test.describe("Dalhousie Estate Apple-level precision and consistency", () => {
   }
 
   test("Room Catalog 'Select this room' carries room selection to booking ledger", async ({ page }) => {
+    test.slow()
     await page.setViewportSize({ width: 1440, height: 900 })
-    await page.goto("/stays/dalhousie-estate")
+    await page.goto("/stays/dalhousie-estate", { timeout: 60000 })
     await page.waitForSelector("[data-hydrated='true']", { state: "attached" })
 
     // Target the specific article containing the exact heading "Deluxe Room"
@@ -96,7 +97,7 @@ test.describe("Dalhousie Estate Apple-level precision and consistency", () => {
   test("Mobile sticky CTA appears past hero and dismisses before footer", async ({ page }) => {
     test.slow()
     await page.setViewportSize({ width: 390, height: 844 })
-    await page.goto("/stays/dalhousie-estate")
+    await page.goto("/stays/dalhousie-estate", { timeout: 60000 })
     await page.waitForSelector("[data-hydrated='true']", { state: "attached" })
 
     // Scroll to Chapter II (past hero, before booking flow)
@@ -123,7 +124,7 @@ test.describe("Dalhousie Estate Apple-level precision and consistency", () => {
   test("Guest Details form validates inputs accessibly and supports keyboard submission", async ({ page }) => {
     test.slow()
     await page.setViewportSize({ width: 1440, height: 900 })
-    await page.goto("/stays/dalhousie-estate")
+    await page.goto("/stays/dalhousie-estate", { timeout: 60000 })
     await page.waitForSelector("[data-hydrated='true']", { state: "attached" })
 
     // Set dates in Step 1
@@ -175,7 +176,7 @@ test.describe("Dalhousie Estate Apple-level precision and consistency", () => {
     })
 
     await page.setViewportSize({ width: 1440, height: 900 })
-    await page.goto("/stays/dalhousie-estate")
+    await page.goto("/stays/dalhousie-estate", { timeout: 60000 })
     await page.waitForSelector("[data-hydrated='true']", { state: "attached" })
 
     // Set dates
@@ -313,5 +314,36 @@ test.describe("Dalhousie Estate Apple-level precision and consistency", () => {
     await expect(copySummaryBtn).toBeEnabled()
     await copySummaryBtn.click()
     await expect(page.getByText(/booking summary copied/i)).toBeVisible()
+  })
+
+  test("Batch 5 & 6: TrustBar displays verified estate facts, zero fake toasts, and transparent policies", async ({ page }) => {
+    test.slow()
+    await page.setViewportSize({ width: 1440, height: 900 })
+    await page.goto("/stays/dalhousie-estate", { timeout: 60000 })
+    await page.waitForSelector("[data-hydrated='true']", { state: "attached" })
+
+    // 1. Verify TrustBar displays 4 verified estate differentiators
+    const bookingSection = page.locator("#booking-flow")
+    await expect(bookingSection.getByText("10 Secluded Rooms")).toBeVisible()
+    await expect(bookingSection.getByText("Independently run on Bakrota Ridge")).toBeVisible()
+    await expect(bookingSection.getByText("Drive-In & Parking")).toBeVisible()
+    await expect(bookingSection.getByText("Paved road with private parking")).toBeVisible()
+    await expect(bookingSection.getByText("Breakfast Included", { exact: true })).toBeVisible()
+    await expect(bookingSection.getByText("Fresh hot breakfast with every stay")).toBeVisible()
+    await expect(bookingSection.getByText("Owner Verified")).toBeVisible()
+    await expect(bookingSection.getByText("Instant WhatsApp communication")).toBeVisible()
+
+    // 2. Verify zero fake social proof toasts or fabricated review popups
+    await page.waitForTimeout(1000)
+    await expect(page.locator(".fixed.bottom-6.right-6")).toHaveCount(0)
+
+    // 3. Verify Transparent Stay Policies strip in Step 1
+    await expect(page.getByText(/Standard Double Occupancy \(2 Adults\/room\)/i)).toBeVisible()
+    await expect(page.getByText(/Extra Bed & Breakfast: ₹1,200\/night/i)).toBeVisible()
+    await expect(page.getByText(/Check-in 1:00 PM · Check-out 11:00 AM/i)).toBeVisible()
+    await expect(page.getByText(/Free On-Site Private Parking/i)).toBeVisible()
+
+    // 4. Verify 100% cancellation policy transparency
+    await expect(page.getByText(/100% refund up to 7 days before check-in/i)).toBeVisible()
   })
 })

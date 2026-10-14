@@ -45,9 +45,30 @@ export const metadata: Metadata = {
 const dalhousieReviews: ReviewDef[] = [] // TODO: Provide 3-5 real guest reviews
 
 const dalhousieTrustCues: TrustCueDef[] = [
-  { id: "rooms", label: "10 Rooms, Independently Run", iconName: "Home" },
-  { id: "response", label: "Instant Owner Response on WhatsApp", iconName: "MessageCircle" },
-  { id: "secure", label: "Secure UPI Payment", iconName: "ShieldCheck" },
+  { 
+    id: "rooms", 
+    label: "10 Secluded Rooms", 
+    description: "Independently run on Bakrota Ridge",
+    iconName: "Home" 
+  },
+  { 
+    id: "access", 
+    label: "Drive-In & Parking", 
+    description: "Paved road with private parking",
+    iconName: "Car" 
+  },
+  { 
+    id: "breakfast", 
+    label: "Breakfast Included", 
+    description: "Fresh hot breakfast with every stay",
+    iconName: "UtensilsCrossed" 
+  },
+  { 
+    id: "concierge", 
+    label: "Owner Verified", 
+    description: "Instant WhatsApp communication",
+    iconName: "MessageCircle" 
+  },
 ]
 
 // TODO: Provide real host photo and bio to enable the HostProfile section

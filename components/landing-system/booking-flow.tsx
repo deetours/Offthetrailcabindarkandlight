@@ -386,7 +386,7 @@ export function BookingFlow({ propertyName, rooms, qrImagePath, ownerWhatsApp, s
 
           {/* Transparent Cost Ledger & Dual-Path Action Row */}
           <div className="pt-6 border-t border-border space-y-4">
-            <div className="bg-background/80 rounded-xl p-5 border border-border flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div className="bg-background/80 rounded-[4px] p-5 border border-border flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
               <div>
                 <div className="text-muted-foreground text-xs font-mono font-bold uppercase tracking-wider mb-1">
                   {nights > 0 && totalRooms > 0
@@ -400,23 +400,43 @@ export function BookingFlow({ propertyName, rooms, qrImagePath, ownerWhatsApp, s
                     {nights > 0 && totalRooms > 0 ? "(Breakfast Included)" : "per night starting rate"}
                   </span>
                 </div>
+                {nights > 0 && totalRooms > 0 && (
+                  <p className="text-[11px] font-mono text-muted-foreground mt-1">
+                    Double occupancy (2 adults/room) · Taxes & morning breakfast included
+                  </p>
+                )}
               </div>
 
               {/* Inclusions summary */}
               <div className="text-xs font-mono space-y-1.5 text-muted-foreground">
                 <div className="flex items-center gap-2 text-primary font-bold">
                   <Check size={14} />
-                  <span>Fresh Breakfast Included Daily</span>
+                  <span>Fresh Daily Breakfast Included</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Check size={14} />
-                  <span>Direct Estate Booking (No platform fees)</span>
+                  <span>High-Speed 50+ Mbps Fiber Wi-Fi</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Check size={14} />
-                  <span>Free cancellation up to 7 days before check-in</span>
+                  <span>Direct Estate Reservation (Zero commissions)</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Check size={14} />
+                  <span>100% refund up to 7 days before check-in</span>
                 </div>
               </div>
+            </div>
+
+            {/* Transparent Stay Policies Strip */}
+            <div className="p-3.5 bg-card/40 border border-border/80 rounded-[3px] flex flex-wrap items-center justify-between gap-y-2 gap-x-4 text-[11px] font-mono text-muted-foreground">
+              <span>Standard Double Occupancy (2 Adults/room)</span>
+              <span className="hidden sm:inline opacity-30">•</span>
+              <span>Extra Bed & Breakfast: ₹1,200/night</span>
+              <span className="hidden sm:inline opacity-30">•</span>
+              <span>Check-in 1:00 PM · Check-out 11:00 AM</span>
+              <span className="hidden sm:inline opacity-30">•</span>
+              <span>Free On-Site Private Parking</span>
             </div>
 
             {/* Selection Guidance Message */}
