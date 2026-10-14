@@ -13,7 +13,8 @@ import {
   ExternalLink, 
   Lock,
   ChevronLeft,
-  MessageSquare
+  MessageSquare,
+  Clock
 } from "lucide-react"
 import { motion, useMotionValue, useTransform, animate } from "framer-motion"
 
@@ -36,6 +37,47 @@ export function BookingFlow({ propertyName, rooms, qrImagePath, ownerWhatsApp, s
   const [phone, setPhone] = useState("")
   const [transactionId, setTransactionId] = useState("")
   const [copiedUpi, setCopiedUpi] = useState(false)
+  const [copiedSummary, setCopiedSummary] = useState(false)
+  const [formErrors, setFormErrors] = useState<{ name?: string; phone?: string }>({})
+  const [leadStatus, setLeadStatus] = useState<"idle" | "submitting" | "saved" | "failed">("idle")
+  const [lastSubmittedSignature, setLastSubmittedSignature] = useState<string | null>(null)
+  const [draftRestored, setDraftRestored] = useState(false)
+
+  // Restore active booking journey draft from sessionStorage once on mount
+  useEffect(() => {
+    try {
+      const raw = sessionStorage.getItem("offthetrail_dalhousie_booking_draft")
+      if (raw) {
+        const parsed = JSON.parse(raw)
+        if (parsed.checkIn) setCheckIn(parsed.checkIn)
+        if (parsed.checkOut) setCheckOut(parsed.checkOut)
+        if (parsed.quantities && typeof parsed.quantities === "object" && Object.keys(parsed.quantities).length > 0) {
+          setQuantities(parsed.quantities)
+        }
+        if (parsed.name) setName(parsed.name)
+        if (parsed.phone) setPhone(parsed.phone)
+      }
+    } catch {
+      // SessionStorage disabled or unavailable — fail gracefully
+    } finally {
+      setDraftRestored(true)
+    }
+  }, [])
+
+  // Preserve active booking journey parameters once draft has been loaded
+  useEffect(() => {
+    if (!draftRestored) return
+    try {
+      if (checkIn || checkOut || name || phone || Object.values(quantities).some(q => q > 0)) {
+        sessionStorage.setItem(
+          "offthetrail_dalhousie_booking_draft",
+          JSON.stringify({ checkIn, checkOut, quantities, name, phone })
+        )
+      }
+    } catch {
+      // SessionStorage quota exceeded or disabled
+    }
+  }, [draftRestored, checkIn, checkOut, quantities, name, phone])
 
   // Pre-select room if user chose one from Room Catalogue
   useEffect(() => {
@@ -101,9 +143,30 @@ export function BookingFlow({ propertyName, rooms, qrImagePath, ownerWhatsApp, s
   }
 
   const handleCopyUpi = () => {
-    navigator.clipboard.writeText("offthetrail@upi")
-    setCopiedUpi(true)
-    setTimeout(() => setCopiedUpi(false), 2000)
+    try {
+      navigator.clipboard.writeText("offthetrail@upi")
+      setCopiedUpi(true)
+      setTimeout(() => setCopiedUpi(false), 2000)
+    } catch {
+      // Clipboard access restricted
+    }
+  }
+
+  const handleCopySummary = () => {
+    try {
+      const summary = `Off The Trail - ${propertyName} Booking Verification Request\n\n` +
+        `Guest: ${name}\n` +
+        `WhatsApp: ${phone}\n` +
+        `Dates: ${checkIn} to ${checkOut} (${nights} night${nights > 1 ? "s" : ""})\n` +
+        `Rooms: ${selectedRoomsSummary}\n` +
+        `Amount Transferred: ₹${subtotal.toLocaleString()} (Breakfast Included)\n` +
+        `UPI Reference / UTR: ${transactionId.trim()}`
+      navigator.clipboard.writeText(summary)
+      setCopiedSummary(true)
+      setTimeout(() => setCopiedSummary(false), 2500)
+    } catch {
+      // Clipboard access restricted
+    }
   }
 
   const selectedRoomsSummary = useMemo(() => {
@@ -127,23 +190,96 @@ export function BookingFlow({ propertyName, rooms, qrImagePath, ownerWhatsApp, s
     return `https://wa.me/${cleanNumber}?text=${encodeURIComponent(message)}`
   }
 
-  // WhatsApp link for final booking request submission
+  // WhatsApp link for final payment verification request submission
   const generateWhatsAppLink = () => {
     const cleanNumber = ownerWhatsApp.replace(/[^0-9]/g, "")
-    const message = `Hello, I'd like to submit my booking request for ${propertyName}.\n\n` +
+    const message = `Hello, I'd like to submit my payment verification request for ${propertyName}.\n\n` +
       `*Guest Name:* ${name}\n` +
       `*WhatsApp:* ${phone}\n` +
       `*Dates:* ${checkIn} to ${checkOut} (${nights} night${nights > 1 ? "s" : ""})\n` +
       `*Rooms:* ${selectedRoomsSummary}\n` +
-      `*Total Amount Paid:* ₹${subtotal.toLocaleString()}\n` +
-      `*UPI UTR / Transaction ID:* ${transactionId}\n\n` +
-      `I have attached my payment receipt screenshot for verification and room confirmation.`
+      `*Amount Transferred:* ₹${subtotal.toLocaleString()}\n` +
+      `*UPI Reference / UTR:* ${transactionId.trim()}\n\n` +
+      `I have transferred the reservation deposit via UPI. Please find my transaction reference above and confirm room allocation.`
 
     return `https://wa.me/${cleanNumber}?text=${encodeURIComponent(message)}`
   }
 
+  // Validate guest contact details accessibly
+  const validateGuestDetails = (): boolean => {
+    const errors: { name?: string; phone?: string } = {}
+    const trimmedName = name.trim()
+    const cleanedPhone = phone.replace(/[^0-9+]/g, "")
+    const digitsOnly = cleanedPhone.replace(/[^0-9]/g, "")
+
+    if (!trimmedName || trimmedName.length < 2) {
+      errors.name = "Please enter your full name (at least 2 characters)."
+    }
+
+    if (!cleanedPhone || digitsOnly.length < 10) {
+      errors.phone = "Please enter a valid phone number (at least 10 digits)."
+    }
+
+    setFormErrors(errors)
+    return Object.keys(errors).length === 0
+  }
+
+  // Non-blocking lead enquiry dispatch to existing backend (/api/leads)
+  const dispatchLeadEnquiry = async () => {
+    const signature = `${name.trim()}_${phone.trim()}_${checkIn}_${checkOut}_${subtotal}`
+    if (signature === lastSubmittedSignature) {
+      return // Skip duplicate network dispatch for identical stay enquiry
+    }
+
+    setLeadStatus("submitting")
+    try {
+      const res = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          full_name: name.trim(),
+          phone_number: phone.trim(),
+          source: "dalhousie_booking_enquiry",
+          notes: `Dalhousie Estate Enquiry | Stay: ${checkIn} to ${checkOut} (${nights} nights) | Rooms: ${selectedRoomsSummary} | Est. Total: ₹${subtotal.toLocaleString()}`
+        })
+      })
+
+      if (res.ok) {
+        setLeadStatus("saved")
+        setLastSubmittedSignature(signature)
+      } else {
+        console.warn("Lead enquiry persistence returned status:", res.status)
+        setLeadStatus("failed")
+      }
+    } catch (err) {
+      console.warn("Lead enquiry persistence network error:", err)
+      setLeadStatus("failed")
+    }
+  }
+
+  // Step 2 submission handler
+  const handleProceedToPayment = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!validateGuestDetails()) return
+
+    // Immediately advance to Step 3 (non-blocking for guest)
+    setStep(3)
+
+    // Dispatch enquiry lead in the background
+    dispatchLeadEnquiry()
+  }
+
+  // Clear draft on successful booking request hand-off
+  const handleClearDraft = () => {
+    try {
+      sessionStorage.removeItem("offthetrail_dalhousie_booking_draft")
+    } catch {
+      // Ignore
+    }
+  }
+
   return (
-    <div className="w-full max-w-4xl mx-auto bg-card border border-border rounded-[4px] p-6 md:p-10 shadow-2xl relative z-20">
+    <div data-hydrated={draftRestored ? "true" : undefined} className="w-full max-w-4xl mx-auto bg-card border border-border rounded-[4px] p-6 md:p-10 shadow-2xl relative z-20">
       
       {/* Stage Progress Header */}
       <div className="flex flex-wrap items-center justify-between gap-4 mb-8 pb-6 border-b border-border/80 text-xs font-mono tracking-widest text-muted-foreground font-bold">
@@ -327,7 +463,7 @@ export function BookingFlow({ propertyName, rooms, qrImagePath, ownerWhatsApp, s
 
       {/* Step 2: Guest Details */}
       {step === 2 && (
-        <div className="space-y-8 animate-fade-in">
+        <form onSubmit={handleProceedToPayment} noValidate className="space-y-8 animate-fade-in">
           {/* Reservation recap strip */}
           <div className="bg-background/80 rounded-[3px] p-4 border border-border flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
             <div>
@@ -340,6 +476,7 @@ export function BookingFlow({ propertyName, rooms, qrImagePath, ownerWhatsApp, s
               </div>
             </div>
             <button 
+              type="button"
               onClick={() => setStep(1)} 
               className="inline-flex items-center gap-1 text-primary text-xs font-mono font-bold uppercase tracking-widest hover:underline"
             >
@@ -361,199 +498,327 @@ export function BookingFlow({ propertyName, rooms, qrImagePath, ownerWhatsApp, s
               </label>
               <input 
                 id="booking-fullname"
+                name="fullName"
                 type="text" 
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => {
+                  setName(e.target.value)
+                  if (formErrors.name) setFormErrors(prev => ({ ...prev, name: undefined }))
+                }}
+                autoComplete="name"
+                required
+                aria-invalid={!!formErrors.name}
+                aria-describedby={formErrors.name ? "booking-fullname-error" : undefined}
                 placeholder="e.g. Rahul Sharma"
-                className="w-full bg-background border border-border rounded-[3px] px-4 py-3 text-foreground focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-colors font-sans"
+                className={`w-full bg-background border rounded-[3px] px-4 py-3 text-foreground transition-colors font-sans focus:outline-none ${
+                  formErrors.name 
+                    ? "border-destructive focus:ring-1 focus:ring-destructive" 
+                    : "border-border focus:border-primary focus:ring-1 focus:ring-primary"
+                }`}
               />
+              {formErrors.name && (
+                <p id="booking-fullname-error" role="alert" className="text-xs text-destructive font-mono mt-1.5">
+                  {formErrors.name}
+                </p>
+              )}
             </div>
+
             <div>
               <label htmlFor="booking-phone" className="block text-xs font-mono text-muted-foreground font-bold mb-2 uppercase tracking-widest">
                 WhatsApp Phone Number *
               </label>
               <input 
                 id="booking-phone"
-                type="tel" 
+                name="phone"
+                type="tel"
+                inputMode="tel"
+                autoComplete="tel"
+                required
                 value={phone}
-                onChange={(e) => setPhone(e.target.value)}
+                onChange={(e) => {
+                  setPhone(e.target.value)
+                  if (formErrors.phone) setFormErrors(prev => ({ ...prev, phone: undefined }))
+                }}
+                aria-invalid={!!formErrors.phone}
+                aria-describedby={formErrors.phone ? "booking-phone-error" : "booking-phone-hint"}
                 placeholder="+91 98765 43210"
-                className="w-full bg-background border border-border rounded-[3px] px-4 py-3 text-foreground font-mono focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-colors"
+                className={`w-full bg-background border rounded-[3px] px-4 py-3 text-foreground font-mono transition-colors focus:outline-none ${
+                  formErrors.phone 
+                    ? "border-destructive focus:ring-1 focus:ring-destructive" 
+                    : "border-border focus:border-primary focus:ring-1 focus:ring-primary"
+                }`}
               />
-              <p className="text-xs text-muted-foreground mt-1.5 font-mono">
-                Booking confirmation & driving directions will be sent to this number.
-              </p>
+              {formErrors.phone ? (
+                <p id="booking-phone-error" role="alert" className="text-xs text-destructive font-mono mt-1.5">
+                  {formErrors.phone}
+                </p>
+              ) : (
+                <p id="booking-phone-hint" className="text-xs text-muted-foreground mt-1.5 font-mono">
+                  Booking confirmation & driving directions will be sent to this number.
+                </p>
+              )}
             </div>
           </div>
 
+          {/* Non-blocking sync status alert if previous background persistence encountered an issue */}
+          {leadStatus === "failed" && (
+            <div className="p-3 bg-secondary/40 border border-border rounded-[3px] flex items-center justify-between text-xs font-mono text-muted-foreground">
+              <span>Enquiry sync is pending network connection.</span>
+              <button
+                type="button"
+                onClick={dispatchLeadEnquiry}
+                className="text-primary font-bold hover:underline ml-2 uppercase tracking-wider"
+              >
+                Retry Sync
+              </button>
+            </div>
+          )}
+
           <div className="pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 border-t border-border">
             <button 
+              type="button"
               onClick={() => setStep(1)} 
               className="text-muted-foreground text-xs font-mono font-bold uppercase tracking-widest hover:text-foreground transition-colors"
             >
               Back
             </button>
             <button 
-              onClick={() => setStep(3)}
-              disabled={name.trim().length < 2 || phone.trim().length < 8}
-              className="w-full sm:w-auto bg-primary hover:bg-[#D4A35B] active:scale-[0.98] text-primary-foreground px-8 py-3.5 rounded-[3px] font-sans font-semibold uppercase tracking-widest text-xs disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 shadow-lg"
+              type="submit"
+              className="w-full sm:w-auto bg-primary hover:bg-[#D4A35B] active:scale-[0.98] text-primary-foreground px-8 py-3.5 rounded-[3px] font-sans font-semibold uppercase tracking-widest text-xs transition-all flex items-center justify-center gap-2 shadow-lg"
             >
               Continue to Payment · ₹{subtotal.toLocaleString()} <ArrowRight size={16} />
             </button>
           </div>
-        </div>
+        </form>
       )}
 
       {/* Step 3: Payment */}
       {step === 3 && (
         <div className="space-y-8 animate-fade-in text-center">
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-mono font-bold uppercase tracking-widest mb-3">
-              <ShieldCheck size={14} /> Zero Gateway Convenience Fees
+          <div className="max-w-xl mx-auto">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-[2px] bg-primary/10 border border-primary/20 text-primary text-[11px] font-mono font-bold uppercase tracking-widest mb-3">
+              <Lock size={12} /> Direct Estate Reservation
             </div>
-            <h3 className="font-serif text-3xl text-foreground mb-2">Scan & Pay via UPI</h3>
-            <p className="text-muted-foreground text-sm max-w-md mx-auto">
-              Pay ₹{subtotal.toLocaleString()} directly to the estate. After initiating payment, submit your UTR number to request booking verification.
+            <h3 className="font-serif text-2xl sm:text-3xl text-foreground mb-2">Direct Estate Payment</h3>
+            <p className="text-muted-foreground text-sm font-light leading-relaxed">
+              Transfer the exact reservation deposit of ₹{subtotal.toLocaleString()} directly to the estate via UPI. Your dates are submitted for immediate verification in the next step.
             </p>
           </div>
 
-          <div className="bg-background border border-primary/30 rounded-2xl p-6 md:p-8 max-w-md mx-auto shadow-2xl relative">
-            <div className="font-mono text-muted-foreground font-bold text-xs uppercase tracking-widest mb-1">Total Payable Amount</div>
-            <div className="font-mono font-bold text-4xl text-primary mb-6">₹{subtotal.toLocaleString()}</div>
+          <div className="bg-background/90 border border-border rounded-[4px] p-6 sm:p-8 max-w-md mx-auto shadow-xl relative">
+            {/* Payee Strip */}
+            <div className="flex items-center justify-between pb-4 border-b border-border/80 text-xs font-mono">
+              <span className="text-muted-foreground uppercase tracking-wider">Payee</span>
+              <span className="text-foreground font-semibold flex items-center gap-1.5">
+                <ShieldCheck size={14} className="text-primary" /> Off The Trail
+              </span>
+            </div>
+
+            {/* Total Payable Amount */}
+            <div className="py-5 text-center border-b border-border/80">
+              <div className="text-[11px] font-mono text-muted-foreground uppercase tracking-widest mb-1">Total Payable Amount</div>
+              <div className="font-mono font-bold text-3xl sm:text-4xl text-primary tabular-nums">₹{subtotal.toLocaleString()}</div>
+              <div className="text-xs text-muted-foreground mt-1 font-sans font-light">
+                {nights} night{nights > 1 ? "s" : ""} · {totalRooms} room{totalRooms > 1 ? "s" : ""} (Hot Breakfast Included)
+              </div>
+            </div>
             
             {/* QR Code Container */}
-            <div className="relative w-52 h-52 mx-auto bg-white p-3 rounded-xl mb-6 shadow-inner">
-               <Image src={qrImagePath} alt="Payment QR Code" fill className="object-contain p-2" priority />
+            <div className="py-6 text-center">
+              <div className="relative w-52 h-52 mx-auto bg-white p-3 rounded-[3px] shadow-sm border border-neutral-200">
+                <Image src={qrImagePath} alt="Off The Trail UPI QR Code" fill className="object-contain p-2" priority />
+              </div>
+              <p className="text-[11px] font-mono text-muted-foreground mt-3">
+                Scan using Google Pay, PhonePe, Paytm, or any UPI app
+              </p>
             </div>
 
             {/* Direct UPI ID with Copy Option */}
-            <div className="bg-card border border-border rounded-xl p-3 mb-4 flex items-center justify-between gap-3 text-left">
+            <div className="bg-card/70 border border-border rounded-[3px] p-3 mb-4 flex items-center justify-between gap-3 text-left">
               <div>
-                <div className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest">Official UPI ID</div>
-                <div className="font-mono text-sm text-foreground font-bold">offthetrail@upi</div>
+                <div className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest">Verified UPI ID</div>
+                <div className="font-mono text-sm text-foreground font-bold tracking-wide">offthetrail@upi</div>
               </div>
               <button
                 type="button"
                 onClick={handleCopyUpi}
-                className="px-3 py-1.5 rounded bg-background border border-border hover:border-primary/50 text-xs font-mono font-bold text-foreground flex items-center gap-1.5 transition-colors"
+                aria-label="Copy UPI ID offthetrail@upi"
+                className="px-3 py-1.5 rounded-[2px] bg-background border border-border hover:border-primary/50 text-xs font-mono font-semibold text-foreground flex items-center gap-1.5 transition-colors"
               >
                 {copiedUpi ? <Check size={13} className="text-primary" /> : <Copy size={13} />}
-                <span>{copiedUpi ? "Copied" : "Copy"}</span>
+                <span aria-live="polite">{copiedUpi ? "Copied" : "Copy"}</span>
               </button>
             </div>
 
             {/* Mobile UPI Deep-Link Intent */}
             <div className="block sm:hidden mb-4">
               <a
-                href={`upi://pay?pa=offthetrail@upi&pn=Dalhousie%20Estate&am=${subtotal}&cu=INR`}
-                className="w-full py-2.5 px-4 bg-primary/20 hover:bg-primary/30 border border-primary/40 text-primary rounded-lg font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-colors"
+                href={`upi://pay?pa=offthetrail@upi&pn=Off%20The%20Trail&am=${subtotal}&cu=INR&tn=Dalhousie%20Estate%20Stay`}
+                className="w-full py-2.5 px-4 bg-primary/10 hover:bg-primary/20 border border-primary/30 text-primary rounded-[3px] font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-colors"
               >
-                <ExternalLink size={14} /> Pay via Installed UPI App
+                <ExternalLink size={14} /> Open Installed UPI App
               </a>
             </div>
 
-            <div className="bg-card text-foreground text-xs p-4 rounded-lg text-left border border-border space-y-2">
-              <div className="flex items-start gap-2">
-                <span className="font-mono font-bold text-primary">1.</span>
-                <span className="opacity-90">Scan QR code or use UPI ID in Google Pay, PhonePe, or Paytm.</span>
+            {/* Restrained Step-by-Step Instructions */}
+            <div className="bg-card/40 text-foreground text-xs p-4 rounded-[3px] text-left border border-border/80 space-y-2 font-sans font-light">
+              <div className="flex items-start gap-2.5">
+                <span className="font-mono font-bold text-primary shrink-0">01.</span>
+                <span className="leading-relaxed">Scan the QR code or transfer to UPI ID <strong className="font-mono text-foreground font-medium">offthetrail@upi</strong>.</span>
               </div>
-              <div className="flex items-start gap-2">
-                <span className="font-mono font-bold text-primary">2.</span>
-                <span className="opacity-90">Enter exactly <strong className="font-mono text-primary font-bold">₹{subtotal.toLocaleString()}</strong> and take a screenshot of the payment receipt.</span>
+              <div className="flex items-start gap-2.5">
+                <span className="font-mono font-bold text-primary shrink-0">02.</span>
+                <span className="leading-relaxed">Verify recipient is <strong className="font-sans text-foreground font-medium">Off The Trail</strong> and transfer <strong className="font-mono text-primary font-bold">₹{subtotal.toLocaleString()}</strong>.</span>
               </div>
-              <div className="flex items-start gap-2">
-                <span className="font-mono font-bold text-primary">3.</span>
-                <span className="opacity-90">Copy the 12-digit UPI Reference / UTR Number.</span>
+              <div className="flex items-start gap-2.5">
+                <span className="font-mono font-bold text-primary shrink-0">03.</span>
+                <span className="leading-relaxed">Note your transaction reference / UTR number from your payment receipt for the next step.</span>
               </div>
             </div>
           </div>
 
           <div className="pt-4 flex flex-col sm:flex-row justify-between items-center gap-4 max-w-md mx-auto">
-             <button 
-               onClick={() => setStep(2)} 
-               className="text-muted-foreground text-xs font-mono font-bold uppercase tracking-widest hover:text-foreground transition-colors"
-             >
-               Back to Details
-             </button>
-             <button 
+            <button 
+              type="button"
+              onClick={() => setStep(2)} 
+              className="text-muted-foreground text-xs font-mono font-bold uppercase tracking-widest hover:text-foreground transition-colors"
+            >
+              Back to Details
+            </button>
+            <button 
+              type="button"
               onClick={() => setStep(4)}
               className="w-full sm:w-auto bg-primary hover:bg-[#D4A35B] active:scale-[0.98] text-primary-foreground px-8 py-3.5 rounded-[3px] font-sans font-semibold uppercase tracking-widest text-xs transition-all flex items-center justify-center gap-2 shadow-lg"
             >
-              I Have Completed Payment <ArrowRight size={16} />
+              I Have Transferred ₹{subtotal.toLocaleString()} <ArrowRight size={16} />
             </button>
           </div>
         </div>
       )}
 
-      {/* Step 4: Confirm */}
+      {/* Step 4: Verification & WhatsApp Handoff */}
       {step === 4 && (
         <div className="space-y-8 animate-fade-in text-center max-w-xl mx-auto">
-          <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 border border-primary/20">
-            <CheckCircle2 className="text-primary" size={32} />
-          </div>
-          
           <div>
-            <h3 className="font-serif text-3xl text-foreground mb-2">Submit Booking Request</h3>
-            <p className="text-muted-foreground text-sm">
-              Enter your 12-digit UPI UTR number and share your payment receipt on WhatsApp. The estate manager verifies the transaction, checks final room allocation, and issues your confirmed booking voucher.
+            <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 border border-primary/20">
+              <Clock className="text-primary" size={22} />
+            </div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-[2px] bg-secondary/80 text-foreground text-[11px] font-mono uppercase tracking-wider mb-3 border border-border">
+              <span>Step 4 of 4 · Verification Request</span>
+            </div>
+            <h3 className="font-serif text-2xl sm:text-3xl text-foreground mb-2">Payment Verification Request</h3>
+            <p className="text-muted-foreground text-sm font-light leading-relaxed">
+              Enter your transaction reference below and share your payment receipt on WhatsApp. The estate manager verifies the transfer and issues your confirmed booking voucher.
             </p>
           </div>
 
-          <div className="text-left bg-background p-6 rounded-[3px] border border-border">
+          {/* Active Reservation Summary */}
+          <div className="bg-background/80 border border-border rounded-[3px] p-5 text-left">
+            <div className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest mb-3 pb-2 border-b border-border/80 flex items-center justify-between">
+              <span>Reservation Summary</span>
+              <span className="text-primary font-bold">Pending Owner Verification</span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+              <div>
+                <span className="text-muted-foreground block font-mono text-[10px] uppercase">Guest</span>
+                <span className="text-foreground font-medium">{name} ({phone})</span>
+              </div>
+              <div>
+                <span className="text-muted-foreground block font-mono text-[10px] uppercase">Stay Dates</span>
+                <span className="text-foreground font-medium">{checkIn} to {checkOut} ({nights} night{nights > 1 ? "s" : ""})</span>
+              </div>
+              <div>
+                <span className="text-muted-foreground block font-mono text-[10px] uppercase">Rooms</span>
+                <span className="text-foreground font-medium">{selectedRoomsSummary}</span>
+              </div>
+              <div>
+                <span className="text-muted-foreground block font-mono text-[10px] uppercase">Deposit Transferred</span>
+                <span className="text-primary font-mono font-bold text-sm">₹{subtotal.toLocaleString()}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Reference Input */}
+          <div className="text-left bg-background/80 p-5 sm:p-6 rounded-[3px] border border-border">
             <label htmlFor="booking-utr" className="block text-xs font-mono text-muted-foreground font-bold mb-2 uppercase tracking-widest">
-              12-Digit UPI UTR / Transaction ID *
+              UPI Reference / UTR / Transaction ID *
             </label>
             <input 
               id="booking-utr"
               type="text" 
               value={transactionId}
               onChange={(e) => setTransactionId(e.target.value)}
-              placeholder="e.g. 4289XXXXXXXX (from payment receipt)"
-              className="w-full bg-card border border-border rounded-[3px] px-4 py-3 text-foreground font-mono focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-colors"
+              placeholder="e.g. 4289XXXXXXXX or bank transaction ref"
+              className="w-full bg-card border border-border rounded-[3px] px-4 py-3 text-foreground font-mono focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-colors text-sm"
             />
             <p className="text-[11px] text-muted-foreground mt-2 font-mono">
-              Found on your Google Pay / PhonePe / Paytm payment success screen.
+              Found on your Google Pay, PhonePe, Paytm, BHIM, or banking payment receipt.
             </p>
           </div>
 
-          <div className="bg-card border border-border rounded-[3px] p-5 text-left">
-            <div className="flex gap-4">
+          {/* Clear Operational Policy Notice */}
+          <div className="bg-card/70 border border-border rounded-[3px] p-5 text-left">
+            <div className="flex gap-3.5">
               <div className="shrink-0 mt-0.5">
-                <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center border border-primary/50">
-                  <span className="text-primary text-xs font-mono font-bold">!</span>
+                <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center border border-primary/40 text-primary text-[11px] font-mono font-bold">
+                  i
                 </div>
               </div>
-              <div className="text-sm">
-                <p className="text-foreground font-semibold mb-1">Payment Verification & Confirmation Process</p>
+              <div className="text-xs space-y-1">
+                <p className="text-foreground font-semibold">Verification & Voucher Issuance</p>
                 <p className="text-muted-foreground font-light leading-relaxed">
-                  Submitting your payment details sends a direct booking request to the estate manager. Your reservation is officially confirmed once payment and room allocation are verified by the estate, and your booking voucher will be sent to your WhatsApp number.
+                  Your reservation is officially confirmed once payment is verified against the estate bank account. The manager will issue your booking voucher and driving/check-in details via WhatsApp.
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="pt-4 flex flex-col items-center gap-3">
-             <a 
+          {/* Submission and Dual-Platform Fallback */}
+          <div className="pt-2 flex flex-col items-center gap-3">
+            <a 
               href={generateWhatsAppLink()}
               target="_blank"
               rel="noopener noreferrer"
-              className={`w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-[#25D366] hover:bg-[#20bd5a] active:scale-[0.98] text-white px-8 py-4 rounded-[3px] font-sans font-semibold uppercase tracking-widest text-xs transition-all shadow-xl ${transactionId.trim().length < 4 ? 'opacity-40 pointer-events-none' : ''}`}
+              onClick={handleClearDraft}
+              className={`w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-[#25D366] hover:bg-[#20bd5a] active:scale-[0.98] text-white px-8 py-4 rounded-[3px] font-sans font-semibold uppercase tracking-widest text-xs transition-all shadow-xl ${transactionId.trim().length < 6 ? 'opacity-40 pointer-events-none' : ''}`}
             >
-              <span>Submit Request via WhatsApp</span>
+              <MessageSquare size={16} />
+              <span>Send Verification on WhatsApp</span>
               <ArrowRight size={16} />
             </a>
 
-            {transactionId.trim().length < 4 && (
+            {transactionId.trim().length < 6 && (
               <p className="text-xs text-muted-foreground font-mono">
-                Please enter your Transaction ID above to activate the WhatsApp button.
+                Please enter your Transaction ID or UTR above (at least 6 characters) to enable WhatsApp submission.
               </p>
             )}
 
+            {/* Desktop / Offline Fallback Options */}
+            <div className="mt-6 pt-6 border-t border-border/80 w-full flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-muted-foreground">
+              <button
+                type="button"
+                onClick={handleCopySummary}
+                disabled={transactionId.trim().length < 6}
+                className="inline-flex items-center gap-2 px-3.5 py-2 bg-background border border-border hover:border-primary/50 text-foreground rounded-[2px] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              >
+                {copiedSummary ? <Check size={13} className="text-primary" /> : <Copy size={13} />}
+                <span>{copiedSummary ? "Booking Summary Copied" : "Copy Booking Summary"}</span>
+              </button>
+
+              <div className="text-center sm:text-right">
+                <span className="block text-[11px]">Direct Concierge WhatsApp / Call</span>
+                <a href={`tel:+${ownerWhatsApp.replace(/[^0-9]/g, "")}`} className="text-primary font-bold hover:underline">
+                  +{ownerWhatsApp.replace(/[^0-9]/g, "").replace(/(\d{2})(\d{5})(\d{5})/, "$1 $2 $3")}
+                </a>
+              </div>
+            </div>
+
             <button
+              type="button"
               onClick={() => setStep(3)}
-              className="text-xs font-mono text-muted-foreground hover:text-foreground mt-2 uppercase tracking-widest"
+              className="text-xs font-mono text-muted-foreground hover:text-foreground mt-4 uppercase tracking-widest"
             >
-              Back to QR Code
+              Back to Payment Screen
             </button>
           </div>
         </div>

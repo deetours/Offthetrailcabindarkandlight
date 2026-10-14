@@ -8,8 +8,14 @@ export async function POST(req: Request) {
     const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
     const supabase = createClient(supabaseUrl, supabaseKey)
 
+    let body: any = {}
     try {
-        const body = await req.json()
+        body = await req.json()
+    } catch {
+        return NextResponse.json({ error: 'Invalid or missing JSON payload' }, { status: 400 })
+    }
+
+    try {
         const { phone_number, full_name, email, source, notes } = body
 
         if (!phone_number && !email) {
