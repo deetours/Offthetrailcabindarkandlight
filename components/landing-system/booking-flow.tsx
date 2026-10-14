@@ -6,7 +6,6 @@ import Image from "next/image"
 import { 
   ArrowRight, 
   Calendar, 
-  CheckCircle2, 
   ShieldCheck, 
   Copy, 
   Check, 
