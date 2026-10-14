@@ -85,11 +85,11 @@ const dalhousieGallery: GalleryPhotoDef[] = [
 const dalhousieAmenities: AmenityDef[] = [
   {
     id: "heritage",
-    title: "Heritage Stone & Timber",
-    description: "Built with dressed mountain stone and aged deodar wood, preserving century-old colonial craftsmanship at 6,800 ft.",
+    title: "Mountain Stone & Ridge Terrace",
+    description: "Natural stone architecture and open terrace seating at 6,800 ft, framed by deodar pines for slow morning tea and sunset views.",
     featured: true,
     imageSrc: "/images/offthetrail7.jpeg",
-    iconName: "Castle" as const
+    iconName: "Mountain" as const
   },
   {
     id: "wifi",
