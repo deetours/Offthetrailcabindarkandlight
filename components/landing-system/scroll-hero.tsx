@@ -32,11 +32,11 @@ export function ScrollHero({
   subhead = "Ten rooms. A slower pace. A quieter side of the mountains.",
   startingPrice,
   imageSrc, 
-  ctaText = "Check availability", 
+  ctaText = "Plan your stay", 
   ctaHref = "#booking-flow", 
   secondaryCtaText = "Explore the rooms", 
   secondaryCtaHref = "#rooms", 
-  conciergeWhatsApp = "919816315898",
+  conciergeWhatsApp = process.env.NEXT_PUBLIC_OFFTHETRAIL_WA_NUMBER || "919816315898",
   conciergePhone = "+91 98163 15898"
 }: ScrollHeroProps) {
   const activeEyebrow = locationEyebrow || eyebrow || "01 / Dalhousie, Himachal Pradesh"
@@ -112,7 +112,7 @@ export function ScrollHero({
           </Link>
 
           <a 
-            href={`https://wa.me/${conciergeWhatsApp}?text=Hello%20OffTheTrail%2C%20I%20have%20an%20inquiry%20about%20${encodeURIComponent(propertyName)}.`}
+            href={`https://wa.me/${conciergeWhatsApp.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Hello OffTheTrail, I have an inquiry about ${propertyName}.`)}`}
             target="_blank"
             rel="noopener noreferrer"
             className="font-sans text-xs uppercase tracking-[0.2em] text-white/70 hover:text-primary transition-colors flex items-center gap-1.5 py-1 px-1 group"

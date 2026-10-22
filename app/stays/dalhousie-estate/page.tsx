@@ -153,7 +153,7 @@ const dalhousieFaqs: FaqItemDef[] = [
   },
   {
     question: "How does payment and booking confirmation work?",
-    answer: "We offer direct, commission-free reservations. Once you choose your dates and room category, you can submit your guest details and pay via UPI using our verified QR code or UPI ID (offthetrail@upi). Submit your UTR number and payment receipt on WhatsApp (+91 98163 15898). The estate manager verifies the transaction, checks final room allocation, and issues your confirmed booking voucher."
+    answer: "We offer direct, commission-free reservations. Select your dates and room category in our stay planner, then click 'Continue on WhatsApp'. Your enquiry goes directly to our team on WhatsApp (+91 98163 15898), where our concierge verifies availability, answers questions, coordinates payment details, and issues your confirmed booking voucher."
   },
   {
     question: "What is your cancellation and refund policy?",
@@ -204,11 +204,11 @@ export default function DalhousieEstatePage() {
         subhead="Ten rooms. A slower pace. A quieter side of the mountains."
         startingPrice="From ₹3,200/night"
         imageSrc="/images/offthetrail7.jpeg"
-        ctaText="Check availability"
+        ctaText="Plan your stay"
         ctaHref="#booking-flow"
         secondaryCtaText="Explore the rooms"
         secondaryCtaHref="#rooms"
-        conciergeWhatsApp="919816315898"
+        conciergeWhatsApp={process.env.NEXT_PUBLIC_OFFTHETRAIL_WA_NUMBER || "919816315898"}
         conciergePhone="+91 98163 15898"
       />
 
@@ -264,7 +264,7 @@ export default function DalhousieEstatePage() {
         trustCues={dalhousieTrustCues}
         host={dalhousieHost}
         qrImagePath="/images/qr-code.jpeg"
-        ownerWhatsApp="+919816315898"
+        ownerWhatsApp={process.env.NEXT_PUBLIC_OFFTHETRAIL_WA_NUMBER || "919816315898"}
       />
 
       {/* Chapter V: Photo Gallery */}
@@ -299,7 +299,7 @@ export default function DalhousieEstatePage() {
         headline="Frequently asked questions."
         subhead="Clear, honest answers regarding arrival, dining, heating, and reservations."
         items={dalhousieFaqs}
-        conciergeWhatsApp="919816315898"
+        conciergeWhatsApp={process.env.NEXT_PUBLIC_OFFTHETRAIL_WA_NUMBER || "919816315898"}
       />
 
       <footer className="py-12 px-6 md:px-12 lg:px-16 bg-background border-t border-border flex flex-col items-center justify-center text-center space-y-3">
@@ -317,7 +317,7 @@ export default function DalhousieEstatePage() {
       <MobileStickyCta 
         startingPrice="₹3,200/night"
         targetElementId="booking-flow"
-        ctaText="Check Availability"
+        ctaText="Plan your stay"
       />
     </main>
   )

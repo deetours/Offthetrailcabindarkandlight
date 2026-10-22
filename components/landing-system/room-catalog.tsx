@@ -152,9 +152,10 @@ export function RoomCatalog({
                   <button
                     type="button"
                     onClick={() => handleSelect(room.id)}
+                    aria-label={`Enquire about ${room.name}`}
                     className="w-full inline-flex items-center justify-center gap-2 bg-surface-subtle hover:bg-primary active:scale-[0.98] text-foreground hover:text-primary-foreground border border-border hover:border-primary py-3.5 px-4 rounded-[3px] font-sans font-semibold uppercase tracking-widest text-xs transition-all duration-200 group/btn shadow-sm"
                   >
-                    <span>Select this room</span>
+                    <span>Enquire about this room</span>
                     <ArrowRight size={14} className="transition-transform group-hover/btn:translate-x-1" />
                   </button>
                 </div>

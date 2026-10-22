@@ -52,7 +52,7 @@ test.describe("Main-Domain Landing Page and WhatsApp Configuration Verification"
     expect(conciergeHref).toContain("wa.me/919816315898")
 
     // Also verify FAQ WhatsApp button uses 919816315898
-    const faqConciergeBtn = page.getByRole("link", { name: /ask concierge on whatsapp/i })
+    const faqConciergeBtn = page.getByRole("link", { name: "Ask us on WhatsApp", exact: true })
     await expect(faqConciergeBtn).toBeVisible()
     const faqHref = await faqConciergeBtn.getAttribute("href")
     expect(faqHref).toContain("wa.me/919816315898")

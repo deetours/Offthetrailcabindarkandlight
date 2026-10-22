@@ -195,7 +195,7 @@ const faqJsonLd = {
       name: "How does booking work at Off The Trail Dalhousie?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Book directly on offthetrail.in/stays/dalhousie for the lowest rate. You can also enquire via WhatsApp at +91 98163 15898. Payment via UPI is accepted — share your UTR number for confirmation.",
+        text: "Plan your stay directly on offthetrail.in/stays/dalhousie and continue directly on WhatsApp at +91 98163 15898. Our concierge team confirms availability, coordinates direct reservations, and issues your booking confirmation voucher.",
       },
     },
     {

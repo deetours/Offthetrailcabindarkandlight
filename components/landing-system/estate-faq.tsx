@@ -27,7 +27,7 @@ export function EstateFaq({
   subhead,
   items, 
   config,
-  conciergeWhatsApp = "919816315898"
+  conciergeWhatsApp = process.env.NEXT_PUBLIC_OFFTHETRAIL_WA_NUMBER || "919816315898"
 }: EstateFaqProps) {
   const faqList: FaqItemDef[] = items || (config?.faq ? config.faq.map(f => ({ question: f.question, answer: f.answer })) : [])
   if (faqList.length === 0) return null
@@ -75,7 +75,7 @@ export function EstateFaq({
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-xs font-sans font-semibold uppercase tracking-widest text-primary hover:text-white transition-colors"
             >
-              <span>Ask Concierge on WhatsApp</span>
+              <span>Ask us on WhatsApp</span>
               <ArrowUpRight size={14} />
             </a>
           </div>
