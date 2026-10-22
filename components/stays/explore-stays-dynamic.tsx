@@ -141,7 +141,7 @@ export function ExploreStaysDynamic({ initialStays = [] }: { initialStays?: any[
             </div>
             <div className="h-10 w-px bg-border dark:bg-white/5" />
             <div>
-              <span className="font-serif text-4xl text-foreground">NE</span>
+              <span className="font-serif text-4xl text-foreground">HP</span>
               <p className="text-[9px] uppercase tracking-[0.4em] text-muted-foreground/30 font-bold mt-1">India&apos;s finest</p>
             </div>
             <div className="h-10 w-px bg-border dark:bg-white/5" />
