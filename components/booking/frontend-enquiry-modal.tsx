@@ -6,6 +6,7 @@ import { ArrowLeft, Send, ArrowRight } from "lucide-react"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet"
 import { OFFTHETRAIL_DATA } from "@/lib/frontend-data"
 import { useRouter } from "next/navigation"
+import { trackEvent } from "@/lib/analytics"
 
 export type EnquiryTab = "stay" | "adventure"
 
@@ -81,6 +82,12 @@ export function FrontendEnquiryModal({ isOpen, onClose, initialTab = "stay", ini
   }
 
   const handleBookNow = () => {
+    trackEvent({
+      action: "booking_engine_click",
+      category: "conversion",
+      property: stayLocation,
+      room_name: room,
+    })
     if (!stayLocation) {
       setErrors({ stayLocation: "Please select a location to book." })
       return
@@ -95,6 +102,7 @@ export function FrontendEnquiryModal({ isOpen, onClose, initialTab = "stay", ini
   const handleStayEnquirySubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (!validateEnquiry()) return
+    trackEvent({ action: "generate_lead", category: "conversion", lead_source: "stay_enquiry_modal" })
 
     const message = `Stay Enquiry\nLocation: ${stayLocation}\nRoom: ${room || 'Any'}\nDates: ${stayDates}\nGuests: ${guests}\nName: ${name}\nPhone: ${phone}${email ? '\nEmail: ' + email : ''}${notes ? '\nNotes: ' + notes : ''}`
     const link = `https://wa.me/${OFFTHETRAIL_DATA.whatsapp_number}?text=${encodeURIComponent(message)}`
@@ -105,6 +113,7 @@ export function FrontendEnquiryModal({ isOpen, onClose, initialTab = "stay", ini
   const handleAdventureSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (!validateAdventure()) return
+    trackEvent({ action: "generate_lead", category: "conversion", lead_source: "adventure_enquiry_modal" })
 
     const message = `Adventure Enquiry\nDestination: ${advDestination}\nType: ${advType}\nDates: ${advDates}\nTravellers: ${advTravellers}\nName: ${name}\nPhone: ${phone}${email ? '\nEmail: ' + email : ''}${notes ? '\nNotes: ' + notes : ''}`
     const link = `https://wa.me/${OFFTHETRAIL_DATA.whatsapp_number}?text=${encodeURIComponent(message)}`

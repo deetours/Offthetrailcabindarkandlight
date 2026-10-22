@@ -4,6 +4,19 @@ import { useState, useEffect } from "react"
 import { usePathname } from "next/navigation"
 import { X, MessageCircle } from "lucide-react"
 import { motion } from "framer-motion"
+import { trackEvent } from "@/lib/analytics"
+
+export const DEFAULT_OFFTHETRAIL_WA_NUMBER = "919816315898"
+
+export function getOffTheTrailWaNumber(): string {
+  const raw = process.env.NEXT_PUBLIC_OFFTHETRAIL_WA_NUMBER || DEFAULT_OFFTHETRAIL_WA_NUMBER
+  return raw.replace(/[^0-9]/g, "")
+}
+
+export function buildWaLink(message: string, recipientNumber?: string): string {
+  const number = (recipientNumber ? recipientNumber.replace(/[^0-9]/g, "") : "") || getOffTheTrailWaNumber()
+  return `https://wa.me/${number}?text=${encodeURIComponent(message)}`
+}
 
 export function WhatsAppPopup() {
   const [isOpen, setIsOpen] = useState(false)
@@ -57,23 +70,37 @@ export function WhatsAppPopup() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (phoneNumber.trim()) {
-      // 1. Log the lead in our database (don't block the WhatsApp redirect)
+    const trimmedPhone = phoneNumber.trim()
+
+    // 1. If phone number entered, log lead in database (fire-and-forget)
+    if (trimmedPhone) {
       fetch('/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          phone_number: phoneNumber,
+          phone_number: trimmedPhone,
           source: 'whatsapp_popup'
         })
       }).catch(err => console.warn('Lead logging failed:', err))
 
-      // 2. WhatsApp link redirect
-      const message = `I've been wandering through your collection. I'm ready to find a place where I actually belong. Could you guide me?`
-      const whatsappLink = `https://wa.me/917629877144?text=${encodeURIComponent(message)}`
-      window.open(whatsappLink, "_blank")
-      setIsOpen(false)
+      trackEvent({
+        action: 'generate_lead',
+        category: 'conversion',
+        lead_source: 'whatsapp_popup',
+      })
     }
+
+    // 2. WhatsApp link redirect (opens regardless of phone input)
+    trackEvent({
+      action: 'whatsapp_click',
+      category: 'lead',
+      context: 'popup',
+    })
+
+    const message = `I've been wandering through your collection. I'm ready to find a place where I actually belong. Could you guide me?`
+    const whatsappLink = buildWaLink(message)
+    window.open(whatsappLink, "_blank")
+    setIsOpen(false)
   }
 
 

@@ -418,6 +418,7 @@ export function StayDetails({ stay }: StayDetailsProps) {
         isVisible={showWhatsAppPrompt}
         onDismiss={() => setShowWhatsAppPrompt(false)}
         propertyName={stay.name}
+        roomSelection={stay.roomTypes[selectedRoom]?.name}
       />
     </main>
   )

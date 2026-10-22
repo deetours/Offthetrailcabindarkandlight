@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
+import { trackEvent } from "@/lib/analytics"
 
 interface MobileStickyCtaProps {
   startingPrice: string
@@ -42,6 +43,12 @@ export function MobileStickyCta({ startingPrice, targetElementId, ctaText }: Mob
   }, [targetElementId])
 
   const scrollToTarget = () => {
+    trackEvent({
+      action: 'booking_cta_click',
+      category: 'engagement',
+      label: ctaText,
+      property: 'Dalhousie Estate',
+    })
     const target = document.getElementById(targetElementId)
     if (target) {
       target.scrollIntoView({ behavior: "smooth" })

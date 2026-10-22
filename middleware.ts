@@ -15,11 +15,10 @@ export async function middleware(request: NextRequest) {
     const isJibhi = hostname === 'jibhi.offthetrail.in' || hostname.startsWith('jibhi.localhost')
 
     // If it's a subdomain, rewrite to the specific folder IMMEDIATELY and skip Supabase
-    if (isDalhousie && !request.nextUrl.pathname.startsWith('/stays/dalhousie-estate')) {
+    if (isDalhousie && !request.nextUrl.pathname.startsWith('/stays/dalhousie')) {
         const url = request.nextUrl.clone()
-        // If they visit the root of the subdomain, rewrite to /stays/dalhousie-estate
-        // If they visit /foo on the subdomain, rewrite to /stays/dalhousie-estate/foo
-        url.pathname = `/stays/dalhousie-estate${request.nextUrl.pathname === '/' ? '' : request.nextUrl.pathname}`
+        // Rewrite subdomain root to canonical /stays/dalhousie route
+        url.pathname = `/stays/dalhousie${request.nextUrl.pathname === '/' ? '' : request.nextUrl.pathname}`
         return NextResponse.rewrite(url)
     }
 

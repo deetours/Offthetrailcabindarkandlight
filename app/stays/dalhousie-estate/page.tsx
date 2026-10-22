@@ -16,12 +16,12 @@ export const metadata: Metadata = {
   title: "Off The Trail Dalhousie Estate | Boutique Stay in Dalhousie",
   description: "A 10-room heritage retreat on Bakrota Ridge, Dalhousie. Pine forest views, private balconies, and slow mountain mornings. From ₹3,200/night.",
   alternates: {
-    canonical: "https://dalhousie.offthetrail.in",
+    canonical: "https://offthetrail.in/stays/dalhousie",
   },
   openGraph: {
     title: "Off The Trail Dalhousie Estate",
     description: "A 10-room heritage retreat on Bakrota Ridge, Dalhousie. Pine forest views, private balconies, and slow mountain mornings. From ₹3,200/night.",
-    url: "https://dalhousie.offthetrail.in",
+    url: "https://offthetrail.in/stays/dalhousie",
     siteName: "Off The Trail",
     images: [
       {
@@ -302,8 +302,13 @@ export default function DalhousieEstatePage() {
         conciergeWhatsApp="919816315898"
       />
 
-      <footer className="py-12 px-6 md:px-12 lg:px-16 bg-background border-t border-border flex flex-col items-center justify-center text-center">
-        <div className="font-serif text-2xl text-foreground font-bold tracking-tight mb-4">OffTheTrail</div>
+      <footer className="py-12 px-6 md:px-12 lg:px-16 bg-background border-t border-border flex flex-col items-center justify-center text-center space-y-3">
+        <div className="font-serif text-2xl text-foreground font-bold tracking-tight">OffTheTrail</div>
+        <address className="not-italic text-xs text-muted-foreground">
+          <span>Bakrota Ridge, Dalhousie, Himachal Pradesh 176304, India</span>
+          {" · "}
+          <a href="tel:+919816315898" className="hover:text-foreground transition-colors">+91 98163 15898</a>
+        </address>
         <p className="text-muted-foreground text-xs font-mono font-bold uppercase tracking-widest">© {new Date().getFullYear()} OffTheTrail. All rights reserved.</p>
       </footer>
 

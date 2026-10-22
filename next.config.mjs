@@ -68,6 +68,17 @@ const nextConfig = {
         destination: '/trips',
         permanent: true,
       },
+      // Resolve duplicate canonical: /stays/dalhousie-estate → /stays/dalhousie (canonical URL)
+      {
+        source: '/stays/dalhousie-estate',
+        destination: '/stays/dalhousie',
+        permanent: true,
+      },
+      {
+        source: '/stays/dalhousie-estate/:path*',
+        destination: '/stays/dalhousie/:path*',
+        permanent: true,
+      },
     ]
   },
   webpack: (config) => {

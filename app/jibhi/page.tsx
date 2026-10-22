@@ -5,6 +5,7 @@ import { RoomLedger, RoomDef } from "@/components/landing-system/room-ledger"
 import { ArrowRight } from "lucide-react"
 
 export const metadata: Metadata = {
+  robots: { index: false, follow: false },
   title: "Jibhi Canopy Cottages | Coming Soon | Offthetrail",
   description: "A spacious multi-level stay in the canopy. Coming soon.",
 }
@@ -27,7 +28,7 @@ const jibhiRooms: RoomDef[] = [
 ]
 
 export default function JibhiCanopyCottagesPage() {
-  const ownerWhatsApp = "+919999999999"
+  const ownerWhatsApp = "+919816315898"
   const message = `Hello, I'm interested in Jibhi Canopy Cottages. Please notify me when bookings open!`
   const waLink = `https://wa.me/${ownerWhatsApp}?text=${encodeURIComponent(message)}`
 

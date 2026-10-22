@@ -1,6 +1,7 @@
 "use client"
 
 import { useRef } from "react"
+import Image from "next/image"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { SceneIntentSelector } from "./scene-intent-selector"
 
@@ -28,14 +29,22 @@ export function SceneDiscoveryHero({ onOpenModal }: SceneDiscoveryHeroProps) {
       ref={containerRef}
       className="relative flex h-[100svh] w-full items-center justify-center overflow-hidden bg-background"
     >
-      {/* Background Image with Parallax */}
+      {/* Background Image with Parallax
+          Using next/image with priority for LCP optimisation.
+          The `priority` prop adds a <link rel="preload"> to the <head>
+          so this hero image loads before the browser parses the full document. */}
       <motion.div 
         style={{ y, scale }}
         className="absolute inset-0 z-0 h-full w-full"
       >
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('/images/suralbhatori1.jpeg')" }}
+        <Image
+          src="/images/suralbhatori1.jpeg"
+          alt="Mountain landscape — Off The Trail, Dalhousie, Himachal Pradesh"
+          fill
+          priority
+          className="object-cover object-center"
+          sizes="100vw"
+          quality={85}
         />
         <div className="absolute inset-0 bg-black/40 mix-blend-multiply" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-background" />
@@ -58,7 +67,7 @@ export function SceneDiscoveryHero({ onOpenModal }: SceneDiscoveryHeroProps) {
           className="flex flex-col items-center gap-4"
         >
           <span className="text-[10px] font-bold uppercase tracking-editorial-label text-white/60">
-            Himachal Pradesh, India
+            Boutique Hotel · Dalhousie, Himachal Pradesh
           </span>
           <h1 className="font-serif text-[clamp(2.5rem,6vw,5rem)] leading-[1.05] tracking-tight text-white/95 max-w-4xl mx-auto">
             Cabins, café, and curated adventures in the hills.

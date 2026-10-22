@@ -4,18 +4,36 @@ import { AnimatePresence, motion } from "framer-motion"
 import { X } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
+import { buildWaLink } from "@/components/ui/whatsapp-popup"
 
 interface WhatsAppHelpToastProps {
   isVisible: boolean
   onDismiss: () => void
   propertyName: string
+  stayDates?: string
+  roomSelection?: string
+  bookingReference?: string
 }
 
-export function WhatsAppHelpToast({ isVisible, onDismiss, propertyName }: WhatsAppHelpToastProps) {
+export function WhatsAppHelpToast({ 
+  isVisible, 
+  onDismiss, 
+  propertyName,
+  stayDates,
+  roomSelection,
+  bookingReference,
+}: WhatsAppHelpToastProps) {
   const [isHovered, setIsHovered] = useState(false)
   
-  const message = `Hi! I'm looking at ${propertyName} and need some help choosing a room.`
-  const whatsappUrl = `https://wa.me/917629877144?text=${encodeURIComponent(message)}`
+  // Build contextual message without inventing unconfirmed booking details
+  const contextParts: string[] = []
+  if (roomSelection) contextParts.push(`Room: ${roomSelection}`)
+  if (stayDates) contextParts.push(`Dates: ${stayDates}`)
+  if (bookingReference) contextParts.push(`Ref: ${bookingReference}`)
+
+  const contextStr = contextParts.length > 0 ? ` (${contextParts.join(" · ")})` : ""
+  const message = `Hi! I'm looking at ${propertyName}${contextStr} and need some help choosing a room.`
+  const whatsappUrl = buildWaLink(message)
 
   return (
     <AnimatePresence>
