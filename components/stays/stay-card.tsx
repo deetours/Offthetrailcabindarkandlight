@@ -38,7 +38,7 @@ export function StayCard({ stay, index, featured = false }: StayCardProps) {
       transition={{ ...transition, delay: (index % 3) * 0.05 }}
       className="h-full"
     >
-      <Magnetic strength={0.05}>
+      <Magnetic strength={0.05} className="h-full">
         <Link href={`/stays/${stay.id}`} className="group block h-full">
           <div className="relative h-full overflow-hidden rounded-[2.5rem] glass shadow-2xl transition-all duration-700 group-hover:shadow-[0_40px_80px_-15px_rgba(0,0,0,0.5)]">
             {/* Image Layer */}

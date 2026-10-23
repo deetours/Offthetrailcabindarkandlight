@@ -17,11 +17,19 @@ test.describe("Phase 1 Validation: Stays Collection & Room Listing", () => {
     // 3. Dalhousie card
     const dalhousieLink = page.locator("a[href='/stays/dalhousie']")
     await expect(dalhousieLink).toHaveCount(1)
+    await dalhousieLink.scrollIntoViewIfNeeded()
+    await expect(dalhousieLink).toBeVisible()
+
+    // Verify non-zero rendered card dimensions (Bento grid large cell: height > 400px)
+    const dalhousieBox = await dalhousieLink.boundingBox()
+    expect(dalhousieBox).not.toBeNull()
+    expect(dalhousieBox!.height).toBeGreaterThan(400)
+    expect(dalhousieBox!.width).toBeGreaterThan(300)
 
     // Dalhousie title, location and tagline
-    await expect(dalhousieLink.getByRole("heading", { name: "Dalhousie Estate" })).toBeAttached()
-    await expect(dalhousieLink.getByText("Dalhousie, HP")).toBeAttached()
-    await expect(dalhousieLink.getByText("Trade the noise for silence.", { exact: true })).toBeAttached()
+    await expect(dalhousieLink.getByRole("heading", { name: "Dalhousie Estate" })).toBeVisible()
+    await expect(dalhousieLink.getByText("Dalhousie, HP")).toBeVisible()
+    await expect(dalhousieLink.getByText("Trade the noise for silence.", { exact: true })).toBeVisible()
 
     // Dalhousie background image
     const dalhousieImgDiv = dalhousieLink.locator(".bg-cover").first()
@@ -33,13 +41,25 @@ test.describe("Phase 1 Validation: Stays Collection & Room Listing", () => {
     await expect(dalhousieLink.getByText("Ten rooms along Bakrota Ridge. Trade the noise for silence.")).toBeAttached()
 
     // 4. Jibhi card
-    const jibhiCard = page.getByRole("heading", { name: "Jibhi Canopy Cottages" })
-    await expect(jibhiCard).toBeAttached()
     const jibhiLink = page.locator("a[href='/stays/jibhi-canopy']")
     await expect(jibhiLink).toHaveCount(1)
+    await jibhiLink.scrollIntoViewIfNeeded()
+    await expect(jibhiLink).toBeVisible()
+
+    // Verify non-zero rendered card dimensions (Bento grid cell: height > 300px)
+    const jibhiBox = await jibhiLink.boundingBox()
+    expect(jibhiBox).not.toBeNull()
+    expect(jibhiBox!.height).toBeGreaterThan(300)
+    expect(jibhiBox!.width).toBeGreaterThan(300)
+
+    const jibhiCard = jibhiLink.getByRole("heading", { name: "Jibhi Canopy Cottages" })
+    await expect(jibhiCard).toBeVisible()
     const jibhiImgDiv = jibhiLink.locator(".bg-cover").first()
     const jibhiBgStyle = await jibhiImgDiv.getAttribute("style")
     expect(jibhiBgStyle).toContain("/Jibhi.jpg")
+
+    // Take verified screenshot of the rendered cards
+    await page.screenshot({ path: "test-results/stays-rendered.png", fullPage: true })
   })
 
   test("Dalhousie landing page displays existing three room categories and verified rates", async ({ page }) => {
