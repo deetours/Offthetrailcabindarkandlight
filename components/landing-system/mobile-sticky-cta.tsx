@@ -13,8 +13,8 @@ interface MobileStickyCtaProps {
 
 export function MobileStickyCta({
   startingPrice = "₹3,200/night",
-  targetElementId = "booking-flow",
-  ctaText = "Plan your stay",
+  targetElementId = "rooms",
+  ctaText = "Explore rooms & enquire",
 }: MobileStickyCtaProps) {
   const [isVisible, setIsVisible] = useState(false)
   const [liveSelection, setLiveSelection] = useState<{

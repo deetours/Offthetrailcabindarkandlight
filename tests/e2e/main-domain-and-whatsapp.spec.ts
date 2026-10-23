@@ -57,9 +57,13 @@ test.describe("Main-Domain Landing Page and WhatsApp Configuration Verification"
     const faqHref = await faqConciergeBtn.getAttribute("href")
     expect(faqHref).toContain("wa.me/919816315898")
 
-    // 5. Verify Booking Flow is mounted
-    const bookingFlow = page.locator("#booking-flow")
-    await expect(bookingFlow).toBeVisible()
+    // 5. Verify Room Catalogue directly provides WhatsApp enquiry links for rooms
+    const deluxeCard = roomCatalog.locator("article").filter({ hasText: "Deluxe Room" })
+    const deluxeWaLink = deluxeCard.getByRole("link", { name: /enquire on whatsapp/i })
+    await expect(deluxeWaLink).toBeVisible()
+    const deluxeHref = await deluxeWaLink.getAttribute("href")
+    expect(deluxeHref).toContain("wa.me/919816315898")
+    expect(deluxeHref).toContain("Deluxe%20Room")
   })
 
   test("/stays/dalhousie-estate also renders with canonical pointing to main-domain /stays/dalhousie", async ({ page }) => {

@@ -204,10 +204,10 @@ export default function DalhousieEstatePage() {
         subhead="Ten rooms. A slower pace. A quieter side of the mountains."
         startingPrice="From ₹3,200/night"
         imageSrc="/images/offthetrail7.jpeg"
-        ctaText="Plan your stay"
-        ctaHref="#booking-flow"
-        secondaryCtaText="Explore the rooms"
-        secondaryCtaHref="#rooms"
+        ctaText="Explore the rooms"
+        ctaHref="#rooms"
+        secondaryCtaText=""
+        secondaryCtaHref=""
         conciergeWhatsApp={process.env.NEXT_PUBLIC_OFFTHETRAIL_WA_NUMBER || "919816315898"}
         conciergePhone="+91 98163 15898"
       />
@@ -316,8 +316,8 @@ export default function DalhousieEstatePage() {
       <SocialProofToast reviews={dalhousieReviews} />
       <MobileStickyCta 
         startingPrice="₹3,200/night"
-        targetElementId="booking-flow"
-        ctaText="Plan your stay"
+        targetElementId="rooms"
+        ctaText="Explore the rooms"
       />
     </main>
   )

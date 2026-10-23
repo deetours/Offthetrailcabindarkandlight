@@ -15,6 +15,14 @@ export interface EnquiryStayParams {
   source?: string
 }
 
+export interface RoomEnquiryParams {
+  roomName: string
+  propertyName?: string
+  price?: number
+  recipientNumber?: string
+  source?: string
+}
+
 export interface ValidationResult {
   isValid: boolean
   error?: string
@@ -191,5 +199,39 @@ export function buildGeneralPropertyWhatsAppUrl(
 ): string {
   const targetNumber = (recipientNumber ? recipientNumber.replace(/[^0-9]/g, "") : "") || getOffTheTrailWaNumber()
   const message = `Hello OFF THE TRAIL! I have an inquiry about staying at ${propertyName}. Could you help me with a few questions?`
+  return `https://wa.me/${targetNumber}?text=${encodeURIComponent(message)}`
+}
+
+/**
+ * Generates the standardized WhatsApp enquiry message for a specific room category.
+ */
+export function buildRoomEnquiryMessage(params: RoomEnquiryParams): string {
+  const {
+    roomName,
+    propertyName = "Dalhousie Estate",
+    source = "OFF THE TRAIL website",
+  } = params
+
+  return (
+    `Hi OFF THE TRAIL! I'm interested in the ${roomName} at ${propertyName}.\n\n` +
+    `Could you please check the current availability and rates and help me with the next steps?\n\n` +
+    `Property: ${propertyName}\n` +
+    `Room: ${roomName}\n` +
+    `Source: ${source}`
+  )
+}
+
+/**
+ * Compiles the complete WhatsApp click-to-chat URL with the formatted room enquiry message.
+ */
+export function buildRoomEnquiryWhatsAppUrl(
+  params: RoomEnquiryParams,
+  recipientNumber?: string
+): string {
+  const targetNumber =
+    (recipientNumber ? recipientNumber.replace(/[^0-9]/g, "") : "") ||
+    (params.recipientNumber ? params.recipientNumber.replace(/[^0-9]/g, "") : "") ||
+    getOffTheTrailWaNumber()
+  const message = buildRoomEnquiryMessage(params)
   return `https://wa.me/${targetNumber}?text=${encodeURIComponent(message)}`
 }

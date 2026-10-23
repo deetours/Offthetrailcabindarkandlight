@@ -4,12 +4,16 @@ import Image from "next/image"
 import { motion, useReducedMotion } from "framer-motion"
 import { ArrowRight, Check } from "lucide-react"
 import { RoomDef } from "./room-ledger"
+import { buildRoomEnquiryWhatsAppUrl } from "@/lib/whatsapp-enquiry"
+import { trackEvent } from "@/lib/analytics"
 
 interface RoomCatalogProps {
   numeral?: string
   headline?: string
   subhead?: string
   rooms: RoomDef[]
+  propertyName?: string
+  whatsappNumber?: string
   onSelectRoom?: (roomId: string) => void
 }
 
@@ -18,16 +22,20 @@ export function RoomCatalog({
   headline = "Spaces shaped by the ridge.",
   subhead = "Ten secluded rooms across three distinct categories. Natural deodar wood, mountain stonework, and unhurried mornings.",
   rooms,
+  propertyName = "Dalhousie Estate",
+  whatsappNumber,
   onSelectRoom,
 }: RoomCatalogProps) {
   const prefersReducedMotion = useReducedMotion()
 
-  const handleSelect = (roomId: string) => {
-    onSelectRoom?.(roomId)
-    const element = document.getElementById("booking-flow")
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
-    }
+  const handleRoomClick = (room: RoomDef) => {
+    onSelectRoom?.(room.id)
+    trackEvent({
+      action: "whatsapp_click",
+      category: "lead",
+      label: room.name,
+      context: "dalhousie_room_catalog",
+    })
   }
 
   // Feature tags based on verified room descriptions
@@ -147,17 +155,24 @@ export function RoomCatalog({
                   </div>
                 </div>
 
-                {/* Primary Selection Action */}
+                {/* Primary Selection Action: Direct WhatsApp Room Enquiry */}
                 <div className="p-6 pt-0 md:p-7 md:pt-0">
-                  <button
-                    type="button"
-                    onClick={() => handleSelect(room.id)}
-                    aria-label={`Enquire about ${room.name}`}
+                  <a
+                    href={buildRoomEnquiryWhatsAppUrl({
+                      roomName: room.name,
+                      propertyName,
+                      price: room.price,
+                      recipientNumber: whatsappNumber,
+                    })}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => handleRoomClick(room)}
+                    aria-label={`Enquire about ${room.name} on WhatsApp`}
                     className="w-full inline-flex items-center justify-center gap-2 bg-surface-subtle hover:bg-primary active:scale-[0.98] text-foreground hover:text-primary-foreground border border-border hover:border-primary py-3.5 px-4 rounded-[3px] font-sans font-semibold uppercase tracking-widest text-xs transition-all duration-200 group/btn shadow-sm"
                   >
-                    <span>Enquire about this room</span>
+                    <span>Enquire on WhatsApp</span>
                     <ArrowRight size={14} className="transition-transform group-hover/btn:translate-x-1" />
-                  </button>
+                  </a>
                 </div>
               </motion.article>
             )
