@@ -79,6 +79,27 @@ const nextConfig = {
         destination: '/stays/dalhousie/:path*',
         permanent: true,
       },
+      // Resolve Jibhi stay route consistency: /stays/jibhi-canopy & /stays/jibhi → /jibhi
+      {
+        source: '/stays/jibhi-canopy',
+        destination: '/jibhi',
+        permanent: true,
+      },
+      {
+        source: '/stays/jibhi-canopy/:path*',
+        destination: '/jibhi/:path*',
+        permanent: true,
+      },
+      {
+        source: '/stays/jibhi',
+        destination: '/jibhi',
+        permanent: true,
+      },
+      {
+        source: '/stays/jibhi/:path*',
+        destination: '/jibhi/:path*',
+        permanent: true,
+      },
     ]
   },
   webpack: (config) => {

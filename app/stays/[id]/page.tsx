@@ -1,11 +1,26 @@
 import { StayDetails } from "@/components/stays/stay-details"
-import { notFound } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
 import { createSupabaseServerClient } from "@/lib/supabase/server"
 
 export const revalidate = 0
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
+
+  if (id === 'jibhi' || id === 'jibhi-canopy') {
+    return {
+      title: "Jibhi Canopy Cottages | Coming Soon | Offthetrail",
+      description: "A spacious multi-level stay in the canopy. Coming soon.",
+    }
+  }
+
+  if (id === 'dalhousie' || id === 'dalhousie-estate') {
+    return {
+      title: "Off The Trail Dalhousie Estate | Boutique Hotel in Dalhousie, Himachal Pradesh",
+      description: "A 10-room boutique mountain retreat on Bakrota Ridge, Dalhousie.",
+    }
+  }
+
   try {
     const supabase = await createSupabaseServerClient()
     const { data: stay } = await supabase
@@ -26,6 +41,14 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 
 export default async function StayPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
+
+  if (id === 'jibhi' || id === 'jibhi-canopy') {
+    redirect('/jibhi')
+  }
+
+  if (id === 'dalhousie' || id === 'dalhousie-estate') {
+    redirect('/stays/dalhousie')
+  }
 
   const supabase = await createSupabaseServerClient()
   const { data: stay, error } = await supabase

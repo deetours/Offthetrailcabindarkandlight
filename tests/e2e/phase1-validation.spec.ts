@@ -84,4 +84,29 @@ test.describe("Phase 1 Validation: Stays Collection & Room Listing", () => {
     await expect(roomsSection.getByText("₹4,000")).toBeVisible()
     await expect(roomsSection.getByText("₹3,200")).toBeVisible()
   })
+
+  test("Batch 2: Jibhi route consistency redirects /stays/jibhi-canopy and /stays/jibhi to /jibhi without 404s", async ({ page }) => {
+    test.slow()
+
+    // 1. Direct navigation to /stays/jibhi-canopy redirects to /jibhi
+    const response = await page.goto("/stays/jibhi-canopy", { timeout: 60000 })
+    expect(response?.status()).toBeLessThan(400)
+    await expect(page).toHaveURL(/\/jibhi$/)
+    await expect(page.getByRole("heading", { name: "Jibhi Canopy Cottages" })).toBeVisible()
+    await expect(page.getByText("Coming Soon")).toBeVisible()
+    await expect(page.getByText("Trade the noise for silence. Deep in the canopy.")).toBeVisible()
+
+    // 2. Direct navigation to /stays/jibhi redirects to /jibhi
+    const response2 = await page.goto("/stays/jibhi", { timeout: 60000 })
+    expect(response2?.status()).toBeLessThan(400)
+    await expect(page).toHaveURL(/\/jibhi$/)
+
+    // 3. Clicking Jibhi card on /stays navigates cleanly to /jibhi
+    await page.goto("/stays", { timeout: 60000 })
+    const jibhiLink = page.locator("a[href='/stays/jibhi-canopy']")
+    await jibhiLink.scrollIntoViewIfNeeded()
+    await jibhiLink.click()
+    await expect(page).toHaveURL(/\/jibhi$/)
+    await expect(page.getByRole("heading", { name: "Jibhi Canopy Cottages" })).toBeVisible()
+  })
 })

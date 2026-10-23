@@ -3,6 +3,7 @@ export const publicRoutes = [
   "/about",
   "/stays",
   "/stays/dalhousie",
+  "/jibhi",
   "/trips",
   "/trips/spiti",
   "/activities",
