@@ -195,19 +195,16 @@ const dalhousieRooms: RoomDef[] = [
 export default function DalhousieEstatePage() {
   return (
     <main className="grain min-h-screen bg-background relative overflow-x-hidden pb-28 md:pb-0">
-      {/* 01 · HERO: The 12-Column Editorial Grid System (Header integrated) */}
+      {/* 01 · HERO: Scene 01 (The Invitation: Escape & Aspiration) */}
       <ScrollHero 
         propertyName="Dalhousie Estate"
-        locationEyebrow="DALHOUSIE · HIMACHAL PRADESH"
-        headline="Dalhousie Estate"
-        tagline="Trade the noise for silence."
-        subhead="Ten rooms. A slower pace. A quieter side of the mountains."
-        startingPrice="From ₹3,200/night"
+        locationEyebrow="BAKROTA RIDGE · DALHOUSIE, 6,800 FT"
+        headline={"Find your\nquiet in the pines."}
+        subhead="A comfortable mountain stay with warm interiors, forest surroundings and room to slow down."
+        startingPrice="From ₹3,200 / night · Breakfast included"
         imageSrc="/images/offthetrail7.jpeg"
         ctaText="Explore the rooms"
         ctaHref="#rooms"
-        secondaryCtaText=""
-        secondaryCtaHref=""
         conciergeWhatsApp={process.env.NEXT_PUBLIC_OFFTHETRAIL_WA_NUMBER || "919816315898"}
         conciergePhone="+91 98163 15898"
       />
