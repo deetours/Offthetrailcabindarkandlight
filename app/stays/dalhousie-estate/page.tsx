@@ -199,18 +199,20 @@ export default function DalhousieEstatePage() {
       <ScrollHero 
         propertyName="Dalhousie Estate"
         locationEyebrow="BAKROTA RIDGE · DALHOUSIE, 6,800 FT"
-        headline={"Find your\nquiet in the pines."}
-        subhead="A comfortable mountain stay with warm interiors, forest surroundings and room to slow down."
+        headline="Dalhousie Estate"
+        tagline="Trade the noise for silence."
+        subhead="Ten rooms. A slower pace. A quieter side of the mountains."
         startingPrice="From ₹3,200 / night · Breakfast included"
         imageSrc="/images/offthetrail7.jpeg"
         ctaText="Explore the rooms"
         ctaHref="#rooms"
+        nextSectionId="overview"
         conciergeWhatsApp={process.env.NEXT_PUBLIC_OFFTHETRAIL_WA_NUMBER || "919816315898"}
         conciergePhone="+91 98163 15898"
       />
 
       {/* 02 · DECISION SNAPSHOT: The facts, immediately */}
-      <section className="bg-card/40 border-y border-border py-8 px-6 md:px-12 lg:px-16 relative z-20">
+      <section id="overview" className="bg-card/40 border-y border-border py-8 px-6 md:px-12 lg:px-16 relative z-20">
         <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           <div>
             <div className="text-[11px] font-sans uppercase tracking-[0.16em] text-primary font-semibold mb-1">Scale & Privacy</div>
@@ -236,6 +238,7 @@ export default function DalhousieEstatePage() {
       </section>
 
       <StoryScene 
+        id="estate"
         numeral="II — The Estate"
         headline="Time slows down on the ridge."
         mainImageSrc="/images/offthetrail8.jpeg"

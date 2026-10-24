@@ -22,6 +22,7 @@ interface ScrollHeroProps {
   showWhatsAppHelper?: boolean
   conciergeWhatsApp?: string
   conciergePhone?: string
+  nextSectionId?: string
 }
 
 export function ScrollHero({ 
@@ -39,7 +40,8 @@ export function ScrollHero({
   secondaryCtaHref, 
   showWhatsAppHelper = true,
   conciergeWhatsApp = process.env.NEXT_PUBLIC_OFFTHETRAIL_WA_NUMBER || "919816315898",
-  conciergePhone = "+91 98163 15898"
+  conciergePhone = "+91 98163 15898",
+  nextSectionId = "overview"
 }: ScrollHeroProps) {
   const activeEyebrow = locationEyebrow || eyebrow || "BAKROTA RIDGE · DALHOUSIE, 6,800 FT"
   const sectionRef = useRef<HTMLElement>(null)
@@ -55,10 +57,10 @@ export function ScrollHero({
 
   const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     if (href.startsWith('#')) {
-      e.preventDefault()
       const targetId = href.substring(1)
       const element = document.getElementById(targetId)
       if (element) {
+        e.preventDefault()
         element.scrollIntoView({ behavior: 'smooth' })
       }
     }
@@ -244,18 +246,32 @@ export function ScrollHero({
         </div>
       </div>
 
-      {/* 5. Clean Bottom Anchor Bar */}
-      <div className="relative z-20 w-full pb-6 pt-2">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16 flex items-center justify-between text-[10px] font-sans uppercase tracking-[0.22em] text-white/40">
-          <span>A STAY BY OFF THE TRAIL · 01 / DALHOUSIE</span>
+      {/* 5. Clean Bottom Anchor Bar with Editorial Scroll Cue */}
+      <div className="relative z-20 w-full pb-6 md:pb-8 pt-2">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16 flex items-center justify-center sm:justify-between text-[10px] font-sans uppercase tracking-[0.22em] text-white/50">
+          <span className="hidden sm:inline text-white/40">
+            A STAY BY OFF THE TRAIL · {propertyName.toUpperCase()}
+          </span>
+
           <a 
-            href={ctaHref}
-            onClick={(e) => handleSmoothScroll(e, ctaHref)}
-            className="hidden sm:inline-flex items-center gap-1.5 text-white/50 hover:text-white transition-colors pointer-events-auto group"
+            href={`#${nextSectionId}`}
+            onClick={(e) => handleSmoothScroll(e, `#${nextSectionId}`)}
+            aria-label="Scroll to discover next section"
+            className="inline-flex items-center gap-2 text-white/75 hover:text-white transition-colors pointer-events-auto py-1 px-2.5 rounded focus:outline-none focus:ring-1 focus:ring-primary/60 group"
           >
-            <span>SCROLL TO DISCOVER</span>
-            <ArrowDown size={11} className="transition-transform group-hover:translate-y-0.5" />
+            <span className="font-medium tracking-[0.2em]">SCROLL TO DISCOVER</span>
+            <motion.span
+              animate={prefersReducedMotion ? {} : { y: [0, 3, 0] }}
+              transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+              className="inline-flex"
+            >
+              <ArrowDown size={12} className="text-primary transition-transform group-hover:translate-y-0.5" />
+            </motion.span>
           </a>
+
+          <span className="hidden sm:inline text-white/40 text-right">
+            BAKROTA RIDGE · 6,800 FT
+          </span>
         </div>
       </div>
     </section>

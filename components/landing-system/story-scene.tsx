@@ -10,6 +10,7 @@ interface StoryParagraph {
 }
 
 interface StorySceneProps {
+  id?: string
   numeral: string
   headline: string
   paragraphs: StoryParagraph[]
@@ -17,7 +18,7 @@ interface StorySceneProps {
   insetImageSrc: string
 }
 
-export function StoryScene({ numeral, headline, paragraphs, mainImageSrc, insetImageSrc }: StorySceneProps) {
+export function StoryScene({ id, numeral, headline, paragraphs, mainImageSrc, insetImageSrc }: StorySceneProps) {
   const containerRef = useRef<HTMLElement>(null)
   const prefersReducedMotion = useReducedMotion()
   
@@ -30,7 +31,8 @@ export function StoryScene({ numeral, headline, paragraphs, mainImageSrc, insetI
   const imageY = useTransform(scrollYProgress, [0, 1], ["-5%", "5%"])
 
   return (
-    <section 
+    <section
+      id={id}
       ref={containerRef} 
       className="relative flex flex-col md:flex-row min-h-screen bg-background overflow-hidden"
     >

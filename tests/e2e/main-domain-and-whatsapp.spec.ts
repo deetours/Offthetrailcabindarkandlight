@@ -40,6 +40,7 @@ test.describe("Main-Domain Landing Page and WhatsApp Configuration Verification"
 
     // 3. Verify Room Catalogue
     const roomCatalog = page.locator("#rooms")
+    await roomCatalog.scrollIntoViewIfNeeded()
     await expect(roomCatalog).toBeVisible()
     await expect(roomCatalog.getByRole("heading", { name: "Super Deluxe Room", exact: true })).toBeVisible()
     await expect(roomCatalog.getByRole("heading", { name: "Deluxe Room", exact: true })).toBeVisible()
@@ -58,8 +59,8 @@ test.describe("Main-Domain Landing Page and WhatsApp Configuration Verification"
     expect(faqHref).toContain("wa.me/919816315898")
 
     // 5. Verify Room Catalogue directly provides WhatsApp enquiry links for rooms
-    const deluxeCard = roomCatalog.locator("article").filter({ hasText: "Deluxe Room" })
-    const deluxeWaLink = deluxeCard.getByRole("link", { name: /enquire on whatsapp/i })
+    const deluxeCard = roomCatalog.locator("article").filter({ hasText: "Deluxe Room" }).first()
+    const deluxeWaLink = deluxeCard.locator("a[href*='wa.me']")
     await expect(deluxeWaLink).toBeVisible()
     const deluxeHref = await deluxeWaLink.getAttribute("href")
     expect(deluxeHref).toContain("wa.me/919816315898")

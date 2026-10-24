@@ -177,7 +177,6 @@
 /* Refined film grain effect */
 .grain {
   position: relative;
-  overflow: hidden;
 }
 
 .grain::before {

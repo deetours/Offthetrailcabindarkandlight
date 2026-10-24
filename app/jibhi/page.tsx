@@ -45,9 +45,11 @@ export default function JibhiCanopyCottagesPage() {
         imageSrc="/hero1.png" // Placeholder
         ctaText="Notify me when bookings open"
         ctaHref={waLink}
+        nextSectionId="canopy"
       />
 
       <StoryScene 
+        id="canopy"
         numeral="II — The Canopy"
         headline="Amongst the branches."
         mainImageSrc="/hero-campfire-spiti1.jpg" // Placeholder
